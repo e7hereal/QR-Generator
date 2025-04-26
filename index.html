@@ -12,8 +12,6 @@
     <body>
         <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
 
-        <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
-
         <!-- ИНСТРУКЦИЯ -->
         <div id="instruction" style="display: none;">
         <div class="instruction-overlay">
@@ -27,15 +25,29 @@
 
             <div id="generalInstructions">
                 <ul>
-                <li>Введите строки текста (одна строка = один QR-код)</li>
-                <li>Нажмите "Сгенерировать QR-коды"</li>
+                    <li>Введите строки текста (одна строка = один QR-код)</li>
+                    <li>Нажмите "Сгенерировать QR-коды"</li>
+                    <li>Дождитесь, пока ползунок генерации дойдет до конца (100%) и исчезнет</li>
+                    <img src="images\progressbar100.jpg" alt="Фото прогрессбара">
+                    <li>При необходимости добавьте стрелки - кнопка "Добавить стрелки"</li>
+                    <li>Нажмите на кнопку "Распечатать QR-коды"</li>
+                    <li>В настройках печати выставляем ориентация - Вертикальная. Масштаб - персонализированные, затем выставляем 100. В параметрах убираем галочку с "Фон"</span></li>
+                    <img src="images/printsetting.jpg" alt="Настройки печати">
+                    <li>Если в параметрах стоит галочка на "Верхние и нижние колонтитулы" - убираем</li>
+                    <img src="images/settingparametrs.jpg" alt="Насткройки - параметры">
                 </ul>
             </div>
 
             <div id="printerInstructions" style="display: none;">
                 <ul>
-                <li>Нажмите Ctrl+P или кнопку "Распечатать"</li>
-                <li>Выберите "Фактический размер", ориентацию — портрет</li>
+                <li>В поиске снизу введите "Принетеры и сканеры" или найдите данный пункт в настройках</li>
+                <img src="images\printersandscanners.jpg" alt="Принетеры и сканеры">
+                <li>Выберите ваш принтер (на 6-ой фазе это принтер TSZM19)</li>
+                <img src="images\settingbutton.jpg" alt="TSZM19">
+                <li>Далее в настройках принтера измените плотность на 27. Формат бумаги выберите "мм". Ширина 65, высота 25</li>
+                <img src="images/printersettings.jpg" alt="Настройки принтера">
+                <li>Затем нажимаем "Применить" и "ОК"</li>
+                <li>Готово. Принтер настроен</li>
                 </ul>
             </div>
 
