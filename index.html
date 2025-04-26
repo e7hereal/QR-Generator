@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="version" content="1.1">
+  <title>Места QR</title>
+
+  <!-- Подключение стилей -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+    <body>
+        <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
+
+        <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
+
+        <!-- ИНСТРУКЦИЯ -->
+        <div id="instruction" style="display: none;">
+        <div class="instruction-overlay">
+            <div class="instruction-content">
+            <p style="font-size: 22px; margin-top: 0;"><strong>Инструкция</strong></p>
+
+            <div style="margin-bottom: 15px;">
+                <button class="tab-button" onclick="showInstructionTab('general')">Общая инструкция</button>
+                <button class="tab-button" onclick="showInstructionTab('printer')">Настройка принтера</button>
+            </div>
+
+            <div id="generalInstructions">
+                <ul>
+                <li>Введите строки текста (одна строка = один QR-код)</li>
+                <li>Нажмите "Сгенерировать QR-коды"</li>
+                </ul>
+            </div>
+
+            <div id="printerInstructions" style="display: none;">
+                <ul>
+                <li>Нажмите Ctrl+P или кнопку "Распечатать"</li>
+                <li>Выберите "Фактический размер", ориентацию — портрет</li>
+                </ul>
+            </div>
+
+            <button class="tab-button" onclick="toggleInstruction()">Закрыть</button>
+            </div>
+        </div>
+        </div>
+            
+        <div id="allCentr">
+            <h1 style="padding-top: 22px;">Генерация QR-кодов</h1>
+            <label for="qrText">Введите строки текста (каждая строка для отдельного QR-кода, места):</label><br>
+            <textarea id="qrText" rows="10" cols="70" placeholder="Введите несколько строк (мест)..."></textarea><br>
+            <button id="generateBarcodes" onclick="generateQRCodes()">Сгенерировать QR-коды</button>
+            <button id="modeButton" onclick="toggleMode()">Добавить стрелки</button>
+            <div id="progressBar">
+                <div id="progressFill"></div>
+                <div id="progressText">0.00%</div>
+            </div>
+        </div>
+
+        <button id="scrollDown" onclick='window.scrollTo({
+            top: 9999999999,
+            left: 100,
+            behavior: "smooth",
+        });'>Промотать вниз</button>
+
+        <button id="clearDivAndTextArea" onclick="showDone()">Очистить всё</button>
+
+        <div id="message">Готово</div>
+
+        <button id="themeButton" onclick="toggleTheme()">Переключить тему</button>
+
+        <div id="qrcodeList"></div>
+
+        <button id="printButton" onclick="window.print()">Распечатать QR-коды</button>
+        
+         <!-- Подключение скриптов -->
+        <script src="script.js"></script>
+    </body>
+</html>

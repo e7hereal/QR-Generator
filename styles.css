@@ -1,0 +1,488 @@
+        /* Стиль для светлой темы (по умолчанию) */
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 20px;
+            background-color: white; /* Белый фон */
+            color: black; /* Тёмный текст */
+            transition: all 0.3s, background 0.5s ease-in-out; /* Плавное изменение фона и текста */
+            background-position: top;
+            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url("https://i.pinimg.com/originals/0b/fe/c7/0bfec764c1121c865e2cb52987dafec3.jpg");
+            background-size: 100%;
+        }
+        
+        #allCentr {
+            position: relative;
+            display: block;
+            align-items: center;
+            width: 600px;
+            height: 450px;
+            text-align: center;
+            background-color: rgb(255 255 255 / 88%);
+            border-radius: 10px;
+            transition: all 0.3s;
+            margin: 0 auto;
+            top: 250px;
+        }
+
+        textarea {
+            margin-top: 7px;
+            margin-bottom: 7px;
+            color: black;
+            background-color: rgba(0, 0, 0, 0);
+            transition: all 0.3s;
+        }
+
+        /* Затемнение фона при открытии инструкции */
+        .instruction-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Поверх всего */
+        }
+
+        .instruction-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .instruction-content {
+            background-color: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        /* Тёмная тема */
+        body.dark-theme .instruction-content {
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+
+        /* Стили кнопок вкладок */
+        .tab-button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            font-size: 14px;
+            background-color: #000000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #493f3f;
+        }
+
+        #qrcodeList {
+            position: absolute;
+            background-color: rgb(255 255 255 / 88%);
+            width: 250px;
+            border-radius: 5px;
+            top: 12px;
+            transition: all 0.3s;
+        }
+
+        .qr-item {
+            display: flex;
+            margin-top: 10px;
+            margin-bottom: 10px; /* Отступ между элементами */
+            height: 94.48818897638px;
+            width: 245.6692913386px;
+            transition: all 0.3s;
+        }
+
+        .down-arrow {
+            width: 50px;
+            height: 90px;
+            margin: auto;
+        }
+
+        .qr-item img {
+            margin-left: 0px; /* Отступ между QR-кодом и текстом */
+            float: right;
+        }
+
+        .qr-text {
+            font-size: 26px; /* Увеличиваем шрифт текста */
+            font-weight: bold;
+            margin: auto;
+            color: black; /* Светлый текст по умолчанию */
+            transition: color 0.5s; /* Плавное изменение цвета */
+        }
+
+        .qr-item.has-arrow .qr-text {
+            font-size: 21.6px;
+            width: 122px;
+            float: right;
+        }
+
+        .qr-item.has-arrow .text-polki {
+            font-size: 21.6px;
+            width: 122.83464606693px;
+        }
+
+        .qr-item.has-arrow img {
+            margin-left: 0px;
+        }
+
+        .text-polki {
+            color: black; /* Черный цвет для текста */
+            text-align: center;
+            width: 150px;
+            transition: color 0.5s;
+        }
+
+        /* Стиль для темной темы */
+        body.dark-theme {
+            background-color: #252121; /* Темный фон */
+            color: white; /* Светлый текст */
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("https://i.pinimg.com/originals/0b/fe/c7/0bfec764c1121c865e2cb52987dafec3.jpg");
+            background-size: 100%;
+            transition: all 0.3s, background 0.5s ease-in-out;
+            background-position: bottom;
+        }
+
+        body.dark-theme #allCentr, textarea {
+            background-color: rgba(0, 0, 0, 0);
+            transition: all 0.3s;
+        }
+
+        body.dark-theme textarea {
+            margin-top: 7px;
+            margin-bottom: 7px;
+            color: white;
+            background-color: #25212100;
+        }
+
+        body.dark-theme #qrcodeList{
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        body.dark-theme .down-arrow {
+            stroke: white; /* Изменяем цвет стрелки на белый */
+        }
+
+        body.dark-theme .down-arrow rect {
+            fill: white; /* Белый прямоугольник */
+        }
+
+        body.dark-theme .down-arrow polygon {
+            fill: white; /* Белый треугольник (стрелка) */
+        }
+
+        /* Цвет текста в темной теме */
+        body.dark-theme .qr-text {
+            color: #ffffff; /* Светлый текст в темной теме */
+        }
+
+        /* Цвет текста в темной теме для .text-polki */
+        body.dark-theme .text-polki {
+            color: #ffffff; /* Белый текст для темной темы */
+            transition: color 0.5s;
+        }
+
+        /* Для тёмной темы */
+        body.dark-theme .instruction-content {
+            background-color: #2c2c2c;
+            color: #ffffff;
+        }
+
+        body.dark-theme .instruction-content button {
+            background-color: #bb86fc;
+            color: #000;
+        }
+
+        body.dark-theme .instruction-content button:hover {
+            background-color: #9a67ea;
+        }
+
+        /* Для тёмной темы */
+        body.dark-theme .tab-button {
+            background-color: #444;
+            color: white;
+        }
+
+        body.dark-theme .tab-button:hover {
+            background-color: #666;
+        }
+
+
+        /* Общие стили для кнопок */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s ease-in-out; /* Плавное изменение фона и анимация при нажатии */
+        }
+
+        /* Расположение кнопок */
+        #printButton {
+            position: fixed;
+            right: 12px;
+            bottom: 12px;
+        }
+
+        #instructionButton {
+            position: absolute;
+            right: 45%;
+            left: 45%;
+        }
+
+        #modeButton {
+            margin-left: 10px;
+        }
+
+        #clearDivAndTextArea {
+            position: fixed;
+            right: 12px;
+            bottom: 66px;
+        }
+
+        #themeButton {
+            position: fixed;
+            right: 12px;
+            top: 12px;
+        }
+
+        #scrollDown {
+            position: fixed;
+            right: 45%;
+            left: 45%;
+            bottom: 12px;
+        }
+
+        button:hover {
+            transform: scale(1.05); /* Увеличиваем размер кнопки при наведении */
+        }
+
+        button:active {
+            transform: scale(0.95); /* Слегка уменьшаем кнопку при нажатии */
+        }
+
+        /* Цвета кнопок */
+        button {
+            color: white; /* Белый текст кнопок */
+        }
+
+        #scrollDown {
+            background-color: #4100da;
+        }
+
+        #scrollDown:hover {
+            background-color: #303f9f;
+        }
+
+        #themeButton {
+            background-color: #6200ea;
+        }
+
+        #themeButton:hover {
+            background-color: #3700b3;
+        }
+
+        #printButton {
+            background-color: #3f51b5;
+        }
+
+        #printButton:hover {
+            background-color: #303f9f;
+        }
+
+        #clearDivAndTextArea {
+            background-color: #4caf50;
+        }
+
+        #clearDivAndTextArea:hover {
+            background-color: #388e3c;
+        }
+
+        #generateBarcodes {
+            background-color: #ff9800;
+        }
+
+        #generateBarcodes:hover {
+            background-color: #f57c00;
+        }
+
+        #modeButton {
+            background-color: #ff9800;
+        }
+
+        #modeButton:hover {
+            background-color: #f57c00;
+        }
+        
+        #instructionButton {
+            background-color: rgb(128, 128, 128);
+        }
+        
+        #instructionButton:hover {
+            background-color:   rgb(255, 255, 255);
+            color: black;
+        }
+
+        #message {
+            opacity: 0; /* Невидимость */
+            visibility: hidden;
+            background-color: #70a370;
+            padding: 41px 37px;
+            transition: opacity 0.3s ease-in-out, visibility 0s 1s;
+            position: fixed;
+            border-radius: 5px;
+            right: 12px;
+            bottom: 120px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 10px solid #70a370;
+        }
+
+        #message.show {
+            opacity: 1; /* Видимость */
+            visibility: visible; /* Элемент видим */
+            transition: opacity 1s ease-in-out, visibility 0s 0s; /* Плавное изменение прозрачности и сразу доступность */
+        }
+
+        /* Стрелка снизу */
+        #message::after {
+            content: ''; /* Пустое содержимое */
+            position: absolute; /* Абсолютное позиционирование */
+            bottom: -10px; /* Расположить стрелку под табличкой */
+            left: 50%; /* Центрировать стрелку по горизонтали */
+            transform: translateX(-50%); /* Точно по центру */
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 10px solid #70a370; /* Цвет стрелки совпадает с фоном */
+        }
+
+        /* Стили для прогресс-бара */
+        #progressBar {
+            width: 80%;
+            height: 5%;
+            border-radius: 10px;
+            display: none;
+            margin: 30px auto;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            background-color: #5a5a5a; 
+            position: relative;
+        }
+
+        #progressBar::-webkit-progress-value {
+            background-image: linear-gradient(170deg, #ff0000, #0015d6);
+            transition: width 0.4s ease-in-out;
+        }
+        
+        #progressBar::-moz-progress-bar {
+            background-image: linear-gradient(170deg, #ff0000, #0015d6);
+            transition: width 0.4s ease-in-out;
+        }
+
+        #progressFill {
+            height: 100%; 
+            width: 0%; 
+            background-image: linear-gradient(170deg, #ff0000, #0015d6);
+            transition: width 0.4s ease-in-out;
+        }
+
+        #progressText {
+            position: absolute; 
+            width: 100%;
+            top: 0;
+            left: 0;
+            font-size: 13px;
+            text-align: center;
+            line-height: 22px;
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+        }
+
+        /* Стиль для печати */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            h1, label, textarea, button, #printButton, br, #allCentr, progress {
+                display: none;
+            }
+
+            .down-arrow {
+                margin-top: auto;
+            }
+            #qrcodeList {
+                top: 0px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .qr-item {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .qr-item img {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+            body.dark-theme .qr-text {
+                color: black; /* Черный текст для печати */
+            }
+            body.dark-theme .down-arrow {
+                stroke: black;
+            }
+            body.dark-theme .down-arrow rect {
+                fill: black; /* Белый прямоугольник */
+            }
+
+            body.dark-theme .down-arrow polygon {
+                fill: black; /* Белый треугольник (стрелка) */
+            }
+
+
+            .text-polki {
+                color: black; /* Черный цвет для печати */
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .qr-text {
+                color: black; /* Черный цвет для печати */
+                margin: auto;
+            }
+
+            body.dark-theme .text-polki {
+                color: black; /* Черный цвет для печати */
+            }
+        }
