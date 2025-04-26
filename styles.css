@@ -1,4 +1,4 @@
-        /* Стиль для светлой темы (по умолчанию) */
+         /* Стиль для светлой темы (по умолчанию) */
         body {
             font-family: Verdana, sans-serif;
             margin: 20px;
@@ -65,10 +65,18 @@
             padding: 30px;
             border-radius: 10px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             text-align: left;
+            max-height: 90vh; /* Высота не больше 90% от экрана */
+            overflow-y: auto; /* Вертикальный скролл при необходимости */
         }
-
+        
+        .instruction-content img {
+            margin: 10px;
+            max-width: 600px;
+            height: auto;
+          }
+          
         /* Тёмная тема */
         body.dark-theme .instruction-content {
             background-color: #2c2c2c;
