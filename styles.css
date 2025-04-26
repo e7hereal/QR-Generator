@@ -247,6 +247,7 @@
             right: 45%;
             left: 45%;
             top: 12px;
+            color: white;
         }
 
         #modeButton {
@@ -339,6 +340,7 @@
         
         #instructionButton:hover {
             background-color:   rgb(70, 70, 70);
+            color: white;
         }
 
         #message {
