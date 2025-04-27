@@ -70,12 +70,33 @@
             max-height: 90vh; /* Высота не больше 90% от экрана */
             overflow-y: auto; /* Вертикальный скролл при необходимости */
         }
+
+        /* Стилизация полосы прокрутки */
+        .instruction-content::-webkit-scrollbar {
+            width: 12px; /* Ширина вертикальной полосы */
+        }
+
+        /* Стилизация фона полосы прокрутки */
+        .instruction-content::-webkit-scrollbar-track {
+            background-color: rgba(0, 0, 0, 0); /* Цвет фона полосы прокрутки */
+            border-radius: 10px; /* Скругленные углы */
+        }
+
+        /* Стилизация "ползунка" полосы прокрутки */
+        .instruction-content::-webkit-scrollbar-thumb {
+            background-color: #747171; /* Цвет ползунка */
+            border-radius: 10px; /* Скругленные углы ползунка */
+        }
+
+        /* Цвет ползунка при наведении */
+        .instruction-content::-webkit-scrollbar-thumb:hover {
+            background-color: #c9c6c6; /* Темный цвет при наведении */
+        }
         
         .instruction-content img {
             margin: 10px;
             max-width: 800px;
             height: auto;
-            border-radius: 10px;
         }
           
         /* Стили кнопок вкладок */
@@ -248,7 +269,6 @@
             right: 45%;
             left: 45%;
             top: 12px;
-            color: white;
         }
 
         #modeButton {
@@ -341,7 +361,6 @@
         
         #instructionButton:hover {
             background-color:   rgb(70, 70, 70);
-            color: white;
         }
 
         #message {
