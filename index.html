@@ -13,7 +13,7 @@
         <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
 
         <!-- ИНСТРУКЦИЯ -->
-        <div id="instruction" style="display: none;">
+        <div id="instruction">
         <div class="instruction-overlay">
             <div class="instruction-content">
             <p style="font-size: 22px; margin-top: 0;"><strong>Инструкция</strong></p>
@@ -23,11 +23,11 @@
                 <button class="tab-button" onclick="showInstructionTab('printer')">Настройка принтера</button>
             </div>
 
-            <div id="generalInstructions">
+            <div id="generalInstructions"class="instruction-tab active">
                 <ul>
-                    <li>Введите места/полки (одна строка = один QR-код)</li>
+                    <li>Введите строки текста (одна строка = один QR-код)</li>
                     <li>Нажмите "Сгенерировать QR-коды"</li>
-                    <li><strong>Обязательно дождитесь</strong>, пока ползунок генерации дойдет до конца (100%) и исчезнет</li>
+                    <li><strong>Обязательно</strong> дождитесь, пока ползунок генерации дойдет до конца (100%) и исчезнет</li>
                     <img src="images\progressbar100.jpg" alt="Фото прогрессбара">
                     <li>При необходимости добавьте стрелки - кнопка "Добавить стрелки"</li>
                     <li>Нажмите на кнопку "Распечатать QR-коды"</li>
@@ -35,11 +35,10 @@
                     <img src="images/printsetting.jpg" alt="Настройки печати">
                     <li>Если в параметрах стоит галочка на "Верхние и нижние колонтитулы" - убираем</li>
                     <img src="images/settingparametrs.jpg" alt="Насткройки - параметры">
-                    <li>Далее нажимаем на "Печать" и готово. Места печатаются</li>
                 </ul>
             </div>
 
-            <div id="printerInstructions" style="display: none;">
+            <div id="printerInstructions" class="instruction-tab">
                 <ul>
                 <li>В поиске снизу введите "Принетеры и сканеры" или найдите данный пункт в настройках</li>
                 <img src="images\printersandscanners.jpg" alt="Принетеры и сканеры">
