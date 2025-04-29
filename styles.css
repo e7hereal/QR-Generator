@@ -278,8 +278,7 @@ body.dark-theme .tab-button:hover {
 }
 
 body.dark-theme .instruction-overlay {
-    background-color: rgba(0, 0, 0, 0.452); /* светлый полупрозрачный фон */
-
+    background-color: rgb(0 0 0 / 85%); /* светлый полупрозрачный фон */
 }
 
 /* Общие стили для кнопок */
