@@ -104,63 +104,85 @@ document.getElementById('qrcodeList').innerHTML = '';
 document.getElementById('qrText').value = '';
 });
 
-// Функция для переключения темы
+    // Функция для переключения темы
 function toggleTheme() {
-const body = document.body;
-body.classList.toggle('dark-theme'); // Переключаем класс темной темы
+    const body = document.body;
+    body.classList.toggle('dark-theme'); // Переключаем класс темной темы
 
-// Сохраняем выбранную тему в localStorage
-if (body.classList.contains('dark-theme')) {
-    localStorage.setItem('theme', 'dark');
-} else {
-    localStorage.setItem('theme', 'light');
-}
+    // Сохраняем выбранную тему в localStorage
+    if (body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
 }
 
 function toggleMode() {
-mode = (mode === 1) ? 2 : 1;
-const modeButton = document.getElementById('modeButton');
-if (mode === 2) {
-    modeButton.innerText = 'Убрать стрелки';
-} else {
-    modeButton.innerText = 'Добавить стрелки ';
-}
-generateQRCodes(); // Перегенерируем QR-коды с новым режимом
-}
+    mode = (mode === 1) ? 2 : 1;
+    const modeButton = document.getElementById('modeButton');
+    if (mode === 2) {
+        modeButton.innerText = 'Убрать стрелки';
+    } else {
+        modeButton.innerText = 'Добавить стрелки ';
+    }
+    generateQRCodes(); // Перегенерируем QR-коды с новым режимом
+    }
 
 function showDone() {
-const messageElement = document.getElementById('message');
-const qrList = document.getElementById('qrcodeList');
+    const messageElement = document.getElementById('message');
+    const qrList = document.getElementById('qrcodeList');
 
-// Проверяем, есть ли внутри qrcodeList дочерние элементы
-if (qrList.children.length === 0) {
-    messageElement.textContent = 'И так пусто';
-} else {
-    messageElement.textContent = 'Готово';
-}
+    // Проверяем, есть ли внутри qrcodeList дочерние элементы
+    if (qrList.children.length === 0) {
+        messageElement.textContent = 'И так пусто';
+    } else {
+        messageElement.textContent = 'Готово';
+    }
 
-messageElement.classList.add('show');
+    messageElement.classList.add('show');
 
-setTimeout(function () {
-    messageElement.classList.remove('show');
-}, 1000);
+    setTimeout(function () {
+        messageElement.classList.remove('show');
+    }, 1000);
 }
 
 // Функция для отображения/скрытия инструкции
 function toggleInstruction() {
-const instruction = document.getElementById('instruction');
-instruction.style.display = instruction.style.display === 'none' ? 'flex' : 'none';
-}
+    const instruction = document.getElementById('instruction');
+    
+    if (instruction.classList.contains('show')) {
+        instruction.classList.remove('show');
+        setTimeout(() => {
+            instruction.style.display = 'none';
+        }, 500); // столько же, сколько в transition
+    } else {
+        instruction.style.display = 'flex'; // сначала показываем
+        // небольшая задержка, чтобы сработал transition
+        setTimeout(() => {
+            instruction.classList.add('show');
+        }, 10);
+    }
+}        
 
 function showInstructionTab(tab) {
-const general = document.getElementById('generalInstructions');
-const printer = document.getElementById('printerInstructions');
-
-if (tab === 'general') {
-    general.style.display = 'block';
-    printer.style.display = 'none';
-} else {
-    general.style.display = 'none';
-    printer.style.display = 'block';
-}
+    const general = document.getElementById('generalInstructions');
+    const printer = document.getElementById('printerInstructions');
+    
+    // Сначала убираем активный класс с обоих
+    general.classList.remove('active');
+    printer.classList.remove('active');
+    
+    // Ждём завершения transition (если хотим полное исчезновение — 400мс)
+    setTimeout(() => {
+        general.style.display = 'none';
+        printer.style.display = 'none';
+    
+        if (tab === 'general') {
+        general.style.display = 'block';
+        setTimeout(() => general.classList.add('active'), 10);
+        } else {
+        printer.style.display = 'block';
+        setTimeout(() => printer.classList.add('active'), 10);
+        }
+    }, 200);
 }
