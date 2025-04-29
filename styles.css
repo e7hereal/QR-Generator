@@ -73,6 +73,7 @@ textarea {
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
 }
 
 .instruction-content img {
@@ -109,13 +110,13 @@ textarea {
 
 /* Стилизация "ползунка" полосы прокрутки */
 .instruction-content::-webkit-scrollbar-thumb {
-    background-color: #747171; /* Цвет ползунка */
+    background-color: #747171; /* темный цвет ползунка */
     border-radius: 10px; /* Скругленные углы ползунка */
 }
 
 /* Цвет ползунка при наведении */
 .instruction-content::-webkit-scrollbar-thumb:hover {
-    background-color: #c9c6c6; /* Темный цвет при наведении */
+    background-color: #c9c6c6; /* светлее при наведении */
 }
 
 .close-instruction {
