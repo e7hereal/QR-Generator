@@ -307,7 +307,12 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s;}
+    transition: 0.3s;
+}
+
+#closeInstruction {
+    margin-top: 15px;
+}
 
 .tab-button:hover {
     background-color: #817f7f;;
