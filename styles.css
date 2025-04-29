@@ -65,6 +65,7 @@ textarea {
 }
     
 .instruction-content {
+    position: relative;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -83,14 +84,16 @@ textarea {
 .instruction-tab {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    display: none;
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, height 0.3s ease;
 }
     
 .instruction-tab.active {
-    display: block;
     opacity: 1;
-    transform: translateY(0);
+    height: auto;
+    overflow: visible;
 }
 
 /* Стилизация полосы прокрутки */
@@ -114,7 +117,33 @@ textarea {
 .instruction-content::-webkit-scrollbar-thumb:hover {
     background-color: #c9c6c6; /* Темный цвет при наведении */
 }
-    
+
+.close-instruction {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+    z-index: 10001;
+    background-color: #000;
+}
+  
+.close-instruction:hover {
+    background-color: #817f7f;;
+}
+
+body.dark-theme .close-instruction {
+    color: #bbb;
+}
+  
+body.dark-theme .close-instruction:hover {
+    color: white;
+}
+  
 #qrcodeList {
     position: absolute;
     background-color: rgb(255 255 255 / 88%);
@@ -281,7 +310,7 @@ button {
     transition: 0.3s;}
 
 .tab-button:hover {
-    background-color: #493f3f;
+    background-color: #817f7f;;
 }
 
 #instructionButton {
