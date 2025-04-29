@@ -4,10 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="version" content="1.2">
+
   <title>Места QR</title>
 
   <!-- Подключение стилей -->
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    // Быстрое применение темы до загрузки CSS, чтобы не мигала
+    (function () {
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark-theme');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  
 </head>
     <body>
         <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
@@ -16,6 +30,7 @@
         <div id="instruction">
         <div class="instruction-overlay">
             <div class="instruction-content">
+                <button class="close-instruction" onclick="toggleInstruction()" aria-label="Закрыть инструкцию">&times;</button>
             <p style="font-size: 22px; margin-top: 0;"><strong>Инструкция</strong></p>
 
             <div style="margin-bottom: 15px;">
