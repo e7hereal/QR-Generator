@@ -167,22 +167,12 @@ function toggleInstruction() {
 function showInstructionTab(tab) {
     const general = document.getElementById('generalInstructions');
     const printer = document.getElementById('printerInstructions');
-    
-    // Сначала убираем активный класс с обоих
-    general.classList.remove('active');
-    printer.classList.remove('active');
-    
-    // Ждём завершения transition (если хотим полное исчезновение — 400мс)
-    setTimeout(() => {
-        general.style.display = 'none';
-        printer.style.display = 'none';
-    
-        if (tab === 'general') {
-        general.style.display = 'block';
-        setTimeout(() => general.classList.add('active'), 10);
-        } else {
-        printer.style.display = 'block';
-        setTimeout(() => printer.classList.add('active'), 10);
-        }
-    }, 200);
+
+    if (tab === 'general') {
+        general.classList.add('active');
+        printer.classList.remove('active');
+    } else {
+        printer.classList.add('active');
+        general.classList.remove('active');
+    }
 }
