@@ -265,6 +265,7 @@ body.dark-theme .instruction-content button {
 
 body.dark-theme .instruction-content button:hover {
     background-color: #9a67ea;
+    color: white;
 }
 
 /* Для тёмной темы */
