@@ -131,7 +131,6 @@ textarea {
     background-color: #bb86fc;
     color: #000;
     z-index: 10001;
-    background-color: #000;
 }
   
 .close-instruction:hover {
@@ -363,6 +362,10 @@ button:active {
 
 /* Цвета кнопок */
 button {
+    color: black; /* Чёрный текст кнопок */
+}
+
+button:hover {
     color: white; /* Белый текст кнопок */
 }
 
