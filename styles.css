@@ -128,13 +128,15 @@ textarea {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    color: #ffffff;
+    background-color: #bb86fc;
+    color: #000;
     z-index: 10001;
     background-color: #000;
 }
   
 .close-instruction:hover {
-    background-color: #817f7f;;
+    background-color: #9a67ea;
+    color: white;
 }
 
 body.dark-theme .close-instruction {
