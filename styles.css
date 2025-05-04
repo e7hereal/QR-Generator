@@ -22,6 +22,7 @@ body {
     transition: all 0.3s;
     margin: 0 auto;
     top: 250px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
 }
 
 textarea {
@@ -99,7 +100,7 @@ textarea {
 
 /* Стилизация полосы прокрутки */
 .instruction-content::-webkit-scrollbar {
-    width: 12px; /* Ширина вертикальной полосы */
+    width: 10px; /* Ширина вертикальной полосы */
 }
 
 /* Стилизация фона полосы прокрутки */
@@ -128,22 +129,9 @@ textarea {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    background-color: #bb86fc;
-    color: #000;
     z-index: 10001;
-}
-  
-.close-instruction:hover {
-    background-color: #9a67ea;
-    color: white;
-}
-
-body.dark-theme .close-instruction {
-    color: #bbb;
-}
-  
-body.dark-theme .close-instruction:hover {
-    color: white;
+    background-color: rgb(51, 122, 183);
+    border-color: rgb(46, 109, 164);
 }
   
 #qrcodeList {
@@ -217,6 +205,7 @@ body.dark-theme {
 body.dark-theme #allCentr, textarea {
     background-color: rgba(0, 0, 0, 0);
     transition: all 0.3s;
+    box-shadow: none;
 }
 
 body.dark-theme textarea {
@@ -259,28 +248,45 @@ body.dark-theme .instruction-content {
     color: #ffffff;
 }
 
-body.dark-theme .instruction-content button {
+body.dark-theme .instruction-overlay {
+    background-color: rgb(0 0 0 / 85%); /* светлый полупрозрачный фон */
+}
+
+body.dark-theme button {
     background-color: #bb86fc;
     color: #000;
 }
 
-body.dark-theme .instruction-content button:hover {
-    background-color: #9a67ea;
-    color: white;
+body.dark-theme button:hover {
+background-color: #9a67ea;
+color: white;
 }
 
-/* Для тёмной темы */
-body.dark-theme .tab-button {
-    background-color: #444;
-    color: white;
+body.dark-theme #modeButton {
+    background-color: #ff0000;
+    color: #000;
+}
+body.dark-theme #generateBarcodes {
+    background-color: #ff0000;
+    color: #000;
 }
 
-body.dark-theme .tab-button:hover {
-    background-color: #666;
+body.dark-theme #printButton {
+    background-color: #ff0000;
+    color: #000;
+}
+body.dark-theme #modeButton:hover {
+    background-color: #bb0101;
+    color: #fff;
+}
+body.dark-theme #generateBarcodes:hover {
+    background-color: #bb0101;
+    color: #fff;
 }
 
-body.dark-theme .instruction-overlay {
-    background-color: rgb(0 0 0 / 85%); /* светлый полупрозрачный фон */
+body.dark-theme #printButton:hover {
+    background-color: #bb0101;
+    color: #fff;
 }
 
 /* Общие стили для кнопок */
@@ -291,6 +297,9 @@ button {
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s ease-in-out, color 0.3s; /* Плавное изменение фона и анимация при нажатии */
+    color: #fff;
+    background-color: rgb(51, 122, 183);
+    border-color: rgb(46, 109, 164);
 }
 
 /* Расположение кнопок */
@@ -309,17 +318,10 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
-    background-color: #bb86fc;
-    color: #000;
 }
 
 #closeInstruction {
     margin-top: 15px;
-}
-
-.tab-button:hover {
-    background-color: #9a67ea;
-    color: white;
 }
 
 #instructionButton {
@@ -354,90 +356,35 @@ button {
 
 button:hover {
     transform: scale(1.05); /* Увеличиваем размер кнопки при наведении */
+    background-color:rgb(40, 96, 144);
+    border-color: rgb(32, 77, 116);
 }
 
 button:active {
     transform: scale(0.95); /* Слегка уменьшаем кнопку при нажатии */
 }
 
-/* Цвета кнопок */
-button {
-    color: black; /* Чёрный текст кнопок */
-}
-
-button:hover {
-    color: white; /* Белый текст кнопок */
-}
-
-#scrollDown {
-    background-color: #4100da;
-}
-
-#scrollDown:hover {
-    background-color: #303f9f;
-}
-
-#themeButton {
-    background-color: #6200ea;
-}
-
-#themeButton:hover {
-    background-color: #3700b3;
-}
-
-#printButton {
-    background-color: #3f51b5;
-}
-
-#printButton:hover {
-    background-color: #303f9f;
-}
-
-#clearDivAndTextArea {
-    background-color: #4caf50;
-}
-
-#clearDivAndTextArea:hover {
-    background-color: #388e3c;
-}
-
-#generateBarcodes {
-    background-color: #ff9800;
-}
-
-#generateBarcodes:hover {
-    background-color: #f57c00;
-}
-
-#modeButton {
-    background-color: #ff9800;
-}
-
-#modeButton:hover {
-    background-color: #f57c00;
-}
-
-#instructionButton {
-    background-color: rgb(128, 128, 128);
-}
-
-#instructionButton:hover {
-    background-color:   rgb(70, 70, 70);
-}
-
 #message {
     opacity: 0; /* Невидимость */
     visibility: hidden;
-    background-color: #70a370;
+    color: #a94442;
+    background-color: #f8d9d9; 
+    border-color: #ebccd1;
     padding: 41px 37px;
-    transition: opacity 0.3s ease-in-out, visibility 0s 1s;
-    position: fixed;
-    border-radius: 5px;
-    right: 12px;
-    bottom: 120px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid #70a370;
+    transition: opacity 1s ease-in-out, visibility 0s 1s;
+    height: 100%;
+    width: 50%;
+    left: 25%;
+    right: 25%;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(2, 1, 1, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5)
 }
 
 #message.show {
@@ -448,16 +395,7 @@ button:hover {
 
 /* Стрелка снизу */
 #message::after {
-    content: ''; /* Пустое содержимое */
-    position: absolute; /* Абсолютное позиционирование */
-    bottom: -10px; /* Расположить стрелку под табличкой */
-    left: 50%; /* Центрировать стрелку по горизонтали */
     transform: translateX(-50%); /* Точно по центру */
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid #70a370; /* Цвет стрелки совпадает с фоном */
 }
 
 /* Стили для прогресс-бара */
