@@ -30,7 +30,7 @@ body {
     transition: all 0.3s;
     margin: 0 auto;
     top: 250px;
-    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .5);
 }
 
 textarea {
@@ -380,7 +380,6 @@ button:active {
     border-color: #ebccd1;
     padding: 41px 37px;
     transition: opacity 1s ease-in-out, visibility 0s 1s;
-    height: 100%;
     width: 50%;
     left: 25%;
     right: 25%;
