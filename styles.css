@@ -8,6 +8,7 @@ body {
     background-position: top;
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url("images/lamoda_9.jpg");
     background-size: 100%;
+    overflow-x: hidden;
 }
 
 #allCentr {
