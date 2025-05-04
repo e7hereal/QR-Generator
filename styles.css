@@ -19,19 +19,20 @@ body {
 }
 
 #allCentr {
-    position: relative;
-    display: block;
-    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
     width: 600px;
     height: 450px;
+    
     text-align: center;
-    background-color: rgb(255 255 255 / 88%);
+    background-color: rgba(255, 255, 255, 0.88);
     border-radius: 10px;
-    transition: all 0.3s;
-    margin: 0 auto;
-    top: 250px;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .5);
-}
+    transition: all 0.3s;
+}    
 
 textarea {
     margin-top: 7px;
@@ -149,6 +150,7 @@ textarea {
     border-radius: 5px;
     top: 12px;
     transition: all 0.3s;
+    margin-left: 10px;
 }
 
 .qr-item {
@@ -176,7 +178,7 @@ textarea {
     font-weight: bold;
     margin: auto;
     color: black; /* Светлый текст по умолчанию */
-    transition: color 0.5s; /* Плавное изменение цвета */
+    transition: color 0.3s; /* Плавное изменение цвета */
 }
 
 .qr-item.has-arrow .qr-text {
@@ -334,9 +336,9 @@ button {
 
 #instructionButton {
     position: absolute;
-    right: 45%;
-    left: 45%;
     top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #modeButton {
@@ -357,9 +359,9 @@ button {
 
 #scrollDown {
     position: fixed;
-    right: 45%;
-    left: 45%;
+    left: 50%;
     bottom: 12px;
+    transform: translateX(-50%);
 }
 
 button:hover {
