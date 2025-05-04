@@ -1,7 +1,15 @@
 /* Стиль для светлой темы (по умолчанию) */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
 body {
     font-family: Verdana, sans-serif;
-    margin: 20px;
     background-color: white; /* Белый фон */
     color: black; /* Тёмный текст */
     transition: all 0.3s, background 0.5s ease-in-out; /* Плавное изменение фона и текста */
