@@ -23,8 +23,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
     width: 600px;
     height: 450px;
+    
     text-align: center;
     background-color: rgba(255, 255, 255, 0.88);
     border-radius: 10px;
@@ -88,7 +90,6 @@ textarea {
     margin: 10px;
     max-width: 800px;
     height: auto;
-    border-radius: 10px;
 }
 
 .instruction-tab {
@@ -374,26 +375,25 @@ button:active {
 }
 
 #message {
-    opacity: 0;
+    opacity: 0; /* Невидимость */
     visibility: hidden;
     color: #a94442;
-    background-color: #f8d9d9;
+    background-color: #f8d9d9; 
     border-color: #ebccd1;
-    padding: 28px 28px;
+    padding: 41px 37px;
     transition: opacity 1s ease-in-out, visibility 0s 1s;
     width: 50%;
     left: 25%;
     right: 25%;
     box-sizing: border-box;
     position: relative;
-    top: 65%;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid #999;
     border: 1px solid rgba(0, 0, 0, .2);
     border-radius: 6px;
     -webkit-box-shadow: 0 3px 9px rgba(2, 1, 1, 0.5);
-    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5)
 }
 
 #message.show {
@@ -452,12 +452,15 @@ button:active {
 
 /* Стиль для печати */
 @media print {
-    body {
+    body, html {
         margin: 0;
         padding: 0;
+        height: 0;
+        width: 0;
+        background: none !important;
     }
 
-    h1, label, textarea, button, #printButton, br, #allCentr, progress, #message {
+    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions {
         display: none;
     }
 
