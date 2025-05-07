@@ -457,7 +457,7 @@ button:active {
         padding: 0;
     }
 
-    h1, label, textarea, button, #printButton, br, #allCentr, progress {
+    h1, label, textarea, button, #printButton, br, #allCentr, progress, #message {
         display: none;
     }
 
