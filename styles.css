@@ -52,14 +52,20 @@ body {
 textarea {
     margin-top: 7px;
     margin-bottom: 7px;
-    color: black;
+    color: #000;
     background-color: rgba(0, 0, 0, 0);
     transition: all 0.3s;
     border-radius: 5px;
 }
 
 textarea:hover {
-    border-color: #000;
+    border-color: #7564ffb8;
+}
+
+textarea:focus {
+    border-color: #7564ffb8; /* Цвет границы при фокусе (например, фиолетовый) */
+    box-shadow: 0px 0px 5px 0px rgba(136, 130, 255, 0.3); /* Легкая тень вокруг */
+    outline: none; /* Убираем стандартную обводку */
 }
 
 #instruction {
@@ -249,10 +255,6 @@ body.dark-theme textarea {
     margin-bottom: 7px;
     color: white;
     background-color: #25212100;
-}
-
-body.dark-theme textarea:hover {
-    border-color: aquamarine;
 }
 
 body.dark-theme #qrcodeList{
