@@ -12,8 +12,9 @@ function generateQRCodes() {
     const qrcodeList = document.getElementById('qrcodeList');
     const text = textArea.value.trim();
     const progressBar = document.getElementById('progressBar');
+    const scrollDownButton = document.getElementById('scrollDown'); // Кнопка промотки вниз
 
-    qrcodeList.innerHTML = '';
+    qrcodeList.innerHTML = ''; // Очистить список QR-кодов перед генерацией
 
     if (text) {
         const separators = /[\s,;|]+/;
@@ -28,11 +29,9 @@ function generateQRCodes() {
         progressBar.style.display = 'block';
         progressBar.style.opacity = 1;
 
-        // Ждём, пока появится с opacity: 1
         setTimeout(() => {
             progressBar.style.opacity = 1;
 
-            // Ещё одна задержка перед началом загрузки
             setTimeout(() => {
                 let processed = 0;
 
@@ -77,12 +76,21 @@ function generateQRCodes() {
 
                         if (processed === total) {
                             setTimeout(() => {
-                            progressBar.style.opacity = 0;
-                            setTimeout(() => {
-                                progressBar.style.display = 'none';
+                                progressBar.style.opacity = 0;
+                                setTimeout(() => {
+                                    progressBar.style.display = 'none';
+                                }, 500);
                             }, 500);
-                        }, 500);
 
+                            // Проверим, нужно ли показывать кнопку "Промотать вниз"
+                            setTimeout(() => {
+                                const scrollHeight = qrcodeList.scrollHeight;
+                                const clientHeight = window.innerHeight;
+                                
+                                if (scrollHeight > clientHeight) {
+                                    scrollDownButton.style.display = 'block'; // Показываем кнопку
+                                }
+                            }, 200); // Даем немного времени, чтобы элементы успели загрузиться
                         }
                     };
 
@@ -184,4 +192,29 @@ document.documentElement.classList.add('disable-transitions');
 // Убираем блокировку анимаций, когда страница полностью загрузится
 window.addEventListener('load', () => {
   document.documentElement.classList.remove('disable-transitions');
+});
+// Функция для проверки необходимости отображения кнопки прокрутки вниз
+function checkScrollButton() {
+    const scrollDownButton = document.getElementById('scrollDown');
+    if (document.documentElement.scrollHeight > window.innerHeight) {
+        // Если высота контента больше высоты окна, показываем кнопку
+        scrollDownButton.style.display = 'block';
+    } else {
+        // Иначе скрываем кнопку
+        scrollDownButton.style.display = 'none';
+    }
+}
+
+// Вызовем функцию для начальной проверки
+checkScrollButton();
+
+// Добавляем событие на прокрутку, чтобы проверка выполнялась при изменении прокрутки
+window.addEventListener('scroll', checkScrollButton);
+
+// Функция для прокрутки вниз при нажатии на кнопку
+document.getElementById('scrollDown').addEventListener('click', () => {
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+    });
 });
