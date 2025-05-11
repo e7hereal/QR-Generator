@@ -177,3 +177,11 @@ function showInstructionTab(tab) {
         general.classList.remove('active');
     }
 }
+
+// Блокировка анимаций при первой загрузке страницы
+document.documentElement.classList.add('disable-transitions');
+
+// Убираем блокировку анимаций, когда страница полностью загрузится
+window.addEventListener('load', () => {
+  document.documentElement.classList.remove('disable-transitions');
+});
