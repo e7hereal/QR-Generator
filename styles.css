@@ -59,7 +59,7 @@ textarea {
 }
 
 textarea:hover {
-    border-color: aquamarine;
+    border-color: #000;
 }
 
 #instruction {
@@ -249,6 +249,10 @@ body.dark-theme textarea {
     margin-bottom: 7px;
     color: white;
     background-color: #25212100;
+}
+
+body.dark-theme textarea:hover {
+    border-color: aquamarine;
 }
 
 body.dark-theme #qrcodeList{
