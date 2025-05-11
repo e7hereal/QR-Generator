@@ -111,6 +111,7 @@ const buttonClearDiv = document.getElementById('clearDivAndTextArea');
 buttonClearDiv.addEventListener('click', function () {
 document.getElementById('qrcodeList').innerHTML = '';
 document.getElementById('qrText').value = '';
+checkScrollButton();
 });
 
     // Функция для переключения темы
