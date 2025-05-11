@@ -64,7 +64,7 @@ textarea:hover {
 
 textarea:focus {
     border-color: #7564ffb8; /* Цвет границы при фокусе (например, фиолетовый) */
-    box-shadow: 0px 0px 5px 0px rgba(136, 130, 255, 0.3); /* Легкая тень вокруг */
+    box-shadow: 0px 0px 15px 0px rgba(129, 123, 255, 0.5); /* Легкая тень вокруг */
     outline: none; /* Убираем стандартную обводку */
 }
 
