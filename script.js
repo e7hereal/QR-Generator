@@ -16,7 +16,8 @@ function generateQRCodes() {
     qrcodeList.innerHTML = '';
 
     if (text) {
-        const lines = text.split('\n').filter(line => line.trim() !== '');
+        const separators = /[\n\s,;|]+/; // Разделители: новая строка, пробел, запятая, точка с запятой, вертикальная черта и т.п.
+        const lines = text.split(separators).filter(part => part.trim() !== '');
         const total = lines.length;
 
         const progressFill = document.getElementById('progressFill');
