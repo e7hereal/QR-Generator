@@ -7,6 +7,13 @@ html, body {
     box-sizing: border-box;
 }
 
+/* Отключаем анимации при первой загрузке */
+html.disable-transitions *,
+html.disable-transitions {
+  transition: none !important;
+}
+
+
 body {
     font-family: Verdana, sans-serif;
     background-color: white; /* Белый фон */
@@ -501,7 +508,6 @@ button:active {
     body.dark-theme .down-arrow polygon {
         fill: black; /* Белый треугольник (стрелка) */
     }
-
 
     .text-polki {
         color: black; /* Черный цвет для печати */
