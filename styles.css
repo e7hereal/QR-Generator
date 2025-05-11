@@ -214,6 +214,7 @@ body.dark-theme {
     color: white; /* Светлый текст */
     background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("images/lamoda_9.jpg");
     transition: all 0.3s, background 0.5s ease-in-out;
+    background-size: 100%
 }
 
 body.dark-theme #allCentr, textarea {
