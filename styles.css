@@ -420,6 +420,7 @@ button:active {
     border-color: #ebccd1;
     padding: 41px 37px;
     transition: opacity 1s ease-in-out, visibility 0s 1s;
+    top: 43%;
     width: 50%;
     left: 25%;
     right: 25%;
