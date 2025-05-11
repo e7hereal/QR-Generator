@@ -55,6 +55,11 @@ textarea {
     color: black;
     background-color: rgba(0, 0, 0, 0);
     transition: all 0.3s;
+    border-radius: 5px;
+}
+
+textarea:hover {
+    border-color: aquamarine;
 }
 
 #instruction {
