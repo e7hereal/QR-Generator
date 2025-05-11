@@ -395,6 +395,7 @@ button {
     left: 50%;
     bottom: 12px;
     transform: translateX(-50%);
+    display: none; /* Кнопка скрыта по умолчанию */
 }
 
 button:hover {
