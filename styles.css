@@ -482,7 +482,7 @@ button:active {
         background: none !important;
     }
 
-    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions {
+    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions, .bg-overlay {
         display: none;
     }
 
