@@ -255,10 +255,10 @@ body.dark-theme #allCentr, textarea {
 }
 
 body.dark-theme textarea {
-    margin-top: 7px;
-    margin-bottom: 7px;
     color: white;
     background-color: #25212100;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 body.dark-theme #qrcodeList{
