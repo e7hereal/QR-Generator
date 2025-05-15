@@ -1,4 +1,4 @@
-let mode = 1; // Начальный режим
+let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры
 
 // Проверка на сохраненную тему в localStorage и применение
 const savedTheme = localStorage.getItem('theme');
@@ -217,5 +217,54 @@ document.getElementById('scrollDown').addEventListener('click', () => {
     window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth'
+    });
+});
+
+function updateClock() {
+        const now = new Date();
+
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const formattedTime = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+        document.getElementById('dateTimeNow').textContent = formattedTime;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Вызываем сразу, чтобы не было задержки на первую отрисовку
+
+document.addEventListener('DOMContentLoaded', function () {
+    const menu = document.getElementById('rightMenu');
+    const togglePin = document.getElementById('togglePin');
+
+    // Устанавливаем начальное состояние по сохранённому значению
+    let isPinned = localStorage.getItem('rightMenu') === 'fixed';
+    if (isPinned) {
+        menu.classList.add('fixed');
+        togglePin.innerHTML = `<span class="menu-icon">&#10003;</span>Закреплено`;
+    } else {
+        togglePin.innerHTML = `<span class="menu-icon">&#9776;</span>Закрепить`;
+    }
+
+    // Обработчик кнопки закрепления
+    togglePin.addEventListener('click', function () {
+        isPinned = !isPinned;
+
+        if (isPinned) {
+            menu.classList.add('fixed');
+            togglePin.innerHTML = `<span class="menu-icon">&#10003;</span>Закреплено`;
+            localStorage.setItem('rightMenu', 'fixed');
+        } else {
+            menu.classList.remove('fixed');
+            togglePin.innerHTML = `<span class="menu-icon">&#9776;</span>Закрепить`;
+            localStorage.removeItem('rightMenu');
+        }
+
+        // Сохраняем классы меню (если нужно)
+        localStorage.setItem('rightMenuClass', menu.className);
     });
 });
