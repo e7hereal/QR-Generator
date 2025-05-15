@@ -494,6 +494,11 @@ button:active {
     gap: 10px;
 }
 
+#dateTimeNow {
+    font-size: 16px;
+    line-height: 0.5;
+}
+
 #author {
     font-size: 10px;
     align-self: center;
