@@ -494,6 +494,12 @@ button:active {
     gap: 10px;
 }
 
+#author {
+    font-size: 10px;
+    align-self: center;
+    line-height: 0;
+}
+
 /* Тёмная тема для меню */
 body.dark-theme #rightMenu {
     background-color: rgb(50 50 50 / 90%);
