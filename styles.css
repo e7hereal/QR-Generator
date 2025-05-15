@@ -37,16 +37,17 @@ body {
 
 #allCentr {
     position: absolute;
-    top: 50%;
+    top: 0%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%);
     width: 600px;
     height: 450px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.88);
+    background-color: rgba(255, 255, 255, 0.90);
     border-radius: 10px;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .5);
     transition: all 0.3s;
+    margin-top: 10px;
 }    
 
 textarea {
@@ -257,8 +258,6 @@ body.dark-theme #allCentr, textarea {
 body.dark-theme textarea {
     color: white;
     background-color: #25212100;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 body.dark-theme #qrcodeList{
@@ -309,29 +308,13 @@ background-color: #9a67ea;
 color: white;
 }
 
-body.dark-theme #modeButton {
-    background-color: #ff0000;
-    color: #000;
-}
 body.dark-theme #generateBarcodes {
     background-color: #ff0000;
     color: #000;
 }
 
-body.dark-theme #printButton {
-    background-color: #ff0000;
-    color: #000;
-}
-body.dark-theme #modeButton:hover {
-    background-color: #bb0101;
-    color: #fff;
-}
-body.dark-theme #generateBarcodes:hover {
-    background-color: #bb0101;
-    color: #fff;
-}
 
-body.dark-theme #printButton:hover {
+body.dark-theme #generateBarcodes:hover {
     background-color: #bb0101;
     color: #fff;
 }
@@ -348,13 +331,6 @@ button {
     background-color: rgb(51, 122, 183);
     border-color: rgb(46, 109, 164);
 }
-
-/* Расположение кнопок */
-#printButton {
-    position: fixed;
-    right: 12px;
-    bottom: 12px;
-}
     
 /* Стили кнопок вкладок */
 .tab-button {
@@ -369,29 +345,6 @@ button {
 
 #closeInstruction {
     margin-top: 15px;
-}
-
-#instructionButton {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#modeButton {
-    margin-left: 10px;
-}
-
-#clearDivAndTextArea {
-    position: fixed;
-    right: 12px;
-    bottom: 66px;
-}
-
-#themeButton {
-    position: fixed;
-    right: 12px;
-    top: 12px;
 }
 
 #scrollDown {
@@ -420,7 +373,7 @@ button:active {
     border-color: #ebccd1;
     padding: 41px 37px;
     transition: opacity 1s ease-in-out, visibility 0s 1s;
-    top: 43%;
+    top: 18%;
     width: 50%;
     left: 25%;
     right: 25%;
@@ -489,6 +442,90 @@ button:active {
     color: rgb(255, 255, 255);
 }
 
+#rightMenu {
+    position: fixed;
+    top: 0;              /* Начало с верхней части страницы */
+    right: -220px;       /* Почти скрыто — только 10px торчит */
+    width: 250px;        /* Ширина меню */
+    height: 100%;        /* Высота на всю страницу */
+    background-color: rgba(255, 255, 255, 0.90);
+    justify-content: space-between;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .5);
+    padding: 10px;
+    border-radius: 8px 0 0 8px;
+    transition: right 0.5s ease-in-out, background 0.5s;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+#rightMenu.fixed {
+    right: 0px; 
+}
+
+#rightMenu.fixed:hover {
+    right: 0;
+}
+
+.menu-buttons, .bottom-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bottom-buttons {
+    margin-top: auto; /* Толкает блок вниз */
+}
+
+/* Выезд меню при наведении */
+#rightMenu:hover {
+    right: 0;
+}
+
+/* Кнопки внутри меню */
+.menu-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Тёмная тема для меню */
+body.dark-theme #rightMenu {
+    background-color: rgb(50 50 50 / 90%);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .5);
+}
+
+/* Кнопка для закрепления меню */
+#togglePin {
+    position: relative; /* добавлено */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, all 0.3s;
+    text-align: left; /* можно добавить для стабильности */
+    padding-left: 35px; /* добавлено для учета иконки слева */
+}
+
+#togglePin .menu-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Чтобы не мешала наведению */
+    font-size: 20px;
+    line-height: 0;
+}
+
 /* Стиль для печати */
 @media print {
     body, html {
@@ -499,8 +536,8 @@ button:active {
         background: none !important;
     }
 
-    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions, .bg-overlay {
-        display: none;
+    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions, .bg-overlay, #rightMenu {
+        display: none !important;
     }
 
     .down-arrow {
@@ -512,6 +549,7 @@ button:active {
         margin-bottom: 0px;
         margin-left: 0px;
         margin-right: 0px;
+        box-shadow: none !important;
     }
 
     .qr-item {
