@@ -26,7 +26,24 @@
 </head>
     <body>
         <div class="bg-overlay"></div>
-        <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
+        
+        <div id="rightMenu">
+          <div id="dateTimeNow"></div>
+
+          <div class="menu-buttons">
+            <button id="togglePin" class="pin-btn">
+              <span class="menu-icon">&#9776;</span>Закрепить
+            </button>
+            <button id="themeButton" onclick="toggleTheme()">Переключить тему</button>
+            <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
+          </div>
+
+          <div class="bottom-buttons">
+            <button id="modeButton" onclick="toggleMode()">Добавить стрелки</button>
+            <button id="clearDivAndTextArea" onclick="showDone()">Очистить</button>
+            <button id="printButton" onclick="window.print()">Печать</button>
+          </div>
+        </div>
 
         <!-- ИНСТРУКЦИЯ -->
         <div id="instruction">
@@ -38,6 +55,7 @@
             <div>
                 <button class="tab-button" onclick="showInstructionTab('general')">Общая инструкция</button>
                 <button class="tab-button" onclick="showInstructionTab('printer')">Настройка принтера</button>
+                
             </div>
 
             <div id="generalInstructions"class="instruction-tab active">
@@ -78,7 +96,7 @@
             <label for="qrText">Введите строки текста (каждая строка для отдельного QR-кода, места):</label><br>
             <textarea id="qrText" rows="10" cols="70" placeholder="Введите несколько строк (мест)..."></textarea><br>
             <button id="generateBarcodes" onclick="generateQRCodes()">Сгенерировать QR-коды</button>
-            <button id="modeButton" onclick="toggleMode()">Добавить стрелки</button>
+
             <div id="progressBar">
                 <div id="progressFill"></div>
                 <div id="progressText">0.00%</div>
@@ -87,16 +105,10 @@
 
         <button id="scrollDown">Промотать вниз</button>
 
-        <button id="clearDivAndTextArea" onclick="showDone()">Очистить</button>
-
         <div id="message">Готово</div>
-
-        <button id="themeButton" onclick="toggleTheme()">Переключить тему</button>
 
         <div id="qrcodeList"></div>
 
-        <button id="printButton" onclick="window.print()">Печать</button>
-        
          <!-- Подключение скриптов -->
         <script src="script.js"></script>
     </body>
