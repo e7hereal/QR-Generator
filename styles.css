@@ -490,32 +490,32 @@ button:active {
 /* Стили для прогресс-бара */
 #progressBar {
     width: 80%;
-    height: 5%;
+    height: 24px;
     border-radius: 10px;
     display: none;
     margin: 30px auto;
     overflow: hidden;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
     background-color: #5a5a5a; 
     position: relative;
 }
 
 #progressBar::-webkit-progress-value {
     background-image: linear-gradient(170deg, #ff0000, #0015d6);
-    transition: width 0.4s ease-in-out;
+    transition: all 0.2s;
 }
 
 #progressBar::-moz-progress-bar {
     background-image: linear-gradient(170deg, #ff0000, #0015d6);
-    transition: width 0.4s ease-in-out;
+    transition: all 0.2;
 }
 
 #progressFill {
     height: 100%; 
     width: 0%; 
     background-image: linear-gradient(170deg, #ff0000, #0015d6);
-    transition: width 0.4s ease-in-out;
+    transition: all 0.2;
 }
 
 #progressText {
@@ -528,6 +528,10 @@ button:active {
     line-height: 22px;
     font-weight: bold;
     color: rgb(255, 255, 255);
+}
+
+#progressBar, #progressFill {
+    box-sizing: border-box;
 }
 
 #rightMenu {
