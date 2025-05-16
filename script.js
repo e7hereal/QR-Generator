@@ -52,7 +52,7 @@ function generateQRCodes() {
                     } else {
                         qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`
                     }
-
+                    
                     const qrDiv = document.createElement('div');
                     qrDiv.classList.add('qr-item');
 
@@ -127,7 +127,7 @@ function generateQRCodes() {
 
                     qrcodeList.appendChild(qrDiv);
                 });
-            }, 400); // Задержка перед стартом загрузки
+            }, 0); // Задержка перед стартом загрузки
         }, 10); // Задержка для активации transition: opacity
     } else {
         alert('Пожалуйста, введите текст в поле!');
@@ -156,7 +156,9 @@ function toggleTheme() {
 }
 
 function toggleMode() {
-    mode = (mode === 3) ? 1 : mode + 1; // Переключаем режим от 1 до 3, затем возвращаемся к 1
+    mode = (mode === 3) ? 1 : mode + 1;
+
+    localStorage.setItem('mode', mode); // сохраняем выбранный режим
 
     const modeButton = document.getElementById('modeButton');
     if (mode === 1) {
@@ -169,6 +171,23 @@ function toggleMode() {
 
     generateQRCodes(); // Перегенерируем QR-коды с новым режимом
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const savedMode = localStorage.getItem('mode');
+    if (savedMode) {
+        mode = parseInt(savedMode, 10);
+        const modeButton = document.getElementById('modeButton');
+        if (modeButton) {
+            if (mode === 1) {
+                modeButton.innerText = 'Режим: места';
+            } else if (mode === 2) {
+                modeButton.innerText = 'Режим: со стрелками';
+            } else if (mode === 3) {
+                modeButton.innerText = 'Режим: контейнера';
+            }
+        }
+    }
+});
 
 function showDone() {
     const messageElement = document.getElementById('message');
