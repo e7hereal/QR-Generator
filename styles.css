@@ -263,6 +263,23 @@ label {
     transition: color 0.5s;
 }
 
+
+#qrcodeList.container {
+    width: 50%;
+    top: 55%;
+    box-sizing: border-box;
+}
+
+.qr-item.container {
+    width: 100%;
+    height: 100%;
+}
+
+.text-polki.container {
+    font-size: 30px;
+    width: 100%;
+}
+
 /* Стиль для темной темы */
 body.dark-theme {
     background-color: #252121; /* Темный фон */
@@ -590,10 +607,10 @@ body.dark-theme #rightMenu {
 /* Стиль для печати */
 @media print {
     body, html {
-        margin: 0;
-        padding: 0;
-        height: 0;
-        width: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
         background: none !important;
     }
 
@@ -602,74 +619,62 @@ body.dark-theme #rightMenu {
     }
 
     .down-arrow {
-        margin-top: auto;
+        margin-top: auto !important;
     }
+
     #qrcodeList {
         top: 0px !important;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
         box-shadow: none !important;
     }
 
     .qr-item {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
-    }
-
-    .qr-item img {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
-    }
-    body.dark-theme .qr-text {
-        color: black; /* Черный текст для печати */
-    }
-    body.dark-theme .down-arrow {
-        stroke: black;
-    }
-    body.dark-theme .down-arrow rect {
-        fill: black; /* Белый прямоугольник */
-    }
-
-    body.dark-theme .down-arrow polygon {
-        fill: black; /* Белый треугольник (стрелка) */
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
     }
 
     .text-polki {
-        color: black; /* Черный цвет для печати */
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
+        color: black !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    .qr-item img {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
     }
 
     .qr-text {
-        color: black; /* Черный цвет для печати */
-        margin: auto;
+        color: black !important;
+        margin: auto !important;
+    }
+
+    body.dark-theme .qr-text {
+        color: black !important;
+    }
+
+    body.dark-theme .down-arrow {
+        stroke: black !important;
+    }
+
+    body.dark-theme .down-arrow rect {
+        fill: black !important;
+    }
+
+    body.dark-theme .down-arrow polygon {
+        fill: black !important;
     }
 
     body.dark-theme .text-polki {
-        color: black; /* Черный цвет для печати */
+        color: black !important;
     }
-}
-
-div#qrcodeList.container {
-    width: 50%;
-    top: 55%;
-    box-sizing: border-box;
-}
-
-.qr-item.container {
-    width: 100%;
-    height: 100%;
-}
-
-.text-polki.container {
-    font-size: 30px;
-    width: 100%;
 }
