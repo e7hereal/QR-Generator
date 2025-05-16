@@ -399,6 +399,7 @@ button {
     transform: translateX(-50%);
     transition: transform 0.3s ease;
     display: none; /* Кнопка скрыта по умолчанию */
+    z-index: 50;
 }
 
 #scrollDown:hover {
