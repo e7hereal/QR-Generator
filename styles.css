@@ -358,7 +358,29 @@ button {
     left: 50%;
     bottom: 12px;
     transform: translateX(-50%);
+    transition: transform 0.3s ease;
     display: none; /* Кнопка скрыта по умолчанию */
+}
+
+#scrollDown:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+#scrollDown:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+#scrollDown.container {
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+#scrollDown.container:hover {
+    transform: translateX(100%) scale(1.05);
+}
+
+#scrollDown.container:active {
+    transform: translateX(100%) scale(0.95);
 }
 
 button:hover {
@@ -612,4 +634,20 @@ body.dark-theme #rightMenu {
     body.dark-theme .text-polki {
         color: black; /* Черный цвет для печати */
     }
+}
+
+div#qrcodeList.container {
+    width: 50%;
+    top: 55%;
+    box-sizing: border-box;
+}
+
+.qr-item.container {
+    width: 100%;
+    height: 100%;
+}
+
+.text-polki.container {
+    font-size: 30px;
+    width: 100%;
 }
