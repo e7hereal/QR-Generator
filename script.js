@@ -300,14 +300,3 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('rightMenuClass', menu.className);
     });
 });
-
-// Для телефонов
-document.addEventListener('DOMContentLoaded', function () {
-    const menu = document.getElementById('rightMenu');
-
-    // Обработчик касания на меню
-    menu.addEventListener('touchstart', function (e) {
-        e.preventDefault(); // предотвращаем возможный "двойной клик"
-        menu.classList.toggle('fixed'); // переключаем состояние меню
-    });
-});
