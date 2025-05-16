@@ -36,9 +36,22 @@ function generateQRCodes() {
                 let processed = 0;
 
                 lines.forEach((line) => {
-                    const firstPart = line.substring(0, 2);
-                    const secondPart = line.substring(3);
-                    const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`;
+                    let firstPart = '';
+                    let secondPart = '';
+
+                    if (mode !== 3) {
+                        firstPart = line.substring(0, 2);
+                        secondPart = line.substring(3);  // Начинаем с третьего символа
+                    } else {
+                        // В режиме 3 не делаем разделения
+                        firstPart = line;
+                        secondPart = ''; // Нет второй части в режиме 3
+                    }
+
+                    if (mode === 3) {qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`
+                    } else {
+                        qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`
+                    }
 
                     const qrDiv = document.createElement('div');
                     qrDiv.classList.add('qr-item');
@@ -60,9 +73,24 @@ function generateQRCodes() {
                         qrDiv.classList.add('has-arrow');
                     }
 
+                    if (mode === 3) {
+                        qrcodeList.classList.add('container');
+                        qrDiv.classList.add('container');
+                        scrollDown.classList.add('container');
+                    } else {
+                        qrcodeList.classList.remove('container');
+                        qrDiv.classList.remove('container');
+                        scrollDown.classList.remove('container');
+                    }
+
                     const caption = document.createElement('div');
                     caption.classList.add('qr-text');
-                    caption.innerHTML = `<div class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
+                    // Если в режиме 3, выводим всю строку как одну часть
+                    if (mode === 3) {
+                        caption.innerHTML = `<div id="textPolki" class="text-polki container">${line}</div>`;
+                    } else {
+                        caption.innerHTML = `<div id="textPolki" class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
+                    }
 
                     const img = document.createElement('img');
                     img.src = qrUrl;
@@ -128,15 +156,19 @@ function toggleTheme() {
 }
 
 function toggleMode() {
-    mode = (mode === 1) ? 2 : 1;
+    mode = (mode === 3) ? 1 : mode + 1; // Переключаем режим от 1 до 3, затем возвращаемся к 1
+
     const modeButton = document.getElementById('modeButton');
-    if (mode === 2) {
-        modeButton.innerText = 'Убрать стрелки';
-    } else {
-        modeButton.innerText = 'Добавить стрелки ';
+    if (mode === 1) {
+        modeButton.innerText = 'Режим: места';
+    } else if (mode === 2) {
+        modeButton.innerText = 'Режим: со стрелками';
+    } else if (mode === 3) {
+        modeButton.innerText = 'Режим: контейнера';
     }
+
     generateQRCodes(); // Перегенерируем QR-коды с новым режимом
-    }
+}
 
 function showDone() {
     const messageElement = document.getElementById('message');
@@ -266,5 +298,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Сохраняем классы меню (если нужно)
         localStorage.setItem('rightMenuClass', menu.className);
+    });
+});
+
+// Для телефонов
+document.addEventListener('DOMContentLoaded', function () {
+    const menu = document.getElementById('rightMenu');
+
+    // Обработчик касания на меню
+    menu.addEventListener('touchstart', function (e) {
+        e.preventDefault(); // предотвращаем возможный "двойной клик"
+        menu.classList.toggle('fixed'); // переключаем состояние меню
     });
 });
