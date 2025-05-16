@@ -52,7 +52,7 @@ body {
     overflow: hidden; /* Для предотвращения выхода контента за пределы */
 }
 
-@media (max-width: 1133px), (max-width: 768px), (max-width: 480px) {
+@media (max-width: 1133px) {
     #qrcodeList {
         top: 55% !important;
     }
@@ -67,6 +67,25 @@ body {
 @media (max-width: 480px) {
     #allCentr {
         width: 80%; /* На маленьких экранах ширина 95% */
+    }
+}
+
+@media (max-height: 812px), (max-height: 640px) {
+    #qrcodeList {
+        top: 80% !important;
+    }
+}
+
+@media (max-height: 545px) {
+    #qrcodeList {
+    top: 90% !important;
+    }
+}
+
+
+@media (max-height: 480px) {
+    #qrcodeList {
+    top: 100% !important;
     }
 }
 
