@@ -401,15 +401,18 @@ qrTextArea.addEventListener('input', () => {
 qrTextArea.addEventListener('dragover', (e) => {
     e.preventDefault(); // Обязательно для того, чтобы браузер разрешил перетаскивание
     qrTextArea.classList.add('dragover'); // Добавляем стиль увеличения
+    fileIcon.classList.add('dragover');
 });
 
 qrTextArea.addEventListener('dragleave', () => {
     qrTextArea.classList.remove('dragover'); // Убираем стиль, когда файл уходит
+    fileIcon.classList.remove('dragover');
 });
 
 qrTextArea.addEventListener('drop', (e) => {
     e.preventDefault(); // Останавливаем стандартное поведение
     qrTextArea.classList.remove('dragover'); // Убираем стиль
+    fileIcon.classList.remove('dragover');
 
     const file = e.dataTransfer.files[0]; // Получаем файл
     if (!file) return;
