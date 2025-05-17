@@ -182,6 +182,18 @@ body.dark-theme .custom-file-button:hover {
     resize: none;
 }
 
+#qrText.dragover {
+    transform: scale(1.05); /* Увеличиваем на 5% */
+    border: 2px dashed #007bff; /* Пунктирная рамка синего цвета */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Легкая тень */
+    transition: all 0.3s ease; /* Плавное изменение */
+}
+
+/* Элементы, связанные с перетаскиванием */
+#qrText.dragover .dragover {
+    opacity: 1; /* При перетаскивании показываем значок */
+}
+
 textarea::placeholder {
     color: #000; /* Задаем цвет для текста placeholder (можно изменить на свой) */
     opacity: 1; /* Убираем прозрачность, если нужно */
