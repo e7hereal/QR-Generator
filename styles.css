@@ -217,6 +217,12 @@ body.dark-theme textarea::placeholder {
     font-family: monospace;
     font-size: 13.3333px;
     font-weight: 400; /* Совпадает с весом шрифта в textarea */
+    transition: all 0.3s;
+}
+
+.file-icon.dragover {
+    transform: translateY(-50%) translateX(-3%) scale(1.05); /* Увеличиваем на 5% */
+    transition: all 0.3s ease; /* Плавное изменение */
 }
 
 #generateBarcodes {
