@@ -136,10 +136,19 @@ function generateQRCodes() {
 
 // Очистить все
 const buttonClearDiv = document.getElementById('clearDivAndTextArea');
+
 buttonClearDiv.addEventListener('click', function () {
-document.getElementById('qrcodeList').innerHTML = '';
-document.getElementById('qrText').value = '';
-checkScrollButton();
+    // Очищаем список QR-кодов
+    document.getElementById('qrcodeList').innerHTML = '';
+    // Очищаем текстовое поле
+    document.getElementById('qrText').value = '';
+
+    // Восстанавливаем значок файла, если textarea пустой
+    if (qrTextArea.value.trim() === '') {
+        fileIcon.innerHTML = defaultFileIcon;
+    }
+
+    checkScrollButton();
 });
 
     // Функция для переключения темы
@@ -318,4 +327,106 @@ document.addEventListener('DOMContentLoaded', function () {
         // Сохраняем классы меню (если нужно)
         localStorage.setItem('rightMenuClass', menu.className);
     });
+});
+
+document.getElementById('fileUpload').addEventListener('change', handleExcelUpload);
+
+function handleExcelUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+        const values = rows.flat().filter(cell => cell !== undefined && cell !== null && String(cell).trim() !== '');
+
+        if (values.length === 0) {
+            alert("Файл пуст или не содержит данных.");
+            return;
+        }
+
+        const qrTextArea = document.getElementById('qrText');
+        qrTextArea.value = values.join('\n');
+
+        generateQRCodes(); // автоматически сгенерировать после загрузки
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+
+
+// Получаем элементы
+// Получаем элементы
+const qrTextArea = document.getElementById('qrText');
+const fileIcon = document.getElementById('fileIcon');
+
+// Значок файла по умолчанию (или любой контент, который должен быть в нем)
+const defaultFileIcon = '<p class="fa fa-file">или перетащите файл сюда: 📂</p>'; // Пример, если используется иконка FontAwesome
+
+// Обработчик для изменения текста в textarea
+qrTextArea.addEventListener('input', () => {
+    if (qrTextArea.value.trim() !== '') {
+        // Если текст есть, скрываем значок файла
+        fileIcon.innerHTML = '';
+    } else {
+        // Если текст пустой, восстанавливаем значок файла
+        fileIcon.innerHTML = defaultFileIcon;
+    }
+});
+
+// Обработчик для drag-and-drop событий
+qrTextArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileIcon.classList.add('dragover');
+});
+
+qrTextArea.addEventListener('dragleave', () => {
+    fileIcon.classList.remove('dragover');
+});
+
+qrTextArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileIcon.classList.remove('dragover');
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+
+    // После того, как файл дропнут, удаляем значок
+    fileIcon.innerHTML = '';
+
+    const reader = new FileReader();
+
+    if (file.name.endsWith('.txt')) {
+        reader.onload = function (e) {
+            qrTextArea.value = e.target.result;
+            generateQRCodes();
+        };
+        reader.readAsText(file);
+    } else if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
+        reader.onload = function (e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+            const values = rows.flat().filter(cell => cell !== undefined && cell !== null && String(cell).trim() !== '');
+
+            if (values.length === 0) {
+                alert("Файл пуст или не содержит данных.");
+                return;
+            }
+
+            qrTextArea.value = values.join('\n');
+            generateQRCodes();
+        };
+        reader.readAsArrayBuffer(file);
+    } else {
+        alert("Поддерживаются только .txt, .xls, .xlsx файлы.");
+    }
 });
