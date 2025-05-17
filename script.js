@@ -397,32 +397,32 @@ qrTextArea.addEventListener('input', () => {
     }
 });
 
-// Обработчик для drag-and-drop событий
+// Обработчики для drag-and-drop событий
 qrTextArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    fileIcon.classList.add('dragover');
+    e.preventDefault(); // Обязательно для того, чтобы браузер разрешил перетаскивание
+    qrTextArea.classList.add('dragover'); // Добавляем стиль увеличения
 });
 
 qrTextArea.addEventListener('dragleave', () => {
-    fileIcon.classList.remove('dragover');
+    qrTextArea.classList.remove('dragover'); // Убираем стиль, когда файл уходит
 });
 
 qrTextArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    fileIcon.classList.remove('dragover');
+    e.preventDefault(); // Останавливаем стандартное поведение
+    qrTextArea.classList.remove('dragover'); // Убираем стиль
 
-    const file = e.dataTransfer.files[0];
+    const file = e.dataTransfer.files[0]; // Получаем файл
     if (!file) return;
 
-    // После того, как файл дропнут, удаляем значок
+    // После того как файл был сброшен, убираем значок
     fileIcon.innerHTML = '';
 
     const reader = new FileReader();
 
     if (file.name.endsWith('.txt')) {
         reader.onload = function (e) {
-            qrTextArea.value = e.target.result;
-            generateQRCodes();
+            qrTextArea.value = e.target.result; // Загружаем текст в textarea
+            generateQRCodes(); // Генерируем QR-коды
         };
         reader.readAsText(file);
     } else if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
@@ -439,8 +439,8 @@ qrTextArea.addEventListener('drop', (e) => {
                 return;
             }
 
-            qrTextArea.value = values.join('\n');
-            generateQRCodes();
+            qrTextArea.value = values.join('\n'); // Загрузка данных в textarea
+            generateQRCodes(); // Генерация QR-кодов
         };
         reader.readAsArrayBuffer(file);
     } else {
