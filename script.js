@@ -201,9 +201,12 @@ document.addEventListener('DOMContentLoaded', function () {
 function showDone() {
     const messageElement = document.getElementById('message');
     const qrList = document.getElementById('qrcodeList');
+    const qrTextArea = document.getElementById('qrText');
 
-    // Проверяем, есть ли внутри qrcodeList дочерние элементы
-    if (qrList.children.length === 0) {
+    // Проверяем, есть ли внутри qrcodeList дочерние элементы и если qrTextArea пустое
+    if (qrList.children.length === 0 && qrTextArea.value.trim().length === 0) {
+        messageElement.textContent = 'И так пусто';
+    } else if (qrTextArea.value.trim().length === 0 && qrList.children.length !== 0) {
         messageElement.textContent = 'И так пусто';
     } else {
         messageElement.textContent = 'Готово';
@@ -329,6 +332,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// Дефолтный значок файла
+const defaultFileIcon = '<p class="fa fa-file">или перетащите файл сюда: 📂</p>';
+const qrTextArea = document.getElementById('qrText');
+const fileIcon = document.getElementById('fileIcon');
+
+// Проверка состояния textarea
+function checkTextArea() {
+    if (qrTextArea.value.trim() !== '') {
+        // Если текст есть, скрываем значок файла
+        fileIcon.innerHTML = '';
+    } else {
+        // Если текст пустой, восстанавливаем значок файла
+        fileIcon.innerHTML = defaultFileIcon;
+    }
+}
+
+// Слушаем изменения в textarea
+qrTextArea.addEventListener('input', checkTextArea);
+
+// Слушаем загрузку файла через проводник
 document.getElementById('fileUpload').addEventListener('change', handleExcelUpload);
 
 function handleExcelUpload(event) {
@@ -352,6 +375,7 @@ function handleExcelUpload(event) {
 
         const qrTextArea = document.getElementById('qrText');
         qrTextArea.value = values.join('\n');
+        checkTextArea(); // Проверим, если в textarea есть текст, скрыть значок
 
         generateQRCodes(); // автоматически сгенерировать после загрузки
     };
@@ -359,15 +383,8 @@ function handleExcelUpload(event) {
     reader.readAsArrayBuffer(file);
 }
 
-
-
-// Получаем элементы
-// Получаем элементы
-const qrTextArea = document.getElementById('qrText');
-const fileIcon = document.getElementById('fileIcon');
-
-// Значок файла по умолчанию (или любой контент, который должен быть в нем)
-const defaultFileIcon = '<p class="fa fa-file">или перетащите файл сюда: 📂</p>'; // Пример, если используется иконка FontAwesome
+// Вставляем дефолтный значок файла при загрузке страницы или если textarea пустая
+checkTextArea();
 
 // Обработчик для изменения текста в textarea
 qrTextArea.addEventListener('input', () => {
