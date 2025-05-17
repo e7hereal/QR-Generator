@@ -95,7 +95,15 @@
         <div id="allCentr">
             <h1>Генерация QR-кодов</h1>
             <label for="qrText">Введите строки текста (каждая строка для отдельного QR-кода):</label><br>
-            <textarea id="qrText" placeholder="Введите несколько строк (мест)..."></textarea><br>
+
+            <div class="file-upload-wrapper">
+                <textarea id="qrText" placeholder="Введите несколько строк (мест)..."></textarea>
+                <span id="fileIcon" class="file-icon">или перетащите файл сюда: &#128194;</span> <!-- Иконка файла -->
+            </div>
+            <br>
+            <label for="fileUpload" class="custom-file-button">Загрузить из Excel</label>
+            <input type="file" id="fileUpload" style="display: none;" accept=".xls, .csv, .xlsx">
+
             <button id="generateBarcodes" onclick="generateQRCodes()">Сгенерировать QR-коды</button>
 
             <div id="progressBar">
@@ -112,5 +120,6 @@
 
          <!-- Подключение скриптов -->
         <script src="script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     </body>
 </html>
