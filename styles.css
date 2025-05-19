@@ -824,7 +824,7 @@ body.dark-theme #rightMenu {
 }
 
 .custom-file-button::after {
-    content: "Выберите файл формата .xls, .xlsx или .csv"; /* Текст подсказки */
+    content: "Выберите файл формата .txt, .xls, .xlsx или .csv"; /* Текст подсказки */
     position: absolute;
     font-size: 12px;
     bottom: 110%; /* Размещаем подсказку выше кнопки */
