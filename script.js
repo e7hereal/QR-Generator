@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Дефолтный значок файла
-const defaultFileIcon = '<p class="fa fa-file">или перетащите файл сюда: 📂</p>';
+const defaultFileIcon = '<p>или перетащите файл сюда: 📂</p>';
 const qrTextArea = document.getElementById('qrText');
 const fileIcon = document.getElementById('fileIcon');
 
@@ -428,7 +428,7 @@ qrTextArea.addEventListener('drop', (e) => {
             generateQRCodes(); // Генерируем QR-коды
         };
         reader.readAsText(file);
-    } else if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
+    } else if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx') || file.name.endsWith('.csv')) {
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: 'array' });
