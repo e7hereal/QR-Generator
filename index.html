@@ -22,7 +22,7 @@
       } catch (e) {}
     })();
   </script>
-
+  
 </head>
     <body>
         <div class="bg-overlay"></div>
@@ -39,6 +39,33 @@
           </div>
 
           <div class="bottom-buttons">
+
+            <div class="setting-groupFontSize">
+              <label for="fontSizeSlider" class="tooltip-label">
+                Размер текста (px):
+              </label>
+              <div class="slider-wrapper">
+                <input type="range" id="fontSizeSlider" min="8" max="36" value="26">
+                <span id="fontSizeValue">26</span>
+              </div>
+            </div>
+
+            <div class="setting-groupTextSplit">
+              <label for="splitSlider" class="tooltip-label">
+                Перенос после символа:
+              </label>
+              <div class="slider-wrapper">
+                <input type="range" id="splitSlider" min="3" max="35" value="3">
+                <span id="splitValue">3</span>
+              </div>
+            </div>
+
+            <div id="modeToggleWrapper">
+              <span class="textToggleWrapper">Перенос строки</span>
+              <span class="questionToggleWrapper">?</span>
+              <button id="smartBreakToggle" class="switch-btn" aria-label="Toggle Smart Break"></button>
+            </div>
+
             <button id="modeButton" onclick="toggleMode()">Режим: места</button>
             <button id="clearDivAndTextArea" onclick="showDone()">Очистить</button>
             <button id="printButton" onclick="window.print()">Печать</button>
