@@ -190,6 +190,7 @@ function toggleMode() {
     if (mode === 1) {
         modeButton.innerText = 'Режим: места';
         smartBreakEnabled = true;
+        toggleBtn.classList.add('disabled');
         localStorage.setItem('smartBreak', 'true');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
@@ -197,6 +198,7 @@ function toggleMode() {
     } else if (mode === 2) {
         modeButton.innerText = 'Режим: со стрелками';
         smartBreakEnabled = true;
+        toggleBtn.classList.add('disabled');
         localStorage.setItem('smartBreak', 'true');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
@@ -206,25 +208,28 @@ function toggleMode() {
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
-        toggleBtn.style.pointerEvents = 'auto';
+        toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 4) {
         modeButton.innerText = 'Режим: без QR';
         const saved = localStorage.getItem('smartBreak');
         localStorage.setItem('smartBreak', 'true');
+        toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 5) {
         modeButton.innerText = 'Режим: без QR со стрелкой';
         const saved = localStorage.getItem('smartBreak');
         localStorage.setItem('smartBreak', 'true');
+        toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 6) {
         modeButton.innerText = 'Режим: логин + пароль';
         const saved = localStorage.getItem('smartBreak');
         localStorage.setItem('smartBreak', 'true');
+        toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     }
@@ -254,6 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (mode === 1 || mode === 2) {
     smartBreakEnabled = true;
     toggleBtn.classList.add('switch-on');
+    toggleBtn.classList.add('disabled');
     document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
     document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
     localStorage.setItem('smartBreak', 'true');
@@ -261,6 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
+        toggleBtn.classList.remove('disabled');
     }
 
     // Обновить надпись на кнопке режима
@@ -543,10 +550,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Клик
 toggleBtn.addEventListener('click', () => {
+    // Если кнопка заблокирована (режим 1 или 2)
+    if (toggleBtn.classList.contains('disabled')) {
+        return; // ничего не делаем
+    }
 
     smartBreakEnabled = !smartBreakEnabled;
     toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
-    localStorage.setItem('smartBreak', smartBreakEnabled);
+    localStorage.setItem('smartBreak', smartBreakEnabled ? 'true' : 'false');
     applySmartBreak();
     updateFontSize();
 });
