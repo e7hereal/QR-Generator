@@ -1,4 +1,4 @@
-let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры
+let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры, 4 - Полки CP
 
 // Проверка на сохраненную тему в localStorage и применение
 const savedTheme = localStorage.getItem('theme');
@@ -6,7 +6,6 @@ if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
 }
 
-// Функция для генерации QR-кодов
 function generateQRCodes() {
     const textArea = document.getElementById('qrText');
     const qrcodeList = document.getElementById('qrcodeList');
@@ -14,124 +13,141 @@ function generateQRCodes() {
     const progressBar = document.getElementById('progressBar');
     const scrollDownButton = document.getElementById('scrollDown'); // Кнопка промотки вниз
 
+    if (text === '') {
+        progressBar.style.display = 'none';
+        return;
+    }
+
     qrcodeList.innerHTML = ''; // Очистить список QR-кодов перед генерацией
 
-    if (text) {
-        const separators = /[\s,;|]+/;
-        const lines = text.split(separators).filter(part => part.trim() !== '');
-        const total = lines.length;
+    let separators;
 
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
+    if (mode === 4 || mode === 5) {
+        // Разделяем по табам и новой строке
+        separators = /[\t\n]+/;
+    } else if (mode === 6) {
+        // Разделяем только по новой строке
+        separators = /\n+/;
+    } else {
+        // Текущие сепараторы для остальных режимов
+        separators = /[\s,;|]+/;
+    }
 
-        progressFill.style.width = '0%';
-        progressText.textContent = '0.00%';
-        progressBar.style.display = 'block';
+    const lines = text.split(separators).filter(part => part.trim() !== '');
+    const total = lines.length;
+
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+
+    progressFill.style.width = '0%';
+    progressText.textContent = '0.00%';
+    progressBar.style.display = 'block';
+    progressBar.style.opacity = 1;
+
+    setTimeout(() => {
         progressBar.style.opacity = 1;
 
         setTimeout(() => {
-            progressBar.style.opacity = 1;
+            let processed = 0;
 
-            setTimeout(() => {
-                let processed = 0;
+            lines.forEach((line) => {
 
-                lines.forEach((line) => {
-                    let firstPart = '';
-                    let secondPart = '';
+                const firstPart = line.substring(0, 2);
+                const secondPart = line.substring(3);  // Начинаем с третьего символа
 
-                    if (mode !== 3) {
-                        firstPart = line.substring(0, 2);
-                        secondPart = line.substring(3);  // Начинаем с третьего символа
-                    } else {
-                        // В режиме 3 не делаем разделения
-                        firstPart = line;
-                        secondPart = ''; // Нет второй части в режиме 3
-                    }
+                let qrUrl;
+                if (mode === 3) {
+                    qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`;
+                } else {
+                    qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`;
+                }
 
-                    if (mode === 3) {qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`
-                    } else {
-                        qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`
-                    }
-                    
-                    const qrDiv = document.createElement('div');
-                    qrDiv.classList.add('qr-item');
+                const qrDiv = document.createElement('div');
+                qrDiv.classList.add('qr-item');
 
-                    if (mode === 2) {
-                        const downArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                        downArrow.setAttribute('class', 'down-arrow');
-                        downArrow.setAttribute('viewBox', '-12 8 50 50');
-                        downArrow.setAttribute('fill', 'none');
-                        downArrow.setAttribute('stroke', 'black');
-                        downArrow.setAttribute('stroke-width', '2');
-                        downArrow.setAttribute('stroke-linecap', 'round');
-                        downArrow.setAttribute('stroke-linejoin', 'round');
-                        downArrow.innerHTML = `
-                            <rect x="12" y="0" width="11" height="40" fill="black"/>
-                            <polygon points="1,40 18,70 36,40" fill="black"/>
-                        `;
-                        qrDiv.appendChild(downArrow);
-                        qrDiv.classList.add('has-arrow');
-                    }
+                if (mode === 2 || mode === 5) {
+                    const downArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    downArrow.setAttribute('class', 'down-arrow');
+                    downArrow.setAttribute('viewBox', '-12 8 50 50');
+                    downArrow.setAttribute('fill', 'none');
+                    downArrow.setAttribute('stroke', 'black');
+                    downArrow.setAttribute('stroke-width', '2');
+                    downArrow.setAttribute('stroke-linecap', 'round');
+                    downArrow.setAttribute('stroke-linejoin', 'round');
+                    downArrow.innerHTML = `
+                        <rect x="12" y="0" width="11" height="40" fill="black"/>
+                        <polygon points="1,40 18,70 36,40" fill="black"/>
+                    `;
+                    qrDiv.appendChild(downArrow);
+                    qrDiv.classList.add('has-arrow');
+                } else {
+                }
 
-                    if (mode === 3) {
-                        qrcodeList.classList.add('container');
-                        qrDiv.classList.add('container');
-                        scrollDown.classList.add('container');
-                    } else {
-                        qrcodeList.classList.remove('container');
-                        qrDiv.classList.remove('container');
-                        scrollDown.classList.remove('container');
-                    }
+                const caption = document.createElement('div');
+                caption.classList.add('qr-text');
+                caption.setAttribute('data-raw', line); // Сохраняем оригинальный текст
+                caption.innerHTML = `<div class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
 
-                    const caption = document.createElement('div');
-                    caption.classList.add('qr-text');
-                    // Если в режиме 3, выводим всю строку как одну часть
-                    if (mode === 3) {
-                        caption.innerHTML = `<div id="textPolki" class="text-polki container">${line}</div>`;
-                    } else {
-                        caption.innerHTML = `<div id="textPolki" class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
-                    }
+                if (mode === 3) {
+                    qrcodeList.classList.add('container');
+                    qrDiv.classList.add('container');
+                    caption.classList.add('container')
+                    scrollDown.classList.add('container');
+                } else {
+                    qrcodeList.classList.remove('container');
+                    qrDiv.classList.remove('container');
+                    caption.classList.remove('container')
+                    scrollDown.classList.remove('container');
+                }
 
-                    const img = document.createElement('img');
-                    img.src = qrUrl;
-                    img.alt = `QR-код для: ${line}`;
+                const img = document.createElement('img');
+                img.src = qrUrl;
+                img.alt = `QR-код для: ${line}`;
 
-                    img.onload = () => {
-                        processed++;
-                        const percentage = (processed / total) * 100;
-                        progressFill.style.width = percentage.toFixed(2) + '%';
-                        progressText.textContent = percentage.toFixed(2) + '%';
+                img.onload = () => {
+                    processed++;
+                    const percentage = (processed / total) * 100;
+                    progressFill.style.width = percentage.toFixed(2) + '%';
+                    progressText.textContent = percentage.toFixed(2) + '%';
 
-                        if (processed === total) {
+                    if (processed === total) {
+                        applySmartBreak();
+
+                        setTimeout(() => {
+                            progressBar.style.opacity = 0;
                             setTimeout(() => {
-                                progressBar.style.opacity = 0;
-                                setTimeout(() => {
-                                    progressBar.style.display = 'none';
-                                }, 500);
+                                progressBar.style.display = 'none';
                             }, 500);
+                        }, 500);
 
-                            // Проверим, нужно ли показывать кнопку "Промотать вниз"
-                            setTimeout(() => {
-                                const scrollHeight = qrcodeList.scrollHeight;
-                                const clientHeight = window.innerHeight;
-                                
-                                if (scrollHeight > clientHeight) {
-                                    scrollDownButton.style.display = 'block'; // Показываем кнопку
-                                }
-                            }, 200); // Даем немного времени, чтобы элементы успели загрузиться
-                        }
-                    };
+                        // Проверим, нужно ли показывать кнопку "Промотать вниз"
+                        setTimeout(() => {
+                            const scrollHeight = qrcodeList.scrollHeight;
+                            const clientHeight = window.innerHeight;
 
-                    qrDiv.appendChild(caption);
-                    qrDiv.appendChild(img);
-
-                    qrcodeList.appendChild(qrDiv);
-                });
-            }, 0); // Задержка перед стартом загрузки
-        }, 10); // Задержка для активации transition: opacity
-    } else {
-        alert('Пожалуйста, введите текст в поле!');
-    }
+                            if (scrollHeight > clientHeight) {
+                                scrollDownButton.style.display = 'block'; // Показываем кнопку
+                            }
+                        }, 200); // Даем немного времени, чтобы элементы успели загрузиться
+                    }
+                };
+                
+                if (mode === 4 || mode === 5) {
+                qrDiv.appendChild(caption);
+                caption.classList.add('withOutQr');
+                qrDiv.classList.add('withOutQr');
+                qrcodeList.appendChild(qrDiv);
+                } else {
+                qrDiv.appendChild(caption);
+                qrDiv.appendChild(img);
+                caption.classList.remove('withOutQr');
+                qrDiv.classList.remove('withOutQr');
+                qrcodeList.appendChild(qrDiv);
+                }
+            });
+        }, 0); // Задержка перед стартом загрузки
+    }, 10); // Задержка для активации transition: opacity
+    updateFontSize();
 }
 
 // Очистить все
@@ -165,38 +181,105 @@ function toggleTheme() {
 }
 
 function toggleMode() {
-    mode = (mode === 3) ? 1 : mode + 1;
-
-    localStorage.setItem('mode', mode); // сохраняем выбранный режим
+    mode = (mode === 6) ? 1 : mode + 1;
+    localStorage.setItem('mode', mode);
 
     const modeButton = document.getElementById('modeButton');
+    const toggleBtn = document.getElementById('smartBreakToggle');
+
     if (mode === 1) {
         modeButton.innerText = 'Режим: места';
+        smartBreakEnabled = true;
+        localStorage.setItem('smartBreak', 'true');
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
+        toggleBtn.classList.add('switch-on');
     } else if (mode === 2) {
         modeButton.innerText = 'Режим: со стрелками';
+        smartBreakEnabled = true;
+        localStorage.setItem('smartBreak', 'true');
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
+        toggleBtn.classList.add('switch-on');
     } else if (mode === 3) {
-        modeButton.innerText = 'Режим: контейнера';
+        modeButton.innerText = 'Режим: большие QR';
+        const saved = localStorage.getItem('smartBreak');
+        smartBreakEnabled = saved === null ? true : saved === 'true';
+        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+        toggleBtn.style.pointerEvents = 'auto';
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
+    } else if (mode === 4) {
+        modeButton.innerText = 'Режим: без QR';
+        const saved = localStorage.getItem('smartBreak');
+        localStorage.setItem('smartBreak', 'true');
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
+    } else if (mode === 5) {
+        modeButton.innerText = 'Режим: без QR со стрелкой';
+        const saved = localStorage.getItem('smartBreak');
+        localStorage.setItem('smartBreak', 'true');
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
+    } else if (mode === 6) {
+        modeButton.innerText = 'Режим: логин + пароль';
+        const saved = localStorage.getItem('smartBreak');
+        localStorage.setItem('smartBreak', 'true');
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     }
 
-    generateQRCodes(); // Перегенерируем QR-коды с новым режимом
+    // Перегенерируем QR-коды
+    generateQRCodes();
+
+    // Применяем умный разрыв
+    applySmartBreak();
+
+    // Меняем размер текста
+    updateFontSize();
 }
+
+// Переключатель переноса
+let smartBreakEnabled = true; // включён по умолчанию
+const toggleBtn = document.getElementById('smartBreakToggle');
 
 document.addEventListener('DOMContentLoaded', function () {
     const savedMode = localStorage.getItem('mode');
+    const toggleBtn = document.getElementById('smartBreakToggle');
+
     if (savedMode) {
         mode = parseInt(savedMode, 10);
-        const modeButton = document.getElementById('modeButton');
-        if (modeButton) {
-            if (mode === 1) {
-                modeButton.innerText = 'Режим: места';
-            } else if (mode === 2) {
-                modeButton.innerText = 'Режим: со стрелками';
-            } else if (mode === 3) {
-                modeButton.innerText = 'Режим: контейнера';
-            }
-        }
     }
+
+    if (mode === 1 || mode === 2) {
+    smartBreakEnabled = true;
+    toggleBtn.classList.add('switch-on');
+    document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
+    document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
+    localStorage.setItem('smartBreak', 'true');
+    } else {
+        const saved = localStorage.getItem('smartBreak');
+        smartBreakEnabled = saved === null ? true : saved === 'true';
+        if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
+    }
+
+    // Обновить надпись на кнопке режима
+    const modeButton = document.getElementById('modeButton');
+    if (mode === 1) modeButton.innerText = 'Режим: места';
+    else if (mode === 2) modeButton.innerText = 'Режим: со стрелками';
+    else if (mode === 3) modeButton.innerText = 'Режим: большие QR';
+    else if (mode === 4) modeButton.innerText = 'Режим: без QR';
+    else if (mode === 5) modeButton.innerText = 'Режим: без QR со стрелкой';
+    else if (mode === 6) modeButton.innerText = 'Режим: логин + пароль';
 });
+
+// Устанавливаем переключатель переноса
+const saved = localStorage.getItem('smartBreak');
+smartBreakEnabled = saved === null ? true : saved === 'true';
+if (smartBreakEnabled) {
+    const toggleBtn = document.getElementById('smartBreakToggle');
+    if (toggleBtn) toggleBtn.classList.add('switch-on');
+}
 
 function showDone() {
     const messageElement = document.getElementById('message');
@@ -449,4 +532,254 @@ qrTextArea.addEventListener('drop', (e) => {
     } else {
         alert("Поддерживаются только .txt, .xls, .xlsx файлы.");
     }
+});
+
+// Инициализация по умолчанию
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('smartBreak');
+    smartBreakEnabled = saved === null ? true : saved === 'true';
+    if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
+});
+
+// Клик
+toggleBtn.addEventListener('click', () => {
+
+    smartBreakEnabled = !smartBreakEnabled;
+    toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+    localStorage.setItem('smartBreak', smartBreakEnabled);
+    applySmartBreak();
+    updateFontSize();
+});
+
+// Drag-перетаскивание
+let isDragging = false;
+let startX = 0;
+
+toggleBtn.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+
+    // Включаем прослушивание событий для перемещения мыши
+    document.addEventListener('mousemove', onMouseMove);
+});
+
+document.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    // Убираем прослушивание события мыши
+    document.removeEventListener('mousemove', onMouseMove);
+
+    const deltaX = e.clientX - startX;
+    if (Math.abs(deltaX) > 10) {
+        smartBreakEnabled = deltaX > 0;
+        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+        localStorage.setItem('smartBreak', smartBreakEnabled);
+        applySmartBreak();
+    }
+});
+
+function onMouseMove(e) {
+    if (!isDragging) return;
+
+    // Перемещаем кнопку в зависимости от изменения координат
+    const deltaX = e.clientX - startX;
+    if (Math.abs(deltaX) > 10) {
+        smartBreakEnabled = deltaX > 0;
+        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+        localStorage.setItem('smartBreak', smartBreakEnabled);
+        applySmartBreak();
+    }
+}
+
+toggleBtn.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+
+    // Добавляем прослушиватель для мобильных устройств
+    document.addEventListener('touchmove', onTouchMove);
+});
+
+document.addEventListener('touchend', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    document.removeEventListener('touchmove', onTouchMove);
+
+    const endX = e.changedTouches[0].clientX;
+    const deltaX = endX - startX;
+    if (Math.abs(deltaX) > 10) {
+        smartBreakEnabled = deltaX > 0;
+        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+        localStorage.setItem('smartBreak', smartBreakEnabled);
+        applySmartBreak();
+    }
+});
+
+function onTouchMove(e) {
+    if (!isDragging) return;
+
+    const deltaX = e.touches[0].clientX - startX;
+    if (Math.abs(deltaX) > 10) {
+        smartBreakEnabled = deltaX > 0;
+        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+        localStorage.setItem('smartBreak', smartBreakEnabled);
+        applySmartBreak();
+    }
+}
+
+window.addEventListener('load', () => {
+    if (qrTextArea.value.trim() !== '') {
+        generateQRCodes(); // уже с правильным mode
+    }
+});
+
+function applySmartBreak() {
+    const qrItems = document.querySelectorAll('#qrcodeList .qr-item .qr-text');
+
+    qrItems.forEach((qrTextEl) => {
+    const rawText = qrTextEl.getAttribute('data-raw');
+    if (!rawText) return;
+
+    const parts = splitText(rawText);
+
+    if (!smartBreakEnabled) {
+        qrTextEl.innerHTML = `<div class="text-polki">${rawText}</div>`;
+    } else {
+        if (mode === 3) {
+        qrTextEl.innerHTML = `
+            <div class="text-polki container">${parts[0]}</div>
+            <div class="text-polki container">${parts[1]}</div>
+        `;
+        } else {
+            qrTextEl.innerHTML = `
+            <div class="text-polki">${parts[0]}</div>
+            <div class="text-polki">${parts[1]}</div>
+        `;
+        }
+    }
+});
+updateFontSize();
+}
+
+// Функция для разделения текста на две части
+function splitText(text) {
+    if (text.length < splitPosition) {
+        return [text, ''];
+    }
+
+    const firstPart = text.substring(0, splitPosition - 1); // например, до 3-го символа
+    const secondPart = text.substring(splitPosition); // начиная после splitPosition (пропускаем 1 символ)
+
+    return [firstPart, secondPart];
+}
+
+document.getElementById("qrText").addEventListener("keydown", function(e) {
+    if (e.key === "Tab") {
+        e.preventDefault(); // Отменяем стандартное поведение для клавиши Tab
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+
+        // Вставляем символ табуляции \t в текущее положение курсора
+        this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+
+        // Перемещаем курсор в конец вставленного символа табуляции
+        this.selectionStart = this.selectionEnd = start + 1; // 1 символ табуляции
+    }
+});
+
+// Ползунок переноса строки
+let splitPosition = parseInt(localStorage.getItem('splitPosition')) || 3;
+
+const splitSlider = document.getElementById('splitSlider');
+const splitValue = document.getElementById('splitValue');
+
+splitSlider.value = splitPosition;
+splitValue.textContent = splitPosition;
+
+splitSlider.addEventListener('input', () => {
+    splitPosition = parseInt(splitSlider.value);
+    splitValue.textContent = splitPosition;
+    localStorage.setItem('splitPosition', splitPosition);
+    applySmartBreak(); // Обновим подписи
+});
+
+// Настройка размера текста
+let fontSize = parseInt(localStorage.getItem('fontSize')) || 26;
+
+const fontSizeSlider = document.getElementById('fontSizeSlider');
+const fontSizeValue = document.getElementById('fontSizeValue');
+
+fontSizeSlider.value = fontSize;
+fontSizeValue.textContent = fontSize;
+
+fontSizeSlider.addEventListener('input', () => {
+  fontSize = parseInt(fontSizeSlider.value);
+  fontSizeValue.textContent = fontSize;
+  localStorage.setItem('fontSize', fontSize);
+  updateFontSize();
+});
+
+function updateFontSize() {
+  if (mode === 1) {
+    fontSize = 26;
+    splitPosition = 3;  // автоматический перенос для режима 1
+  } else if (mode === 2) {
+    fontSize = 21;
+    splitPosition = 3;  // автоматический перенос для режима 2
+  }
+
+  // Обновляем слайдер и отображение splitPosition
+  splitSlider.value = splitPosition;
+  splitValue.textContent = splitPosition;
+
+  // Сохраняем в localStorage, чтобы при перезагрузке остались значения
+  localStorage.setItem('splitPosition', splitPosition);
+  localStorage.setItem('fontSize', fontSize);
+
+  // Обновляем слайдер и отображение fontSize
+  fontSizeSlider.value = fontSize;
+  fontSizeValue.textContent = fontSize;
+
+  // Применяем размер шрифта к элементам
+  const textElements = document.querySelectorAll('.text-polki, .qr-text');
+  textElements.forEach(el => {
+    el.style.fontSize = fontSize + 'px';
+  });
+}
+
+// При загрузке страницы сразу применяем сохранённый размер:
+updateFontSize();
+
+// Пример инициализации после загрузки
+window.addEventListener('DOMContentLoaded', () => {
+  // ...восстановить mode из localStorage, если есть
+  mode = parseInt(localStorage.getItem('mode')) || 1;
+
+  updateFontSize();
+  generateQRCodes();
+});
+
+let textarea = document.getElementById('qrText');
+
+fileIcon.addEventListener('mouseenter', () => {
+  textarea.classList.add('hover-like');
+});
+fileIcon.addEventListener('mouseleave', () => {
+  textarea.classList.remove('hover-like');
+});
+
+fileIcon.addEventListener('mousedown', () => {
+  textarea.classList.add('focus-like');
+});
+fileIcon.addEventListener('mouseup', () => {
+  textarea.classList.remove('focus-like');
+});
+fileIcon.addEventListener('mouseout', () => {
+  textarea.classList.remove('focus-like');
+});
+
+// Добавляем фокус при клике на иконку
+fileIcon.addEventListener('click', () => {
+textarea.style.caretColor = '#000';
+  textarea.focus();
 });
