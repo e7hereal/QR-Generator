@@ -498,7 +498,7 @@ body.dark-theme .qr-text {
 /* Цвет текста в темной теме для .text-polki */
 body.dark-theme .text-polki {
     color: #ffffff; /* Белый текст для темной темы */
-    transition: all 0.3s;
+    transition: color 0.5s;
 }
 
 /* Для тёмной темы */
@@ -1205,4 +1205,15 @@ body.dark-theme .slider-wrapper span {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+.disabled {
+  /* pointer-events: none; */
+  opacity: 0.5; /* или другой эффект для затемнения */
+  cursor: not-allowed;
+}
+
+.switch-btn.switch-on.disabled {
+    background-color: #fff;
+    transform: scale(1);
 }
