@@ -207,28 +207,27 @@ function toggleMode() {
         modeButton.innerText = 'Режим: большие QR';
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
-        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
         toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 4) {
         modeButton.innerText = 'Режим: без QR';
         const saved = localStorage.getItem('smartBreak');
-        localStorage.setItem('smartBreak', 'true');
+        smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 5) {
         modeButton.innerText = 'Режим: без QR со стрелкой';
         const saved = localStorage.getItem('smartBreak');
-        localStorage.setItem('smartBreak', 'true');
+        smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 6) {
         modeButton.innerText = 'Режим: логин + пароль';
         const saved = localStorage.getItem('smartBreak');
-        localStorage.setItem('smartBreak', 'true');
+        smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
@@ -242,6 +241,8 @@ function toggleMode() {
 
     // Меняем размер текста
     updateFontSize();
+
+    checkSplitToggle();
 }
 
 // Переключатель переноса
@@ -251,6 +252,7 @@ const toggleBtn = document.getElementById('smartBreakToggle');
 document.addEventListener('DOMContentLoaded', function () {
     const savedMode = localStorage.getItem('mode');
     const toggleBtn = document.getElementById('smartBreakToggle');
+    checkSplitToggle();
 
     if (savedMode) {
         mode = parseInt(savedMode, 10);
@@ -263,11 +265,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
     document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
     localStorage.setItem('smartBreak', 'true');
+    checkSplitToggle();
     } else {
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
         toggleBtn.classList.remove('disabled');
+        checkSplitToggle();
     }
 
     // Обновить надпись на кнопке режима
@@ -560,6 +564,7 @@ toggleBtn.addEventListener('click', () => {
     localStorage.setItem('smartBreak', smartBreakEnabled ? 'true' : 'false');
     applySmartBreak();
     updateFontSize();
+    checkSplitToggle();
 });
 
 // Drag-перетаскивание
@@ -794,3 +799,24 @@ fileIcon.addEventListener('click', () => {
 textarea.style.caretColor = '#000';
   textarea.focus();
 });
+
+function checkSplitToggle() {
+    const elem = document.getElementsByClassName('setting-groupTextSplit')[0];
+    if (!elem) return;
+
+    // Если режим 1 или 2 — всегда скрываем
+    if (mode === 1 || mode === 2) {
+        elem.style.display = 'none';
+        return;
+    }
+
+    // В остальных режимах показываем/скрываем в зависимости от smartBreakEnabled
+    if (smartBreakEnabled) {
+        elem.style.display = 'block';
+    } else {
+        elem.style.display = 'none';
+    }
+}
+
+// Вызови функцию там, где меняется режим или smartBreakEnabled
+checkSplitToggle();
