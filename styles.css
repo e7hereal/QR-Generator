@@ -1213,7 +1213,7 @@ body.dark-theme .slider-wrapper span {
   cursor: not-allowed;
 }
 
-.switch-btn.switch-on.disabled {
+.switch-btn.switch-on.disabled:hover {
     background-color: #fff;
     transform: scale(1);
 }
