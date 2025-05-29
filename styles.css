@@ -1214,7 +1214,7 @@ body.dark-theme .slider-wrapper span {
 }
 
 .switch-btn.switch-on.disabled:hover {
-    background-color: #fff;
+    background-color: #bfbfbf;
     transform: none;
 }
 
