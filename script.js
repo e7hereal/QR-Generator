@@ -58,6 +58,8 @@ function generateQRCodes() {
                 let qrUrl;
                 if (mode === 3) {
                     qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`;
+                } else if (mode === 7) {
+                    qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=130`;
                 } else {
                     qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`;
                 }
@@ -93,16 +95,28 @@ function generateQRCodes() {
                     qrDiv.classList.add('container');
                     caption.classList.add('container')
                     scrollDown.classList.add('container');
+                } else if (mode === 7) {
+                    qrcodeList.classList.add('lm');
+                    qrDiv.classList.add('lm');
+                    caption.classList.add('lm')
                 } else {
                     qrcodeList.classList.remove('container');
                     qrDiv.classList.remove('container');
                     caption.classList.remove('container')
                     scrollDown.classList.remove('container');
+                    caption.classList.remove('lm');
+                    qrcodeList.classList.remove('lm');
                 }
 
                 const img = document.createElement('img');
                 img.src = qrUrl;
                 img.alt = `QR-код для: ${line}`;
+
+                if (mode === 7) {
+                    img.classList.add('lm');
+                } else {
+                    img.classList.remove('lm');
+                }
 
                 img.onload = () => {
                     processed++;
@@ -181,7 +195,7 @@ function toggleTheme() {
 }
 
 function toggleMode() {
-    mode = (mode === 6) ? 1 : mode + 1;
+    mode = (mode === 7) ? 1 : mode + 1;
     localStorage.setItem('mode', mode);
 
     const modeButton = document.getElementById('modeButton');
@@ -231,6 +245,14 @@ function toggleMode() {
         toggleBtn.classList.remove('disabled');
         document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
         document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
+    }  else if (mode === 7) {
+        modeButton.innerText = 'Режим: LM-ки';
+        const saved = localStorage.getItem('smartBreak');
+        smartBreakEnabled = saved === null ? true : saved === 'false';
+        toggleBtn.classList.add('disabled');
+        toggleBtn.classList.remove('switch-on');
+        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
+        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     }
 
     // Перегенерируем QR-коды
@@ -266,6 +288,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
     localStorage.setItem('smartBreak', 'true');
     checkSplitToggle();
+    } else if (mode === 7) {
+        smartBreakEnabled = false
+        localStorage.setItem('smartBreak', 'false');
+        toggleBtn.classList.remove('switch-on');
+        toggleBtn.classList.add('disabled');
+        checkSplitToggle();
     } else {
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
@@ -282,7 +310,8 @@ document.addEventListener('DOMContentLoaded', function () {
     else if (mode === 4) modeButton.innerText = 'Режим: без QR';
     else if (mode === 5) modeButton.innerText = 'Режим: без QR со стрелкой';
     else if (mode === 6) modeButton.innerText = 'Режим: логин + пароль';
-});
+    else if (mode === 7) modeButton.innerText = 'Режим: LM-ки';
+ });
 
 // Устанавливаем переключатель переноса
 const saved = localStorage.getItem('smartBreak');
@@ -666,6 +695,10 @@ function applySmartBreak() {
             <div class="text-polki container">${parts[0]}</div>
             <div class="text-polki container">${parts[1]}</div>
         `;
+        } else if (mode === 7) {
+            qrTextEl.innerHTML = `
+            <div class="text-polki lm">${parts[0]}</div>
+            <div class="text-polki lm">${parts[1]}</div>`
         } else {
             qrTextEl.innerHTML = `
             <div class="text-polki">${parts[0]}</div>
@@ -805,7 +838,7 @@ function checkSplitToggle() {
     if (!elem) return;
 
     // Если режим 1 или 2 — всегда скрываем
-    if (mode === 1 || mode === 2) {
+    if (mode === 1 || mode === 2 || mode === 7) {
         elem.style.display = 'none';
         return;
     }
