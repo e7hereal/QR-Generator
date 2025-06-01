@@ -283,8 +283,10 @@ document.addEventListener('DOMContentLoaded', function () {
     smartBreakEnabled = true;
     toggleBtn.classList.add('switch-on');
     toggleBtn.classList.add('disabled');
-    document.getElementsByClassName('setting-groupTextSplit')[0].style.opacity = '0';
-    document.getElementsByClassName('setting-groupFontSize')[0].style.opacity = '0';
+    const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+    notShowTextSplit.classList.add('hidden');
+    const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+    notShowTextFontSize.classList.add('hidden');
     localStorage.setItem('smartBreak', 'true');
     checkSplitToggle();
     } else if (mode === 7) {
@@ -292,12 +294,20 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('smartBreak', 'false');
         toggleBtn.classList.remove('switch-on');
         toggleBtn.classList.add('disabled');
+        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+        notShowTextSplit.classList.add('hidden');
+        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+        notShowTextFontSize.classList.remove('hidden');
         checkSplitToggle();
     } else {
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
         toggleBtn.classList.remove('disabled');
+        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+        notShowTextSplit.classList.remove('hidden');
+        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+        notShowTextFontSize.classList.remove('hidden');
         checkSplitToggle();
     }
 
