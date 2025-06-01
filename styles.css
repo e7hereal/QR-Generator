@@ -498,7 +498,7 @@ body.dark-theme .qr-text {
 /* Цвет текста в темной теме для .text-polki */
 body.dark-theme .text-polki {
     color: #ffffff; /* Белый текст для темной темы */
-    transition: all 0.3s;
+    transition: color 0.5s;
 }
 
 /* Для тёмной темы */
@@ -673,7 +673,7 @@ button:active {
     left: 0;
     font-size: 13px;
     text-align: center;
-    line-height: 24px;
+    line-height: 22px;
     font-weight: bold;
     color: rgb(255, 255, 255);
 }
@@ -1042,8 +1042,17 @@ body.dark-theme .switch-btn:hover {
 }
 
 .setting-groupFontSize {
-  transition: transform 0.3s ease;
+  transition: all 0.3s;
   border-radius: 6px;
+  overflow: hidden;
+  opacity: 1;
+  max-height: 42px;
+}
+
+.setting-groupFontSize.hidden {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
 }
 
 .setting-groupFontSize label {
@@ -1058,8 +1067,17 @@ body.dark-theme .switch-btn:hover {
 }
 
 .setting-groupTextSplit {
-  transition: transform 0.3s ease;
+  transition: all 0.3s;
   border-radius: 6px;
+  overflow: hidden;
+  opacity: 1;
+  max-height: 42px;
+}
+
+.setting-groupTextSplit.hidden {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
 }
 
 .setting-groupTextSplit label {
@@ -1214,7 +1232,7 @@ body.dark-theme .slider-wrapper span {
 }
 
 .switch-btn.switch-on.disabled:hover {
-    background-color: #bfbfbf;
+    background-color: #fff;
     transform: none;
 }
 
