@@ -1,9 +1,12 @@
 let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры, 4 - Полки CP
 
-// Проверка на сохраненную тему в localStorage и применение
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
+let useApiGeneration = true;
+
+function toggleGenerationMode() {
+  useApiGeneration = !useApiGeneration;
+  document.getElementById('toggleGenerationMode').textContent =
+    'Режим генерации: ' + (useApiGeneration ? 'API' : 'JS');
+    generateQRCodes();
 }
 
 function generateQRCodes() {
@@ -11,25 +14,21 @@ function generateQRCodes() {
     const qrcodeList = document.getElementById('qrcodeList');
     const text = textArea.value.trim();
     const progressBar = document.getElementById('progressBar');
-    const scrollDownButton = document.getElementById('scrollDown'); // Кнопка промотки вниз
+    const scrollDownButton = document.getElementById('scrollDown');
 
     if (text === '') {
         progressBar.style.display = 'none';
         return;
     }
 
-    qrcodeList.innerHTML = ''; // Очистить список QR-кодов перед генерацией
+    qrcodeList.innerHTML = '';
 
     let separators;
-
     if (mode === 4 || mode === 5) {
-        // Разделяем по табам и новой строке
         separators = /[\t\n]+/;
     } else if (mode === 6) {
-        // Разделяем только по новой строке
         separators = /\n+/;
     } else {
-        // Текущие сепараторы для остальных режимов
         separators = /[\s,;|]+/;
     }
 
@@ -45,124 +44,152 @@ function generateQRCodes() {
     progressBar.style.opacity = 1;
 
     setTimeout(() => {
-        progressBar.style.opacity = 1;
+    let processed = 0;
+    const startTime = performance.now(); // ВРЕМЯ НАЧАЛА
 
-        setTimeout(() => {
-            let processed = 0;
+    function handleProgress() {
+        processed++;
+        const percentage = (processed / total) * 100;
+        progressFill.style.width = percentage.toFixed(2) + '%';
+        progressText.textContent = percentage.toFixed(2) + '%';
 
-            lines.forEach((line) => {
+        if (processed === total) {
+            const endTime = performance.now(); // ВРЕМЯ ОКОНЧАНИЯ
+            const duration = (endTime - startTime).toFixed(2);
+            const modeUsed = useApiGeneration ? 'API' : 'JS';
 
-                const firstPart = line.substring(0, 2);
-                const secondPart = line.substring(3);  // Начинаем с третьего символа
+            console.log(`✅ Генерация в режиме ${modeUsed} завершена за ${duration} мс (${(duration / 1000).toFixed(2)} секунд)`);
 
-                let qrUrl;
-                if (mode === 3) {
-                    qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`;
-                } else if (mode === 7) {
-                    qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=130`;
-                } else {
-                    qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`;
+            applySmartBreak();
+
+            setTimeout(() => {
+                progressBar.style.opacity = 0;
+                setTimeout(() => {
+                    progressBar.style.display = 'none';
+                }, 500);
+            }, 500);
+
+            setTimeout(() => {
+                const scrollHeight = qrcodeList.scrollHeight;
+                const clientHeight = window.innerHeight;
+
+                if (scrollHeight > clientHeight) {
+                    scrollDownButton.style.display = 'block';
                 }
+            }, 200);
+        }
+    }
 
-                const qrDiv = document.createElement('div');
-                qrDiv.classList.add('qr-item');
+        lines.forEach((line) => {
+            const firstPart = line.substring(0, 2);
+            const secondPart = line.substring(3);
+            let qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`;
+            if (mode === 3) qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`;
+            if (mode === 7) qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=130`;
 
-                if (mode === 2 || mode === 5) {
-                    const downArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                    downArrow.setAttribute('class', 'down-arrow');
-                    downArrow.setAttribute('viewBox', '-12 8 50 50');
-                    downArrow.setAttribute('fill', 'none');
-                    downArrow.setAttribute('stroke', 'black');
-                    downArrow.setAttribute('stroke-width', '2');
-                    downArrow.setAttribute('stroke-linecap', 'round');
-                    downArrow.setAttribute('stroke-linejoin', 'round');
-                    downArrow.innerHTML = `
-                        <rect x="12" y="0" width="11" height="40" fill="black"/>
-                        <polygon points="1,40 18,70 36,40" fill="black"/>
-                    `;
-                    qrDiv.appendChild(downArrow);
-                    qrDiv.classList.add('has-arrow');
-                } else {
-                }
+            const qrDiv = document.createElement('div');
+            qrDiv.classList.add('qr-item');
 
-                const caption = document.createElement('div');
-                caption.classList.add('qr-text');
-                caption.setAttribute('data-raw', line); // Сохраняем оригинальный текст
-                caption.innerHTML = `<div class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
+            if (mode === 2 || mode === 5) {
+                const downArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                downArrow.setAttribute('class', 'down-arrow');
+                downArrow.setAttribute('viewBox', '-12 8 50 50');
+                downArrow.setAttribute('fill', 'none');
+                downArrow.setAttribute('stroke', 'black');
+                downArrow.setAttribute('stroke-width', '2');
+                downArrow.setAttribute('stroke-linecap', 'round');
+                downArrow.setAttribute('stroke-linejoin', 'round');
+                downArrow.innerHTML = `
+                    <rect x="12" y="0" width="11" height="40" fill="black"/>
+                    <polygon points="1,40 18,70 36,40" fill="black"/>
+                `;
+                qrDiv.appendChild(downArrow);
+                qrDiv.classList.add('has-arrow');
+            }
 
-                if (mode === 3) {
-                    qrcodeList.classList.add('container');
-                    qrDiv.classList.add('container');
-                    caption.classList.add('container')
-                    scrollDown.classList.add('container');
-                } else if (mode === 7) {
-                    qrcodeList.classList.add('lm');
-                    qrDiv.classList.add('lm');
-                    caption.classList.add('lm')
-                } else {
-                    qrcodeList.classList.remove('container');
-                    qrDiv.classList.remove('container');
-                    caption.classList.remove('container')
-                    scrollDown.classList.remove('container');
-                    caption.classList.remove('lm');
-                    qrcodeList.classList.remove('lm');
-                }
+            const caption = document.createElement('div');
+            caption.classList.add('qr-text');
+            caption.setAttribute('data-raw', line);
+            caption.innerHTML = `<div class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
 
-                const img = document.createElement('img');
-                img.src = qrUrl;
-                img.alt = `QR-код для: ${line}`;
+            // Стили в зависимости от режима
+            if (mode === 3) {
+                qrcodeList.classList.add('container');
+                qrDiv.classList.add('container');
+                caption.classList.add('container');
+                scrollDown.classList.add('container');
+            } else if (mode === 7) {
+                qrcodeList.classList.add('lm');
+                qrDiv.classList.add('lm');
+                caption.classList.add('lm');
+            } else {
+                qrcodeList.classList.remove('container', 'lm');
+                qrDiv.classList.remove('container', 'lm');
+                caption.classList.remove('container', 'lm');
+                scrollDown.classList.remove('container');
+            }
 
-                if (mode === 7) {
-                    img.classList.add('lm');
-                } else {
-                    img.classList.remove('lm');
-                }
-
-                img.onload = () => {
-                    processed++;
-                    const percentage = (processed / total) * 100;
-                    progressFill.style.width = percentage.toFixed(2) + '%';
-                    progressText.textContent = percentage.toFixed(2) + '%';
-
-                    if (processed === total) {
-                        applySmartBreak();
-
-                        setTimeout(() => {
-                            progressBar.style.opacity = 0;
-                            setTimeout(() => {
-                                progressBar.style.display = 'none';
-                            }, 500);
-                        }, 500);
-
-                        // Проверим, нужно ли показывать кнопку "Промотать вниз"
-                        setTimeout(() => {
-                            const scrollHeight = qrcodeList.scrollHeight;
-                            const clientHeight = window.innerHeight;
-
-                            if (scrollHeight > clientHeight) {
-                                scrollDownButton.style.display = 'block'; // Показываем кнопку
-                            }
-                        }, 200); // Даем немного времени, чтобы элементы успели загрузиться
-                    }
-                };
-                
-                if (mode === 4 || mode === 5) {
+            if (mode === 4 || mode === 5) {
                 qrDiv.appendChild(caption);
                 caption.classList.add('withOutQr');
                 qrDiv.classList.add('withOutQr');
                 qrcodeList.appendChild(qrDiv);
-                } else {
-                qrDiv.appendChild(caption);
+                handleProgress();
+                return;
+            }
+
+            qrDiv.appendChild(caption);
+
+            if (useApiGeneration) {
+                const img = document.createElement('img');
+                img.src = qrUrl;
+                img.alt = `QR-код для: ${line}`;
+                if (mode === 7) img.classList.add('lm');
+                
+                img.onload = () => handleProgress();
                 qrDiv.appendChild(img);
-                caption.classList.remove('withOutQr');
-                qrDiv.classList.remove('withOutQr');
-                qrcodeList.appendChild(qrDiv);
+            } else {
+                const qrContainer = document.createElement('div');
+                qrContainer.classList.add('qrcode-js');
+
+                qrDiv.appendChild(qrContainer);
+
+                if (mode === 3) {
+                    new QRCode(qrContainer, {
+                        text: line,
+                        width: 250,
+                        height: 250,
+                        margin: 1
+                    });
+                } else if (mode === 7) {
+                    new QRCode(qrContainer, {
+                        text: line,
+                        width: 130,
+                        height: 130,
+                        margin: 1
+                    });
+                } else {
+                    new QRCode(qrContainer, {
+                        text: line,
+                        width: 76,
+                        height: 76,
+                        margin: 1
+                    });
                 }
-            });
-        }, 0); // Задержка перед стартом загрузки
-    }, 10); // Задержка для активации transition: opacity
+
+                setTimeout(() => handleProgress(), 0);
+            }
+
+            caption.classList.remove('withOutQr');
+            qrDiv.classList.remove('withOutQr');
+            qrcodeList.appendChild(qrDiv);
+        });
+
+    }, 10);
+
     updateFontSize();
 }
+
 
 // Очистить все
 const buttonClearDiv = document.getElementById('clearDivAndTextArea');
