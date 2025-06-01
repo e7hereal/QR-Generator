@@ -389,6 +389,13 @@ body.dark-theme textarea::placeholder {
     float: right;
 }
 
+.qrcode-js {
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 .qr-item.has-arrow .qr-text {
     font-size: 21.6px;
     width: 122px;
@@ -1044,7 +1051,6 @@ body.dark-theme .switch-btn:hover {
 .setting-groupFontSize {
   transition: all 0.3s;
   border-radius: 6px;
-  overflow: hidden;
   opacity: 1;
   max-height: 42px;
 }
@@ -1069,7 +1075,6 @@ body.dark-theme .switch-btn:hover {
 .setting-groupTextSplit {
   transition: all 0.3s;
   border-radius: 6px;
-  overflow: hidden;
   opacity: 1;
   max-height: 42px;
 }
@@ -1259,4 +1264,31 @@ body.dark-theme .slider-wrapper span {
 
 .qr-text.lm {
     width: 100%;
+}
+
+#toggleGenerationMode:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+#toggleGenerationMode::after {
+    content: 'По умолчанию стоит режим API, менять только в случае, если не загружаются QR-кода. В режиме JS загрузка как-бы зависает при большом количестве QR-кодов, надо просто подождать.';
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: normal;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
 }
