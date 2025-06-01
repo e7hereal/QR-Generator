@@ -206,53 +206,51 @@ function toggleMode() {
         smartBreakEnabled = true;
         toggleBtn.classList.add('disabled');
         localStorage.setItem('smartBreak', 'true');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
+        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+        notShowTextSplit.classList.add('hidden');
+        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+        notShowTextFontSize.classList.add('hidden');
         toggleBtn.classList.add('switch-on');
     } else if (mode === 2) {
         modeButton.innerText = 'Режим: со стрелками';
         smartBreakEnabled = true;
         toggleBtn.classList.add('disabled');
         localStorage.setItem('smartBreak', 'true');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
+        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+        notShowTextSplit.classList.add('hidden');
+        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+        notShowTextFontSize.classList.add('hidden');
         toggleBtn.classList.add('switch-on');
     } else if (mode === 3) {
         modeButton.innerText = 'Режим: большие QR';
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
+        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+        notShowTextSplit.classList.remove('hidden');
+        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+        notShowTextFontSize.classList.remove('hidden');
     } else if (mode === 4) {
         modeButton.innerText = 'Режим: без QR';
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 5) {
         modeButton.innerText = 'Режим: без QR со стрелкой';
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     } else if (mode === 6) {
         modeButton.innerText = 'Режим: логин + пароль';
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'block';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     }  else if (mode === 7) {
         modeButton.innerText = 'Режим: LM-ки';
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'false';
         toggleBtn.classList.add('disabled');
         toggleBtn.classList.remove('switch-on');
-        document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
-        document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'block';
     }
 
     // Перегенерируем QR-коды
@@ -264,6 +262,7 @@ function toggleMode() {
     // Меняем размер текста
     updateFontSize();
 
+    // Проверка режима для переключателя
     checkSplitToggle();
 }
 
@@ -284,8 +283,8 @@ document.addEventListener('DOMContentLoaded', function () {
     smartBreakEnabled = true;
     toggleBtn.classList.add('switch-on');
     toggleBtn.classList.add('disabled');
-    document.getElementsByClassName('setting-groupTextSplit')[0].style.display = 'none';
-    document.getElementsByClassName('setting-groupFontSize')[0].style.display = 'none';
+    document.getElementsByClassName('setting-groupTextSplit')[0].style.opacity = '0';
+    document.getElementsByClassName('setting-groupFontSize')[0].style.opacity = '0';
     localStorage.setItem('smartBreak', 'true');
     checkSplitToggle();
     } else if (mode === 7) {
@@ -426,6 +425,12 @@ function updateClock() {
 document.addEventListener('DOMContentLoaded', function () {
     const menu = document.getElementById('rightMenu');
     const togglePin = document.getElementById('togglePin');
+    const notSaveTextArea = document.getElementById('qrText');
+    
+    if (notSaveTextArea) {
+        notSaveTextArea.value = '';
+        notSaveTextArea.focus();
+    }
 
     // Устанавливаем начальное состояние по сохранённому значению
     let isPinned = localStorage.getItem('rightMenu') === 'fixed';
@@ -450,8 +455,6 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.removeItem('rightMenu');
         }
 
-        // Сохраняем классы меню (если нужно)
-        localStorage.setItem('rightMenuClass', menu.className);
     });
 });
 
@@ -834,22 +837,19 @@ textarea.style.caretColor = '#000';
 });
 
 function checkSplitToggle() {
-    const elem = document.getElementsByClassName('setting-groupTextSplit')[0];
-    if (!elem) return;
+    const elemTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+    if (!elemTextSplit) return;
 
     // Если режим 1 или 2 — всегда скрываем
     if (mode === 1 || mode === 2 || mode === 7) {
-        elem.style.display = 'none';
+        elemTextSplit.classList.add('hidden');
         return;
     }
 
     // В остальных режимах показываем/скрываем в зависимости от smartBreakEnabled
     if (smartBreakEnabled) {
-        elem.style.display = 'block';
+        elemTextSplit.classList.remove('hidden');
     } else {
-        elem.style.display = 'none';
+        elemTextSplit.classList.add('hidden');
     }
 }
-
-// Вызови функцию там, где меняется режим или smartBreakEnabled
-checkSplitToggle();
