@@ -431,7 +431,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (notSaveTextArea) {
         notSaveTextArea.value = '';
-        notSaveTextArea.focus();
     }
 
     // Устанавливаем начальное состояние по сохранённому значению
