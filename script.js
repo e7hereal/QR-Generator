@@ -200,15 +200,15 @@ function toggleMode() {
 
     const modeButton = document.getElementById('modeButton');
     const toggleBtn = document.getElementById('smartBreakToggle');
+    const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+    const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
 
     if (mode === 1) {
         modeButton.innerText = 'Режим: места';
         smartBreakEnabled = true;
         toggleBtn.classList.add('disabled');
         localStorage.setItem('smartBreak', 'true');
-        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
         notShowTextSplit.classList.add('hidden');
-        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
         notShowTextFontSize.classList.add('hidden');
         toggleBtn.classList.add('switch-on');
     } else if (mode === 2) {
@@ -216,9 +216,7 @@ function toggleMode() {
         smartBreakEnabled = true;
         toggleBtn.classList.add('disabled');
         localStorage.setItem('smartBreak', 'true');
-        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
         notShowTextSplit.classList.add('hidden');
-        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
         notShowTextFontSize.classList.add('hidden');
         toggleBtn.classList.add('switch-on');
     } else if (mode === 3) {
@@ -226,9 +224,7 @@ function toggleMode() {
         const saved = localStorage.getItem('smartBreak');
         smartBreakEnabled = saved === null ? true : saved === 'true';
         toggleBtn.classList.remove('disabled');
-        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
         notShowTextSplit.classList.remove('hidden');
-        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
         notShowTextFontSize.classList.remove('hidden');
     } else if (mode === 4) {
         modeButton.innerText = 'Режим: без QR';
@@ -273,6 +269,8 @@ const toggleBtn = document.getElementById('smartBreakToggle');
 document.addEventListener('DOMContentLoaded', function () {
     const savedMode = localStorage.getItem('mode');
     const toggleBtn = document.getElementById('smartBreakToggle');
+    const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+    const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
     checkSplitToggle();
 
     if (savedMode) {
@@ -283,9 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
     smartBreakEnabled = true;
     toggleBtn.classList.add('switch-on');
     toggleBtn.classList.add('disabled');
-    const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
     notShowTextSplit.classList.add('hidden');
-    const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
     notShowTextFontSize.classList.add('hidden');
     localStorage.setItem('smartBreak', 'true');
     checkSplitToggle();
@@ -294,9 +290,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('smartBreak', 'false');
         toggleBtn.classList.remove('switch-on');
         toggleBtn.classList.add('disabled');
-        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
         notShowTextSplit.classList.add('hidden');
-        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
         notShowTextFontSize.classList.remove('hidden');
         checkSplitToggle();
     } else {
@@ -304,9 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
         smartBreakEnabled = saved === null ? true : saved === 'true';
         if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
         toggleBtn.classList.remove('disabled');
-        const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
         notShowTextSplit.classList.remove('hidden');
-        const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
         notShowTextFontSize.classList.remove('hidden');
         checkSplitToggle();
     }
