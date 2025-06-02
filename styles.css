@@ -404,10 +404,13 @@ body.dark-theme textarea::placeholder {
 }
 
 .qrcode-js {
-    padding: 8px;
+    display: flex;
+    padding: 10px;
     background-color: #fff;
     border-radius: 5px;
     box-sizing: border-box;
+    width: 94.48px;
+    height: 94.48px;
 }
 
 .qrcode-js img {
