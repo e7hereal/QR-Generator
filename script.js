@@ -1,8 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-    }
+// Проверка на сохраненную тему в localStorage и применение
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+}
+
+// Блокировка анимаций при первой загрузке страницы
+document.documentElement.classList.add('disable-transitions');
+document.body.classList.add('disable-transitions');
+const textAreaWithOutTransition = document.getElementById('qrText');
+textAreaWithOutTransition.classList.add('disable-transitions');
+
+// Убираем блокировку анимаций, когда страница полностью загрузится
+window.addEventListener('load', () => {
+  document.documentElement.classList.remove('disable-transitions');
+  document.body.classList.remove('disable-transitions');
+  textAreaWithOutTransition.classList.remove('disable-transitions');
 });
 
 let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры, 4 - Полки CP
@@ -408,13 +420,6 @@ function showInstructionTab(tab) {
     }
 }
 
-// Блокировка анимаций при первой загрузке страницы
-document.documentElement.classList.add('disable-transitions');
-
-// Убираем блокировку анимаций, когда страница полностью загрузится
-window.addEventListener('load', () => {
-  document.documentElement.classList.remove('disable-transitions');
-});
 // Функция для проверки необходимости отображения кнопки прокрутки вниз
 function checkScrollButton() {
     const scrollDownButton = document.getElementById('scrollDown');
