@@ -102,7 +102,7 @@ function generateQRCodes() {
         lines.forEach((line) => {
             const firstPart = line.substring(0, 2);
             const secondPart = line.substring(3);
-            let qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=90`;
+            let qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=94`;
             if (mode === 3) qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=250`;
             if (mode === 7) qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=130`;
 
