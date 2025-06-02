@@ -1062,7 +1062,7 @@ body.dark-theme .switch-btn:hover {
 }
 
 .setting-groupFontSize {
-  transition: all 0.3s;
+  transition: all 0.3s, opacity 0.1s;
   border-radius: 6px;
   opacity: 1;
   max-height: 42px;
@@ -1086,7 +1086,7 @@ body.dark-theme .switch-btn:hover {
 }
 
 .setting-groupTextSplit {
-  transition: all 0.3s;
+  transition: all 0.3s, opacity 0.1s;
   border-radius: 6px;
   opacity: 1;
   max-height: 42px;
