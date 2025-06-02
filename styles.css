@@ -400,13 +400,18 @@ body.dark-theme textarea::placeholder {
 .qr-item img {
     margin-left: 0px; /* Отступ между QR-кодом и текстом */
     float: right;
+    border-radius: 5px;
 }
 
 .qrcode-js {
     padding: 8px;
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: 5px;
     box-sizing: border-box;
+}
+
+.qrcode-js img {
+    border-radius: 0px !important
 }
 
 .qr-item.has-arrow .qr-text {
