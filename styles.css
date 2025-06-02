@@ -13,6 +13,11 @@ html.disable-transitions {
 transition: none !important;
 }
 
+body.disable-transitions *,
+body.disable-transitions {
+transition: none !important;
+}
+
 .bg-overlay {
     position: fixed;
     top: 0;
@@ -185,6 +190,14 @@ body.dark-theme .custom-file-button:hover {
     border-radius: 5px;
     resize: none;
     cursor: text;
+}
+
+#qrText.disable-transitions {
+    transition: none !important;
+}
+
+#qrText.disable-transitions::placeholder {
+    transition: none !important;
 }
 
 #qrText.dragover {
