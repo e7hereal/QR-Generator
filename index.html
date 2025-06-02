@@ -7,22 +7,30 @@
 
   <title>Места QR</title>
 
-  <!-- Подключение стилей -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="icon.png" type="image/png">
+  <style>
+  html.dark-theme, body.dark-theme {
+    background-color: #252121 !important;
+  }
+  body.dark-theme #allCentr {
+    background-color: #252121;
+  }
+  </style>
 
   <script>
     // Быстрое применение темы до загрузки CSS, чтобы не мигала
     (function () {
-      try {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark-theme');
-        }
-      } catch (e) {}
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-theme');
+        document.body.classList.add('dark-theme');
+      }
     })();
   </script>
-  
+
+  <!-- Подключение стилей -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="icon.png" type="image/png">
+
 </head>
     <body>
         <div class="bg-overlay"></div>
