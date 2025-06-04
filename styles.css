@@ -409,8 +409,6 @@ body.dark-theme textarea::placeholder {
     background-color: #fff;
     border-radius: 5px;
     box-sizing: border-box;
-    width: 94.48px;
-    height: 94.48px;
 }
 
 .qrcode-js img {
