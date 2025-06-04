@@ -163,41 +163,32 @@ function generateQRCodes() {
                 const img = document.createElement('img');
                 img.src = qrUrl;
                 img.alt = `QR-код для: ${line}`;
-                if (mode === 7) img.classList.add('lm');
-                
+                if (mode === 3) img.classList.add('container');
+                else if (mode === 7) img.classList.add('lm');
                 img.onload = () => handleProgress();
                 qrDiv.appendChild(img);
             } else {
                 const qrContainer = document.createElement('div');
                 qrContainer.classList.add('qrcode-js');
+                if (mode === 3) qrContainer.classList.add('container');
+                else if (mode === 7) qrContainer.classList.add('lm');
 
                 qrDiv.appendChild(qrContainer);
 
-                if (mode === 3) {
-                    new QRCode(qrContainer, {
-                        text: line,
-                        width: 250,
-                        height: 250,
-                        margin: 1
-                    });
-                } else if (mode === 7) {
-                    new QRCode(qrContainer, {
-                        text: line,
-                        width: 130,
-                        height: 130,
-                        margin: 1
-                    });
-                } else {
-                    new QRCode(qrContainer, {
-                        text: line,
-                        width: 76,
-                        height: 76,
-                        margin: 1
-                    });
-                }
+                let size = 76;
+                if (mode === 3) size = 250;
+                else if (mode === 7) size = 130;
+
+                new QRCode(qrContainer, {
+                    text: line,
+                    width: size,
+                    height: size,
+                    margin: 1
+                });
 
                 setTimeout(() => handleProgress(), 0);
             }
+
 
             caption.classList.remove('withOutQr');
             qrDiv.classList.remove('withOutQr');
@@ -208,7 +199,6 @@ function generateQRCodes() {
 
     updateFontSize();
 }
-
 
 // Очистить все
 const buttonClearDiv = document.getElementById('clearDivAndTextArea');
@@ -368,6 +358,7 @@ if (smartBreakEnabled) {
     if (toggleBtn) toggleBtn.classList.add('switch-on');
 }
 
+// Вспывающее окно по кнопке
 function showDone() {
     const messageElement = document.getElementById('message');
     const qrList = document.getElementById('qrcodeList');
@@ -446,6 +437,7 @@ document.getElementById('scrollDown').addEventListener('click', () => {
     });
 });
 
+// Время
 function updateClock() {
         const now = new Date();
 
@@ -721,6 +713,7 @@ window.addEventListener('load', () => {
     }
 });
 
+// Применение переноса
 function applySmartBreak() {
     const qrItems = document.querySelectorAll('#qrcodeList .qr-item .qr-text');
 
@@ -765,6 +758,7 @@ function splitText(text) {
     return [firstPart, secondPart];
 }
 
+// tab в textarea
 document.getElementById("qrText").addEventListener("keydown", function(e) {
     if (e.key === "Tab") {
         e.preventDefault(); // Отменяем стандартное поведение для клавиши Tab
@@ -795,7 +789,7 @@ splitSlider.addEventListener('input', () => {
     applySmartBreak(); // Обновим подписи
 });
 
-// Настройка размера текста
+// Ползунок размера текста
 let fontSize = parseInt(localStorage.getItem('fontSize')) || 26;
 
 const fontSizeSlider = document.getElementById('fontSizeSlider');
@@ -811,6 +805,7 @@ fontSizeSlider.addEventListener('input', () => {
   updateFontSize();
 });
 
+// Изменение размера текста
 function updateFontSize() {
   if (mode === 1) {
     fontSize = 26;
@@ -842,7 +837,7 @@ function updateFontSize() {
 // При загрузке страницы сразу применяем сохранённый размер:
 updateFontSize();
 
-// Пример инициализации после загрузки
+// Инициализация после загрузки
 window.addEventListener('DOMContentLoaded', () => {
   // ...восстановить mode из localStorage, если есть
   mode = parseInt(localStorage.getItem('mode')) || 1;
@@ -851,6 +846,7 @@ window.addEventListener('DOMContentLoaded', () => {
   generateQRCodes();
 });
 
+// Динамический textarea с drag n drop
 let textarea = document.getElementById('qrText');
 
 fileIcon.addEventListener('mouseenter', () => {
@@ -876,6 +872,7 @@ textarea.style.caretColor = '#000';
   textarea.focus();
 });
 
+// Проверка на setting-groupTextSplit, убираем, если выключен
 function checkSplitToggle() {
     const elemTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
     if (!elemTextSplit) return;
