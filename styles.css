@@ -415,6 +415,13 @@ body.dark-theme textarea::placeholder {
     border-radius: 0px !important
 }
 
+.qrcode-js.container {
+    padding: 30px;
+}
+.qrcode-js.lm {
+    padding: 15px;
+}
+
 .qr-item.has-arrow .qr-text {
     font-size: 21.6px;
     width: 122px;
