@@ -176,8 +176,8 @@ function generateQRCodes() {
                 qrDiv.appendChild(qrContainer);
 
                 let size = 76;
-                if (mode === 3) size = 250;
-                else if (mode === 7) size = 130;
+                if (mode === 3) size = 190;
+                else if (mode === 7) size = 100;
 
                 new QRCode(qrContainer, {
                     text: line,
