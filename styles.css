@@ -323,7 +323,7 @@ body.dark-theme textarea::placeholder {
     opacity: 0;
     transition: opacity 0.5s ease;
     display: none;
-    z-index: 999; /* Достаточно высокий, но ниже overlay */
+    z-index: 9999; /* Достаточно высокий, но ниже overlay */
 }
 
 #instruction.show {
@@ -343,7 +343,7 @@ body.dark-theme textarea::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Поверх всего */
+    z-index: 99999; /* Поверх всего */
 }
     
 .instruction-content {
@@ -442,6 +442,28 @@ body.dark-theme textarea::placeholder {
     height: 100%;
     margin: auto;
     padding: 0;
+    transition: all 0.3s;
+    fill: black;
+    stroke: black;
+}
+
+
+.down-arrow rect {
+    transition: all 0.3s;
+    fill: black;
+    stroke: black;
+}
+
+
+.down-arrow polygon {
+    transition: all 0.3s;
+    fill: black;
+    stroke: black;
+}
+
+
+.down-arrow.large {
+    width: 60px;
 }
 
 .qr-item img {
@@ -554,20 +576,22 @@ body.dark-theme textarea {
 }
 
 body.dark-theme #qrcodeList{
-    background-color: rgba(0, 0, 0, 0);
-    box-shadow: none;
+    background-color: rgb(50 50 50 / 90%);
 }
 
 body.dark-theme .down-arrow {
     stroke: white; /* Изменяем цвет стрелки на белый */
+    fill: white;
 }
 
 body.dark-theme .down-arrow rect {
     fill: white; /* Белый прямоугольник */
+    stroke: white;
 }
 
 body.dark-theme .down-arrow polygon {
     fill: white; /* Белый треугольник (стрелка) */
+    stroke: white;
 }
 
 /* Цвет текста в темной теме */
