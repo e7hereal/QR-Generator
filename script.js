@@ -62,9 +62,8 @@ function generateQRCodes() {
     progressBar.style.display = 'block';
     progressBar.style.opacity = 1;
 
-    setTimeout(() => {
     let processed = 0;
-    const startTime = performance.now(); // ВРЕМЯ НАЧАЛА
+    const startTime = performance.now();
 
     function handleProgress() {
         processed++;
@@ -73,7 +72,7 @@ function generateQRCodes() {
         progressText.textContent = percentage.toFixed(2) + '%';
 
         if (processed === total) {
-            const endTime = performance.now(); // ВРЕМЯ ОКОНЧАНИЯ
+            const endTime = performance.now();
             const duration = (endTime - startTime).toFixed(2);
             const modeUsed = useApiGeneration ? 'API' : 'JS';
 
@@ -99,7 +98,14 @@ function generateQRCodes() {
         }
     }
 
-        lines.forEach((line) => {
+    let index = 0;
+    const batchSize = 5;
+
+    function processBatch() {
+        const end = Math.min(index + batchSize, total);
+
+        for (; index < end; index++) {
+            const line = lines[index];
             const firstPart = line.substring(0, 2);
             const secondPart = line.substring(3);
             let qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(line)}&margin=3&size=94`;
@@ -109,7 +115,7 @@ function generateQRCodes() {
             const qrDiv = document.createElement('div');
             qrDiv.classList.add('qr-item');
 
-            if (mode === 2 || mode === 5) {
+            if (mode === 2) {
                 const downArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                 downArrow.setAttribute('class', 'down-arrow');
                 downArrow.setAttribute('viewBox', '-12 8 50 50');
@@ -119,8 +125,23 @@ function generateQRCodes() {
                 downArrow.setAttribute('stroke-linecap', 'round');
                 downArrow.setAttribute('stroke-linejoin', 'round');
                 downArrow.innerHTML = `
-                    <rect x="12" y="0" width="11" height="40" fill="black"/>
-                    <polygon points="1,40 18,70 36,40" fill="black"/>
+                    <rect x="12" y="0" width="11" height="40"/>
+                    <polygon points="1,40 18,70 36,40"/>
+                `;
+                qrDiv.appendChild(downArrow);
+                qrDiv.classList.add('has-arrow');
+            } else if (mode === 5) {
+                const downArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                downArrow.setAttribute('class', 'down-arrow large');
+                downArrow.setAttribute('viewBox', '-12 8 50 50');
+                downArrow.setAttribute('fill', 'none');
+                downArrow.setAttribute('stroke', 'black');
+                downArrow.setAttribute('stroke-width', '2');
+                downArrow.setAttribute('stroke-linecap', 'round');
+                downArrow.setAttribute('stroke-linejoin', 'round');
+                downArrow.innerHTML = `
+                    <rect x="12" y="0" width="11" height="40"/>
+                    <polygon points="1,40 18,70 36,40"/>
                 `;
                 qrDiv.appendChild(downArrow);
                 qrDiv.classList.add('has-arrow');
@@ -131,12 +152,11 @@ function generateQRCodes() {
             caption.setAttribute('data-raw', line);
             caption.innerHTML = `<div class="text-polki">${firstPart}</div><div class="text-polki">${secondPart}</div>`;
 
-            // Стили в зависимости от режима
             if (mode === 3) {
                 qrcodeList.classList.add('container');
                 qrDiv.classList.add('container');
                 caption.classList.add('container');
-                scrollDown.classList.add('container');
+                scrollDownButton.classList.add('container');
             } else if (mode === 7) {
                 qrcodeList.classList.add('lm');
                 qrDiv.classList.add('lm');
@@ -145,7 +165,7 @@ function generateQRCodes() {
                 qrcodeList.classList.remove('container', 'lm');
                 qrDiv.classList.remove('container', 'lm');
                 caption.classList.remove('container', 'lm');
-                scrollDown.classList.remove('container');
+                scrollDownButton.classList.remove('container');
             }
 
             if (mode === 4 || mode === 5) {
@@ -154,7 +174,7 @@ function generateQRCodes() {
                 qrDiv.classList.add('withOutQr');
                 qrcodeList.appendChild(qrDiv);
                 handleProgress();
-                return;
+                continue;
             }
 
             qrDiv.appendChild(caption);
@@ -189,13 +209,17 @@ function generateQRCodes() {
                 setTimeout(() => handleProgress(), 0);
             }
 
-
             caption.classList.remove('withOutQr');
             qrDiv.classList.remove('withOutQr');
             qrcodeList.appendChild(qrDiv);
-        });
+        }
 
-    }, 10);
+        if (index < total) {
+            requestAnimationFrame(processBatch);
+        }
+    }
+
+    requestAnimationFrame(processBatch);
 
     updateFontSize();
 }
