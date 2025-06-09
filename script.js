@@ -78,6 +78,8 @@ function generateQRCodes() {
 
             console.log(`✅ Генерация в режиме ${modeUsed} завершена за ${duration} мс (${(duration / 1000).toFixed(2)} секунд)`);
 
+            console.log(`📦 Всего сгенерировано QR-элементов: ${document.querySelectorAll('.qr-item').length}`);
+
             applySmartBreak();
 
             setTimeout(() => {
