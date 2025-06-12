@@ -1403,6 +1403,10 @@ body.dark-theme .slider-wrapper span {
   width: 100%;
 }
 
+#modeButton:hover {
+  transform: none;
+}
+
 .mode-menu {
   position: absolute;
   bottom: 100%; /* располагать над кнопкой */
