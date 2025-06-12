@@ -945,13 +945,16 @@ body.dark-theme #rightMenu {
 
     body.dark-theme .down-arrow {
         stroke: black !important;
+        fill: black !important;
     }
 
     body.dark-theme .down-arrow rect {
+        stroke: black !important;
         fill: black !important;
     }
 
     body.dark-theme .down-arrow polygon {
+        stroke: black !important;
         fill: black !important;
     }
 
