@@ -68,7 +68,7 @@
               </div>
             </div>
 
-            <button id="toggleGenerationMode" onclick="toggleGenerationMode()">Режим генерации: API</button>
+            <button id="toggleGenerationMode" onclick="toggleGenerationMode()">Режим генерации: API*</button>
             
             <div id="modeToggleWrapper">
               <span class="textToggleWrapper">Перенос строки</span>
@@ -76,7 +76,20 @@
               <button id="smartBreakToggle" class="switch-btn" aria-label="Toggle Smart Break"></button>
             </div>
 
-            <button id="modeButton" onclick="toggleMode()">Режим: места</button>
+            <div class="mode-wrapper">
+              <div id="modeMenu" class="mode-menu hidden">
+                <div onclick="selectMode(1)">Места</div>
+                <div onclick="selectMode(2)">Места со стрелками</div>
+                <div onclick="selectMode(3)">Большие QR</div>
+                <div onclick="selectMode(4)">Без QR</div>
+                <div onclick="selectMode(5)">Без QR со стрелкой</div>
+                <div onclick="selectMode(6)">Логин + пароль</div>
+                <div onclick="selectMode(7)">LM-ки</div>
+              </div>
+              <button id="modeButton" onclick="toggleModeMenu()">Режим: места ▾</button>
+            </div>
+
+
             <button id="clearDivAndTextArea" onclick="showDone()">Очистить</button>
             <button id="printButton" onclick="window.print()">Печать</button>
             <div id="author">© e7hereal | Ремнев Дмитрий</div>
