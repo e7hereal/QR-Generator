@@ -602,7 +602,7 @@ body.dark-theme .qr-text {
 /* Цвет текста в темной теме для .text-polki */
 body.dark-theme .text-polki {
     color: #ffffff; /* Белый текст для темной темы */
-    transition: color 0.5s;
+    transition: all 0.3s;
 }
 
 /* Для тёмной темы */
