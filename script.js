@@ -23,8 +23,8 @@ let useApiGeneration = true;
 
 function toggleGenerationMode() {
   useApiGeneration = !useApiGeneration;
-  document.getElementById('toggleGenerationMode').textContent =
-    'Режим генерации: ' + (useApiGeneration ? 'API' : 'JS');
+  document.getElementById('toggleGenerationMode').innerHTML =
+    'Режим генерации: ' + (useApiGeneration ? 'API' : 'JS') + '*';
     generateQRCodes();
 }
 
@@ -256,73 +256,76 @@ function toggleTheme() {
     }
 }
 
-function toggleMode() {
-    mode = (mode === 7) ? 1 : mode + 1;
-    localStorage.setItem('mode', mode);
-
-    const modeButton = document.getElementById('modeButton');
-    const toggleBtn = document.getElementById('smartBreakToggle');
-    const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
-    const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
-
-    if (mode === 1) {
-        modeButton.innerText = 'Режим: места';
-        smartBreakEnabled = true;
-        toggleBtn.classList.add('disabled');
-        localStorage.setItem('smartBreak', 'true');
-        notShowTextSplit.classList.add('hidden');
-        notShowTextFontSize.classList.add('hidden');
-        toggleBtn.classList.add('switch-on');
-    } else if (mode === 2) {
-        modeButton.innerText = 'Режим: со стрелками';
-        smartBreakEnabled = true;
-        toggleBtn.classList.add('disabled');
-        localStorage.setItem('smartBreak', 'true');
-        notShowTextSplit.classList.add('hidden');
-        notShowTextFontSize.classList.add('hidden');
-        toggleBtn.classList.add('switch-on');
-    } else if (mode === 3) {
-        modeButton.innerText = 'Режим: большие QR';
-        const saved = localStorage.getItem('smartBreak');
-        smartBreakEnabled = saved === null ? true : saved === 'true';
-        toggleBtn.classList.remove('disabled');
-        notShowTextSplit.classList.remove('hidden');
-        notShowTextFontSize.classList.remove('hidden');
-    } else if (mode === 4) {
-        modeButton.innerText = 'Режим: без QR';
-        const saved = localStorage.getItem('smartBreak');
-        smartBreakEnabled = saved === null ? true : saved === 'true';
-        toggleBtn.classList.remove('disabled');
-    } else if (mode === 5) {
-        modeButton.innerText = 'Режим: без QR со стрелкой';
-        const saved = localStorage.getItem('smartBreak');
-        smartBreakEnabled = saved === null ? true : saved === 'true';
-        toggleBtn.classList.remove('disabled');
-    } else if (mode === 6) {
-        modeButton.innerText = 'Режим: логин + пароль';
-        const saved = localStorage.getItem('smartBreak');
-        smartBreakEnabled = saved === null ? true : saved === 'true';
-        toggleBtn.classList.remove('disabled');
-    }  else if (mode === 7) {
-        modeButton.innerText = 'Режим: LM-ки';
-        const saved = localStorage.getItem('smartBreak');
-        smartBreakEnabled = saved === null ? true : saved === 'false';
-        toggleBtn.classList.add('disabled');
-        toggleBtn.classList.remove('switch-on');
-    }
-
-    // Перегенерируем QR-коды
-    generateQRCodes();
-
-    // Применяем умный разрыв
-    applySmartBreak();
-
-    // Меняем размер текста
-    updateFontSize();
-
-    // Проверка режима для переключателя
-    checkSplitToggle();
+function toggleModeMenu() {
+  document.getElementById('modeMenu').classList.toggle('hidden');
 }
+
+function selectMode(value) {
+  mode = parseInt(value, 10);
+  localStorage.setItem('mode', mode);
+  document.getElementById('modeMenu').classList.add('hidden');
+
+  const toggleBtn = document.getElementById('smartBreakToggle');
+  const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+  const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
+  const modeButton = document.getElementById('modeButton');
+
+  switch (mode) {
+    case 1:
+      modeButton.innerText = 'Режим: места';
+      smartBreakEnabled = true;
+      toggleBtn.classList.add('disabled');
+      toggleBtn.classList.add('switch-on');
+      notShowTextSplit.classList.add('hidden');
+      notShowTextFontSize.classList.add('hidden');
+      localStorage.setItem('smartBreak', 'true');
+      break;
+    case 2:
+      modeButton.innerText = 'Режим: места со стрелками';
+      smartBreakEnabled = true;
+      toggleBtn.classList.add('disabled');
+      toggleBtn.classList.add('switch-on');
+      notShowTextSplit.classList.add('hidden');
+      notShowTextFontSize.classList.add('hidden');
+      localStorage.setItem('smartBreak', 'true');
+      break;
+    case 3:
+      modeButton.innerText = 'Режим: большие QR ▾';
+      smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
+      toggleBtn.classList.remove('disabled');
+      notShowTextSplit.classList.remove('hidden');
+      notShowTextFontSize.classList.remove('hidden');
+      break;
+    case 4:
+      modeButton.innerText = 'Режим: без QR';
+      smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
+      toggleBtn.classList.remove('disabled');
+      break;
+    case 5:
+      modeButton.innerText = 'Режим: без QR со стрелкой';
+      smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
+      toggleBtn.classList.remove('disabled');
+      break;
+    case 6:
+      modeButton.innerText = 'Режим: логин + пароль';
+      smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
+      toggleBtn.classList.remove('disabled');
+      break;
+    case 7:
+      modeButton.innerText = 'Режим: LM-ки';
+      smartBreakEnabled = false;
+      toggleBtn.classList.add('disabled');
+      toggleBtn.classList.remove('switch-on');
+      localStorage.setItem('smartBreak', 'false');
+      break;
+  }
+
+  generateQRCodes();
+  applySmartBreak();
+  updateFontSize();
+  checkSplitToggle();
+}
+
 
 // Переключатель переноса
 let smartBreakEnabled = true; // включён по умолчанию
@@ -368,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обновить надпись на кнопке режима
     const modeButton = document.getElementById('modeButton');
     if (mode === 1) modeButton.innerText = 'Режим: места';
-    else if (mode === 2) modeButton.innerText = 'Режим: со стрелками';
+    else if (mode === 2) modeButton.innerText = 'Режим: места со стрелками';
     else if (mode === 3) modeButton.innerText = 'Режим: большие QR';
     else if (mode === 4) modeButton.innerText = 'Режим: без QR';
     else if (mode === 5) modeButton.innerText = 'Режим: без QR со стрелкой';
@@ -916,3 +919,11 @@ function checkSplitToggle() {
         elemTextSplit.classList.add('hidden');
     }
 }
+
+document.addEventListener('click', function (e) {
+  const menu = document.getElementById('modeMenu');
+  const button = document.getElementById('modeButton');
+  if (!menu.contains(e.target) && e.target !== button) {
+    menu.classList.add('hidden');
+  }
+});
