@@ -848,6 +848,7 @@ button:active {
     font-size: 10px;
     align-self: center;
     line-height: 0;
+    color: rgb(128, 128, 128);
 }
 
 /* Тёмная тема для меню */
