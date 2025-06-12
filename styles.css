@@ -1026,7 +1026,7 @@ body.dark-theme #rightMenu {
     border-radius: 5px; /* Скругление углов */
     background-color: rgb(51, 122, 183); /* Фон, как у кнопок */
     color: white;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -1391,4 +1391,59 @@ body.dark-theme .slider-wrapper span {
 
     transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 1000;
+}
+
+.mode-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+#modeButton {
+  width: 100%;
+}
+
+.mode-menu {
+  position: absolute;
+  bottom: 100%; /* располагать над кнопкой */
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mode-menu.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.mode-menu div {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.mode-menu div:hover {
+  background-color: #dadada;
+}
+
+/* Тёмная тема */
+body.dark-theme .mode-menu {
+  background-color: #444;
+  border-color: #666;
+}
+
+body.dark-theme .mode-menu div {
+  color: #fff;
+  background-color: rgb(50 50 50 / 90%);
+}
+
+body.dark-theme .mode-menu div:hover {
+  background-color: #555;
 }
