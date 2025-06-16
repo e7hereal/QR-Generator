@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="1.2">
+  <meta name="version" content="1.13">
 
   <title>Места QR</title>
 
@@ -44,6 +44,7 @@
             </button>
             <button id="themeButton" onclick="toggleTheme()">Переключить тему</button>
             <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
+            <!-- <button id="toggleSnow">Новогодняя версия</button> -->
           </div>
 
           <div class="bottom-buttons">
@@ -167,6 +168,8 @@
         <div id="message">Готово</div>
 
         <div id="qrcodeList"></div>
+
+        <canvas id="snow-canvas"></canvas>
 
          <!-- Подключение скриптов -->
         <script src="script.js"></script>
