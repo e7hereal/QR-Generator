@@ -893,7 +893,7 @@ body.dark-theme #rightMenu {
         background: none !important;
     }
 
-    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions, .bg-overlay, #rightMenu {
+    h1, label, textarea, button, br, #allCentr, #progressBar, #message, #instruction, p, #generalInstructions, #printerInstructions, .bg-overlay, #rightMenu, #snow-canvas {
         display: none !important;
     }
 
