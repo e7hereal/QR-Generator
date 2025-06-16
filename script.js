@@ -292,24 +292,34 @@ function selectMode(value) {
     case 3:
       modeButton.innerText = 'Режим: большие QR';
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
+      toggleBtn.classList.add('switch-on');
       toggleBtn.classList.remove('disabled');
       notShowTextSplit.classList.remove('hidden');
       notShowTextFontSize.classList.remove('hidden');
       break;
     case 4:
       modeButton.innerText = 'Режим: без QR';
+      toggleBtn.classList.add('switch-on');
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
       toggleBtn.classList.remove('disabled');
+      notShowTextSplit.classList.remove('hidden');
+      notShowTextFontSize.classList.remove('hidden');
       break;
     case 5:
       modeButton.innerText = 'Режим: без QR со стрелкой';
+      toggleBtn.classList.add('switch-on');
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
       toggleBtn.classList.remove('disabled');
+      notShowTextSplit.classList.remove('hidden');
+      notShowTextFontSize.classList.remove('hidden');
       break;
     case 6:
       modeButton.innerText = 'Режим: логин + пароль';
+      toggleBtn.classList.add('switch-on');
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
       toggleBtn.classList.remove('disabled');
+      notShowTextSplit.classList.remove('hidden');
+      notShowTextFontSize.classList.remove('hidden');
       break;
     case 7:
       modeButton.innerText = 'Режим: LM-ки';
@@ -317,6 +327,8 @@ function selectMode(value) {
       toggleBtn.classList.add('disabled');
       toggleBtn.classList.remove('switch-on');
       localStorage.setItem('smartBreak', 'false');
+      notShowTextSplit.classList.remove('hidden');
+      notShowTextFontSize.classList.remove('hidden');
       break;
   }
 
@@ -927,3 +939,137 @@ document.addEventListener('click', function (e) {
     menu.classList.add('hidden');
   }
 });
+
+/*
+
+const canvas = document.getElementById('snow-canvas');
+const ctx = canvas.getContext('2d');
+let width = window.innerWidth;
+let height = window.innerHeight;
+canvas.width = width;
+canvas.height = height;
+
+const snowflakes = [];
+let isSnowing = false;
+let animationFrameId;
+let lastTime = performance.now();
+
+const createSnowflake = () => ({
+  x: Math.random() * width,
+  y: -5,
+  radius: Math.random() * 2 + 1,
+  speed: Math.random() * 1 + 0.5,
+  opacity: Math.random() * 0.5 + 0.3,
+  settled: false,
+  settleTime: 0,
+});
+
+const drawSnowflake = (s) => {
+  const { x, y, radius: r, opacity } = s;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+  ctx.lineWidth = 1.5;
+
+  ctx.beginPath();
+  ctx.arc(0, 0, r / 2, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+  ctx.fill();
+
+  for (let i = 0; i < 6; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    const angle = (Math.PI / 3) * i;
+    const xEnd = Math.cos(angle) * r * 1.5;
+    const yEnd = Math.sin(angle) * r * 1.5;
+    ctx.lineTo(xEnd, yEnd);
+    ctx.stroke();
+  }
+  ctx.restore();
+};
+
+const updateSnowflake = (s, delta) => {
+  if (!s.settled) {
+    s.y += s.speed * delta;
+    const elements = document.querySelectorAll('#allCentr, .box, #qrcodeList, button');
+    for (const el of elements) {
+      const rect = el.getBoundingClientRect();
+      if (s.y >= rect.top && s.y <= rect.bottom && s.x >= rect.left && s.x <= rect.right) {
+        s.settled = true;
+        s.settleTime = Date.now();
+        s.y = rect.top + Math.random() * 5;
+        break;
+      }
+    }
+    if (s.y > height) {
+      s.settled = true;
+      s.settleTime = Date.now();
+    }
+  } else {
+    const age = Date.now() - s.settleTime;
+    if (age > 3000) {
+      s.opacity -= 0.01 * delta;
+      if (s.opacity <= 0) return false;
+    }
+  }
+  return true;
+};
+
+const animate = () => {
+  const now = performance.now();
+  const delta = (now - lastTime) / 16.67;
+  lastTime = now;
+
+  ctx.clearRect(0, 0, width, height);
+
+  if (isSnowing && Math.random() < 0.7) {
+    snowflakes.push(createSnowflake());
+  }
+
+  for (let i = snowflakes.length - 1; i >= 0; i--) {
+    const s = snowflakes[i];
+    drawSnowflake(s);
+    if (!updateSnowflake(s, delta)) snowflakes.splice(i, 1);
+  }
+
+  if (isSnowing || snowflakes.length > 0) {
+    animationFrameId = requestAnimationFrame(animate);
+  }
+};
+
+const toggleButton = document.getElementById('toggleSnow');
+
+// Восстанавливаем состояние из localStorage
+const savedState = localStorage.getItem('isSnowing');
+if (savedState === 'true') {
+  isSnowing = true;
+  toggleButton.textContent = 'Выключить Новогоднюю версию';
+  lastTime = performance.now();
+  animate();
+} else {
+  toggleButton.textContent = 'Новогодняя версия';
+}
+
+toggleButton.addEventListener('click', () => {
+  isSnowing = !isSnowing;
+
+  // Сохраняем состояние в localStorage
+  localStorage.setItem('isSnowing', isSnowing);
+
+  if (isSnowing) {
+    lastTime = performance.now();
+    animate();
+    toggleButton.textContent = 'Выключить Новогоднюю версию';
+  } else {
+    toggleButton.textContent = 'Новогодняя версия';
+  }
+});
+
+window.addEventListener('resize', () => {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+});
+
+*/
