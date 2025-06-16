@@ -290,7 +290,7 @@ function selectMode(value) {
       localStorage.setItem('smartBreak', 'true');
       break;
     case 3:
-      modeButton.innerText = 'Режим: большие QR ▾';
+      modeButton.innerText = 'Режим: большие QR';
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
       toggleBtn.classList.remove('disabled');
       notShowTextSplit.classList.remove('hidden');
