@@ -292,43 +292,38 @@ function selectMode(value) {
     case 3:
       modeButton.innerText = 'Режим: большие QR';
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
-      toggleBtn.classList.add('switch-on');
       toggleBtn.classList.remove('disabled');
       notShowTextSplit.classList.remove('hidden');
       notShowTextFontSize.classList.remove('hidden');
       break;
     case 4:
       modeButton.innerText = 'Режим: без QR';
-      toggleBtn.classList.add('switch-on');
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
-      toggleBtn.classList.remove('disabled');
       notShowTextSplit.classList.remove('hidden');
       notShowTextFontSize.classList.remove('hidden');
+      toggleBtn.classList.remove('disabled');
       break;
     case 5:
       modeButton.innerText = 'Режим: без QR со стрелкой';
-      toggleBtn.classList.add('switch-on');
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
-      toggleBtn.classList.remove('disabled');
       notShowTextSplit.classList.remove('hidden');
       notShowTextFontSize.classList.remove('hidden');
+      toggleBtn.classList.remove('disabled');
       break;
     case 6:
       modeButton.innerText = 'Режим: логин + пароль';
-      toggleBtn.classList.add('switch-on');
       smartBreakEnabled = localStorage.getItem('smartBreak') !== 'false';
-      toggleBtn.classList.remove('disabled');
       notShowTextSplit.classList.remove('hidden');
       notShowTextFontSize.classList.remove('hidden');
+      toggleBtn.classList.remove('disabled');
       break;
     case 7:
       modeButton.innerText = 'Режим: LM-ки';
       smartBreakEnabled = false;
+      notShowTextFontSize.classList.remove('hidden');
       toggleBtn.classList.add('disabled');
       toggleBtn.classList.remove('switch-on');
       localStorage.setItem('smartBreak', 'false');
-      notShowTextSplit.classList.remove('hidden');
-      notShowTextFontSize.classList.remove('hidden');
       break;
   }
 
