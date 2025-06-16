@@ -602,7 +602,7 @@ body.dark-theme .qr-text {
 /* Цвет текста в темной теме для .text-polki */
 body.dark-theme .text-polki {
     color: #ffffff; /* Белый текст для темной темы */
-    transition: all 0.3s;
+    transition: color 0.5s;
 }
 
 /* Для тёмной темы */
@@ -1415,7 +1415,7 @@ body.dark-theme .slider-wrapper span {
   border: 1px solid #ccc;
   width: 100%;
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -1432,7 +1432,6 @@ body.dark-theme .slider-wrapper span {
   cursor: pointer;
   font-size: 16px;
   background-color: #fff;
-  text-align: center;
 }
 
 .mode-menu div:hover {
@@ -1453,3 +1452,15 @@ body.dark-theme .mode-menu div {
 body.dark-theme .mode-menu div:hover {
   background-color: #555;
 }
+
+/* Снежинки
+
+#snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+*/
