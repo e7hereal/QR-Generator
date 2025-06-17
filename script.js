@@ -327,6 +327,7 @@ function selectMode(value) {
       break;
   }
 
+  updateSwitchText();
   generateQRCodes();
   applySmartBreak();
   updateFontSize();
@@ -343,7 +344,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('smartBreakToggle');
     const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
     const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
+    const switchText = toggleBtn.querySelector('.switch-text');
+
     checkSplitToggle();
+
 
     if (savedMode) {
         mode = parseInt(savedMode, 10);
@@ -357,6 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
     notShowTextFontSize.classList.add('hidden');
     localStorage.setItem('smartBreak', 'true');
     checkSplitToggle();
+
     } else if (mode === 7) {
         smartBreakEnabled = false
         localStorage.setItem('smartBreak', 'false');
@@ -384,6 +389,9 @@ document.addEventListener('DOMContentLoaded', function () {
     else if (mode === 5) modeButton.innerText = 'Режим: без QR со стрелкой';
     else if (mode === 6) modeButton.innerText = 'Режим: логин + пароль';
     else if (mode === 7) modeButton.innerText = 'Режим: LM-ки';
+
+    updateSwitchText();
+
  });
 
 // Устанавливаем переключатель переноса
@@ -393,6 +401,8 @@ if (smartBreakEnabled) {
     const toggleBtn = document.getElementById('smartBreakToggle');
     if (toggleBtn) toggleBtn.classList.add('switch-on');
 }
+
+
 
 // Вспывающее окно по кнопке
 function showDone() {
@@ -654,18 +664,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Клик
 toggleBtn.addEventListener('click', () => {
-    // Если кнопка заблокирована (режим 1 или 2)
     if (toggleBtn.classList.contains('disabled')) {
-        return; // ничего не делаем
+        return;
     }
 
     smartBreakEnabled = !smartBreakEnabled;
     toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
     localStorage.setItem('smartBreak', smartBreakEnabled ? 'true' : 'false');
+
+    updateSwitchText();
+
     applySmartBreak();
     updateFontSize();
     checkSplitToggle();
 });
+
+function updateSwitchText() {
+  const toggleBtn = document.getElementById('smartBreakToggle');
+  if (!toggleBtn) return;
+
+  const switchText = toggleBtn.querySelector('.switch-text');
+  if (!switchText) return;
+
+  switchText.textContent = smartBreakEnabled ? 'ON' : 'OFF';
+}
 
 // Drag-перетаскивание
 let isDragging = false;
