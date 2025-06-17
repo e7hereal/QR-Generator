@@ -1354,12 +1354,12 @@ body.dark-theme .slider-wrapper span {
 }
 
 .switch-btn.switch-on.disabled:hover {
-    background-color: #fff;
+    background-color: #fff !important;
     transform: none;
 }
 
 .switch-btn.disabled:hover {
-    background-color: #bfbfbf;
+    background-color: #bfbfbf !important;
     transform: none;
 }
 
