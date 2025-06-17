@@ -1078,16 +1078,16 @@ body.dark-theme #modeToggleWrapper {
     font-family: Verdana, sans-serif;
     position: absolute;
     top: 50%;
-    left: 28px;
+    left: 29px;
     transform: translateY(-50%);
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
     color: #000000;
     transition: all 0.3s;
 }
 
 .switch-on .switch-text {
-    left: 7px;
+    left: 8px;
 }
 
 /* Для темной темы */
