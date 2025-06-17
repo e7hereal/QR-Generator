@@ -344,7 +344,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('smartBreakToggle');
     const notShowTextFontSize = document.getElementsByClassName('setting-groupFontSize')[0];
     const notShowTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
-    const switchText = toggleBtn.querySelector('.switch-text');
+
+    updateSwitchText();
 
     checkSplitToggle();
 
@@ -662,11 +663,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (smartBreakEnabled) toggleBtn.classList.add('switch-on');
 });
 
+const SWITCH_THRESHOLD = 6; // Порог переключения в пикселях
+
 // Клик
 toggleBtn.addEventListener('click', () => {
-    if (toggleBtn.classList.contains('disabled')) {
-        return;
-    }
+    if (toggleBtn.classList.contains('disabled')) return;
 
     smartBreakEnabled = !smartBreakEnabled;
     toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
@@ -697,7 +698,6 @@ toggleBtn.addEventListener('mousedown', (e) => {
     isDragging = true;
     startX = e.clientX;
 
-    // Включаем прослушивание событий для перемещения мыши
     document.addEventListener('mousemove', onMouseMove);
 });
 
@@ -705,28 +705,24 @@ document.addEventListener('mouseup', (e) => {
     if (!isDragging) return;
     isDragging = false;
 
-    // Убираем прослушивание события мыши
     document.removeEventListener('mousemove', onMouseMove);
-
-    const deltaX = e.clientX - startX;
-    if (Math.abs(deltaX) > 10) {
-        smartBreakEnabled = deltaX > 0;
-        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
-        localStorage.setItem('smartBreak', smartBreakEnabled);
-        applySmartBreak();
-    }
+    // НЕ переключаем состояние здесь!
 });
 
 function onMouseMove(e) {
     if (!isDragging) return;
 
-    // Перемещаем кнопку в зависимости от изменения координат
     const deltaX = e.clientX - startX;
-    if (Math.abs(deltaX) > 10) {
-        smartBreakEnabled = deltaX > 0;
-        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
-        localStorage.setItem('smartBreak', smartBreakEnabled);
-        applySmartBreak();
+    if (Math.abs(deltaX) > SWITCH_THRESHOLD) {
+        const newState = deltaX > 0;
+        if (newState !== smartBreakEnabled) {
+            smartBreakEnabled = newState;
+            toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+            localStorage.setItem('smartBreak', smartBreakEnabled ? 'true' : 'false');
+            updateSwitchText();
+            applySmartBreak();
+            checkSplitToggle();
+        }
     }
 }
 
@@ -734,34 +730,31 @@ toggleBtn.addEventListener('touchstart', (e) => {
     isDragging = true;
     startX = e.touches[0].clientX;
 
-    // Добавляем прослушиватель для мобильных устройств
     document.addEventListener('touchmove', onTouchMove);
 });
 
 document.addEventListener('touchend', (e) => {
     if (!isDragging) return;
     isDragging = false;
-    document.removeEventListener('touchmove', onTouchMove);
 
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = endX - startX;
-    if (Math.abs(deltaX) > 10) {
-        smartBreakEnabled = deltaX > 0;
-        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
-        localStorage.setItem('smartBreak', smartBreakEnabled);
-        applySmartBreak();
-    }
+    document.removeEventListener('touchmove', onTouchMove);
+    // НЕ переключаем состояние здесь!
 });
 
 function onTouchMove(e) {
     if (!isDragging) return;
 
     const deltaX = e.touches[0].clientX - startX;
-    if (Math.abs(deltaX) > 10) {
-        smartBreakEnabled = deltaX > 0;
-        toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
-        localStorage.setItem('smartBreak', smartBreakEnabled);
-        applySmartBreak();
+    if (Math.abs(deltaX) > SWITCH_THRESHOLD) {
+        const newState = deltaX > 0;
+        if (newState !== smartBreakEnabled) {
+            smartBreakEnabled = newState;
+            toggleBtn.classList.toggle('switch-on', smartBreakEnabled);
+            localStorage.setItem('smartBreak', smartBreakEnabled ? 'true' : 'false');
+            updateSwitchText();
+            applySmartBreak();
+            checkSplitToggle();
+        }
     }
 }
 
@@ -801,6 +794,7 @@ function applySmartBreak() {
         }
     }
 });
+updateSwitchText();
 updateFontSize();
 }
 
@@ -935,17 +929,21 @@ function checkSplitToggle() {
     const elemTextSplit = document.getElementsByClassName('setting-groupTextSplit')[0];
     if (!elemTextSplit) return;
 
-    // Если режим 1 или 2 — всегда скрываем
+    let wasHidden = elemTextSplit.classList.contains('hidden');
+
     if (mode === 1 || mode === 2 || mode === 7) {
         elemTextSplit.classList.add('hidden');
-        return;
+    } else {
+        if (smartBreakEnabled) {
+            elemTextSplit.classList.remove('hidden');
+        } else {
+            elemTextSplit.classList.add('hidden');
+        }
     }
 
-    // В остальных режимах показываем/скрываем в зависимости от smartBreakEnabled
-    if (smartBreakEnabled) {
-        elemTextSplit.classList.remove('hidden');
-    } else {
-        elemTextSplit.classList.add('hidden');
+    // Если состояние изменилось, применяем перенос заново
+    if (wasHidden !== elemTextSplit.classList.contains('hidden')) {
+        applySmartBreak();
     }
 }
 
