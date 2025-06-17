@@ -1043,6 +1043,7 @@ body.dark-theme #modeToggleWrapper {
     width: 54px; /* Увеличиваем на 1.5 раза */
     height: 28px; /* Увеличиваем на 1.5 раза */
     background: #bfbfbf;
+    color: #000;
     border: none;
     border-radius: 28px;
     position: relative;
@@ -1082,7 +1083,6 @@ body.dark-theme #modeToggleWrapper {
     transform: translateY(-50%);
     font-size: 9px;
     font-weight: bold;
-    color: #000000;
     transition: all 0.3s;
 }
 
@@ -1090,7 +1090,7 @@ body.dark-theme #modeToggleWrapper {
     left: 8px;
 }
 
-body.dark-theme .switch-text:hover {
+body.dark-theme .switch-btn:hover {
     color: white
 }
 
@@ -1114,6 +1114,7 @@ body.dark-theme .switch-on::after {
 /* Ховер-эффект для кнопки */
 .switch-btn:hover {
     background: #989898;
+    color: #ffffff;
 }
 
 body.dark-theme .switch-btn:hover {
@@ -1393,7 +1394,7 @@ body.dark-theme .slider-wrapper span {
 }
 
 #toggleGenerationMode::after {
-    content: 'По умолчанию стоит режим API, менять только в случае, если не загружаются QR-кода. В режиме JS загрузка как-бы зависает при большом количестве QR-кодов, надо просто подождать.';
+    content: 'По умолчанию стоит режим API, менять только в случае, если не загружаются QR-кода. В режиме JS при большом количестве QR-кодов загрузка немного дольше.';
     position: absolute;
     bottom: 125%;
     left: 50%;
