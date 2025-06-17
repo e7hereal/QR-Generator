@@ -1090,6 +1090,10 @@ body.dark-theme #modeToggleWrapper {
     left: 8px;
 }
 
+body.dark-theme .switch-text:hover {
+    color: white
+}
+
 /* Для темной темы */
 body.dark-theme .switch-btn {
     background: #bfbfbf;
