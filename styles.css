@@ -1117,8 +1117,23 @@ body.dark-theme .switch-on::after {
     color: #ffffff;
 }
 
+.switch-btn.switch-on.disabled:hover {
+    color: #000;
+}
+.switch-btn.disabled:hover {
+    color: #000;
+}
+
 body.dark-theme .switch-btn:hover {
     background: #989898;
+    color: #fff;
+}
+
+body.dark-theme .switch-btn.switch-on.disabled:hover {
+    color: #000;
+}
+body.dark-theme .switch-btn.disabled:hover {
+    color: #000;
 }
 
 .questionToggleWrapper {
