@@ -307,6 +307,21 @@ async function submitGuess() {
     });
   }
 
+  function setupResetStatsButton() {
+  const resetBtn = document.getElementById("reset-stats");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      stats.played = 0;
+      stats.won = 0;
+      stats.currentStreak = 0;
+      stats.maxStreak = 0;
+      saveStats();
+      updateStatsUI();
+      setMessage("Статистика сброшена");
+    });
+  }
+  }
+
   await loadWords();
   targetWord = words[Math.floor(Math.random() * words.length)];
   window._targetWord = targetWord; // <-- Добавь это
@@ -316,5 +331,6 @@ async function submitGuess() {
   setupKeyboard();
   setupInputListeners();
   setupCloseButton();
+  setupResetStatsButton();
 
 })();
