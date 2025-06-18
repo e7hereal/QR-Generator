@@ -139,3 +139,32 @@ header {
 #reset-stats:hover {
   background-color: #565758;
 }
+
+/* Анимация переворота (flip) */
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+.flip {
+  animation: flip 0.6s ease forwards;
+}
+
+/* Анимация прыжка (bounce) */
+@keyframes bounce {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-10px); }
+  60%  { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+.bounce {
+  animation: bounce 0.4s ease;
+}
