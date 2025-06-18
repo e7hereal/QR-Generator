@@ -39,6 +39,35 @@
     document.getElementById("maxStreak").textContent = stats.maxStreak;
   }
 
+  function showNewGameButton() {
+  const btn = document.getElementById("new-game-btn");
+  if (btn) {
+    btn.style.display = "block";
+    btn.addEventListener("click", () => {
+      btn.style.display = "none";
+      targetWord = words[Math.floor(Math.random() * words.length)];
+      resetGame();
+    });
+  }
+  }
+
+  if (guess === targetWord) {
+  setMessage("Поздравляем! Вы угадали!", 4000);
+  isGameOver = true;
+  updateStats(true);
+  showNewGameButton(); // ← добавлено
+  return;
+  }
+
+  if (currentRow >= MAX_GUESSES) {
+    setMessage(`Игра окончена! Слово было: ${targetWord.toUpperCase()}`, 6000);
+    isGameOver = true;
+    updateStats(false);
+    showNewGameButton(); // ← добавлено
+  }
+
+
+
   function resetGame() {
     guesses = Array(MAX_GUESSES).fill(null).map(() => Array(WORD_LENGTH).fill(""));
     currentRow = 0;
@@ -48,6 +77,8 @@
     board.innerHTML = "";
     createBoard();
     resetKeyboard();
+    const btn = document.getElementById("new-game-btn");
+    if (btn) btn.style.display = "none";
   }
 
   function createBoard() {
