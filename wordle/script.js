@@ -68,7 +68,7 @@
   const keyboardRows = [
     ["й","ц","у","к","е","н","г","ш","щ","з"],
     ["х","ъ","ф","ы","в","а","п","р","о","л"],
-    ["Enter","д","ж","э","я","ч","с","м","и","т","ь","б","ю","Backspace",]
+    ["Enter","д","ж","э","я","ч","с","м","и","т","ь","б","ю","Backspace"]
   ];
 
   function setupKeyboard() {
@@ -81,7 +81,7 @@
         keyBtn.setAttribute("data-key", key.toLowerCase());
         keyBtn.classList.add("key");
         if(key === "Enter" || key === "Backspace") keyBtn.classList.add("wide");
-        keyBtn.addEventListener("click", () => onKey(key.toLowerCase()));
+        keyBtn.addEventListener("click", () => handleKeyInput(key.toLowerCase()));
         rowDiv.appendChild(keyBtn);
       });
       keyboard.appendChild(rowDiv);
@@ -278,6 +278,8 @@
   }
 
   await loadWords();
+  targetWord = words[Math.floor(Math.random() * words.length)];
+  window._targetWord = targetWord; // <-- Добавь это
   loadStats();
   updateStatsUI();
   resetGame();
