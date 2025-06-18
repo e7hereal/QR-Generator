@@ -157,19 +157,19 @@
   }
 
 async function submitGuess() {
-  if(isGameOver) {
+  if (isGameOver) {
     console.log("Игра завершена — ход невозможен");
     return;
   }
 
-  if(currentCol !== WORD_LENGTH) {
+  if (currentCol !== WORD_LENGTH) {
     shakeRow(currentRow);
     setMessage("Недостаточно букв");
     return;
   }
 
   const guess = guesses[currentRow].join("");
-  if(!words.includes(guess)) {
+  if (!words.includes(guess)) {
     shakeRow(currentRow);
     setMessage("Нет такого слова");
     return;
@@ -179,20 +179,22 @@ async function submitGuess() {
 
   console.log(`Текущий ход: ${currentRow}, Загаданное слово: ${targetWord}, Попытка: ${guess}`);
 
-  if(guess === targetWord) {
+  if (guess === targetWord) {
     setMessage("Поздравляем! Вы угадали!", 4000);
     isGameOver = true;
     updateStats(true);
+    showNewGameButton(); // ← переместили сюда
     return;
   }
 
   currentRow++;
   currentCol = 0;
 
-  if(currentRow >= MAX_GUESSES) {
+  if (currentRow >= MAX_GUESSES) {
     setMessage(`Игра окончена! Слово было: ${targetWord.toUpperCase()}`, 6000);
     isGameOver = true;
     updateStats(false);
+    showNewGameButton(); // ← и это сюда
   }
 }
 
