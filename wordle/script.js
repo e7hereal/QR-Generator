@@ -205,6 +205,7 @@ async function submitGuess() {
           letterCount[guessLetters[i]]--;
         }
       }
+
       for(let i=0; i<WORD_LENGTH; i++) {
         if(letterState[i] === "correct") continue;
         if(letterCount[guessLetters[i]] > 0) {
@@ -217,16 +218,24 @@ async function submitGuess() {
         setTimeout(() => {
           const tile = rowTiles[i];
           tile.classList.add("flip");
+
           setTimeout(() => {
             tile.classList.remove("flip");
             tile.classList.add(letterState[i]);
+
+            // 🔽 Добавим bounce после flip
+            tile.classList.add("bounce");
+            setTimeout(() => tile.classList.remove("bounce"), 400);
+
             updateKeyColor(guessLetters[i], letterState[i]);
-            if(i === WORD_LENGTH - 1) resolve();
+
+            if (i === WORD_LENGTH - 1) resolve();
           }, 300);
         }, i * 300);
       }
     });
   }
+
 
   function updateKeyColor(letter, state) {
     letter = letter.toLowerCase();
