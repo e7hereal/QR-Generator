@@ -33,6 +33,11 @@
 
 </head>
     <body>
+
+      <div id="wordle-container" style="display:none; position:fixed; inset:0; background:#121213cc; z-index:9999; overflow:auto;">
+        <iframe src="wordle/index.html" style="width:100%; height:100%; border:none;"></iframe>
+      </div>
+
         <div class="bg-overlay"></div>
         
         <div id="rightMenu">
@@ -177,5 +182,21 @@
         <script src="script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
         <script src="js/qrcode.min.js"></script>
+
+        <script>
+          (function() {
+            let clickCount = 0;
+            const authorDiv = document.getElementById("author");
+            const wordleContainer = document.getElementById("wordle-container");
+
+            authorDiv.addEventListener("click", () => {
+              clickCount++;
+              if(clickCount >= 10) {
+                wordleContainer.style.display = "block";
+                clickCount = 0;
+              }
+            });
+          })();
+        </script>
     </body>
 </html>
