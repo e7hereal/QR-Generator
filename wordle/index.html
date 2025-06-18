@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wordle</title>
+  <link rel="stylesheet" href="../wordle/styles.css" />
+</head>
+<body>
+  <div id="wordle-app">
+    <header>
+      <h1>Wordle (русская версия)</h1>
+      <button id="close-btn" aria-label="Закрыть игру">✕</button>
+    </header>
+    <div id="board"></div>
+    <div id="keyboard"></div>
+    <div id="message"></div>
+    <div id="stats">
+      <h2>Статистика</h2>
+      <p>Игр сыграно: <span id="played">0</span></p>
+      <p>Побед: <span id="won">0</span></p>
+      <p>Текущая серия: <span id="currentStreak">0</span></p>
+      <p>Максимальная серия: <span id="maxStreak">0</span></p>
+      <button id="reset-stats">Сбросить статистику</button>
+    </div>
+  </div>
+
+  <script src="../wordle/script.js"></script>
+</body>
+</html>
