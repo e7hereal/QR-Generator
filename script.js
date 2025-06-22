@@ -163,6 +163,10 @@ function generateQRCodes() {
                 qrcodeList.classList.add('lm');
                 qrDiv.classList.add('lm');
                 caption.classList.add('lm');
+                qrcodeList.classList.remove('container');
+                qrDiv.classList.remove('container');
+                caption.classList.remove('container');
+                scrollDownButton.classList.remove('container');
             } else {
                 qrcodeList.classList.remove('container', 'lm');
                 qrDiv.classList.remove('container', 'lm');
