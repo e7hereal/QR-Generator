@@ -35,7 +35,7 @@ body {
     background-color: white; /* Белый фон */
     color: black; /* Тёмный текст */
     transition: all 0.3s, background 0.5s ease-in-out; /* Плавное изменение фона и текста */
-    background: url("images/lamoda_9.jpg");
+    background: url("../images/lamoda_9.jpg");
     background-size: 100%;
     overflow-x: hidden;
 }
@@ -554,7 +554,7 @@ body.dark-theme textarea::placeholder {
 body.dark-theme {
     background-color: #252121; /* Темный фон */
     color: white; /* Светлый текст */
-    background: url("images/lamoda_9.jpg");
+    background: url("../images/lamoda_9.jpg");
     transition: all 0.3s, background 0.5s ease-in-out;
     background-size: 100%;
 }
