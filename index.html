@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="1.16">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="version" content="1.16" />
 
   <title>Места QR</title>
 
   <style>
-  html.dark-theme, body.dark-theme {
-    background-color: #252121 !important;
-    background: url(../images/lamoda_9.jpg);
-  }
-  body.dark-theme #allCentr {
-    background-color: #252121;
-  }
+    html.dark-theme, body.dark-theme {
+      background-color: #252121 !important;
+      background: url(../images/lamoda_9.jpg);
+    }
+    body.dark-theme #allCentr {
+      background-color: #252121;
+    }
   </style>
 
   <script>
@@ -28,158 +28,150 @@
   </script>
 
   <!-- Подключение стилей -->
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="icon.png" type="image/png">
-
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="icon.png" type="image/png" />
 </head>
-    <body>
+<body>
+  <div class="bg-overlay"></div>
 
+  <div id="rightMenu">
+    <div id="dateTimeNow"></div>
+    <div class="menu-buttons">
+      <button id="togglePin" class="pin-btn">
+        <span class="menu-icon">&#9776;</span>Закрепить
+      </button>
+      <button id="themeButton" onclick="toggleTheme()">Переключить тему</button>
+      <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
+      <!-- <button id="toggleSnow">Новогодняя версия</button> -->
+    </div>
+
+    <div class="bottom-buttons">
+      <div class="setting-groupFontSize">
+        <label for="fontSizeSlider" class="tooltip-label">
+          Размер текста (px):
+        </label>
+        <div class="slider-wrapper">
+          <input type="range" id="fontSizeSlider" min="8" max="36" value="26" />
+          <span id="fontSizeValue">26</span>
+        </div>
       </div>
 
-        <div class="bg-overlay"></div>
-        
-        <div id="rightMenu">
-          <div id="dateTimeNow"></div>
+      <div class="setting-groupTextSplit">
+        <label for="splitSlider" class="tooltip-label">
+          Перенос после символа:
+        </label>
+        <div class="slider-wrapper">
+          <input type="range" id="splitSlider" min="3" max="35" value="3" />
+          <span id="splitValue">3</span>
+        </div>
+      </div>
 
-          <div class="menu-buttons">
-            <button id="togglePin" class="pin-btn">
-              <span class="menu-icon">&#9776;</span>Закрепить
-            </button>
-            <button id="themeButton" onclick="toggleTheme()">Переключить тему</button>
-            <button id="instructionButton" onclick="toggleInstruction()">Показать инструкцию</button>
-            <!-- <button id="toggleSnow">Новогодняя версия</button> -->
-          </div>
+      <button id="toggleGenerationMode" onclick="toggleGenerationMode()">Режим генерации: API*</button>
 
-          <div class="bottom-buttons">
+      <div id="modeToggleWrapper">
+        <span class="textToggleWrapper">Перенос строки</span>
+        <span class="questionToggleWrapper">?</span>
+        <button id="smartBreakToggle" class="switch-btn" aria-label="Toggle Smart Break">
+          <span class="switch-text">On</span>
+        </button>
+      </div>
 
-            <div class="setting-groupFontSize">
-              <label for="fontSizeSlider" class="tooltip-label">
-                Размер текста (px):
-              </label>
-              <div class="slider-wrapper">
-                <input type="range" id="fontSizeSlider" min="8" max="36" value="26">
-                <span id="fontSizeValue">26</span>
-              </div>
-            </div>
+      <div class="mode-wrapper">
+        <div id="modeMenu" class="mode-menu hidden">
+          <div onclick="selectMode(1)">Места</div>
+          <div onclick="selectMode(2)">Места со стрелками</div>
+          <div onclick="selectMode(3)">Большие QR</div>
+          <div onclick="selectMode(4)">Без QR</div>
+          <div onclick="selectMode(5)">Без QR со стрелкой</div>
+          <div onclick="selectMode(6)">Логин + пароль</div>
+          <div onclick="selectMode(7)">LM-ки</div>
+        </div>
+        <button id="modeButton" onclick="toggleModeMenu()">Режим: места ▾</button>
+      </div>
 
-            <div class="setting-groupTextSplit">
-              <label for="splitSlider" class="tooltip-label">
-                Перенос после символа:
-              </label>
-              <div class="slider-wrapper">
-                <input type="range" id="splitSlider" min="3" max="35" value="3">
-                <span id="splitValue">3</span>
-              </div>
-            </div>
+      <button id="clearDivAndTextArea" onclick="showDone()">Очистить</button>
+      <button id="printButton" onclick="window.print()">Печать</button>
+      <div id="author">© e7hereal | Ремнев Дмитрий</div>
+    </div>
+  </div>
 
-            <button id="toggleGenerationMode" onclick="toggleGenerationMode()">Режим генерации: API*</button>
-            
-            <div id="modeToggleWrapper">
-              <span class="textToggleWrapper">Перенос строки</span>
-              <span class="questionToggleWrapper">?</span>
-              <button id="smartBreakToggle" class="switch-btn" aria-label="Toggle Smart Break">
-                <span class="switch-text">On</span>
-              </button>
-            </div>
+  <!-- ИНСТРУКЦИЯ -->
+  <div id="instruction">
+    <div class="instruction-overlay">
+      <div class="instruction-content">
+        <button class="close-instruction" onclick="toggleInstruction()" aria-label="Закрыть инструкцию">&times;</button>
+        <p style="font-size: 22px; margin-top: 0;"><strong>Инструкция</strong></p>
 
-            <div class="mode-wrapper">
-              <div id="modeMenu" class="mode-menu hidden">
-                <div onclick="selectMode(1)">Места</div>
-                <div onclick="selectMode(2)">Места со стрелками</div>
-                <div onclick="selectMode(3)">Большие QR</div>
-                <div onclick="selectMode(4)">Без QR</div>
-                <div onclick="selectMode(5)">Без QR со стрелкой</div>
-                <div onclick="selectMode(6)">Логин + пароль</div>
-                <div onclick="selectMode(7)">LM-ки</div>
-              </div>
-              <button id="modeButton" onclick="toggleModeMenu()">Режим: места ▾</button>
-            </div>
-
-
-            <button id="clearDivAndTextArea" onclick="showDone()">Очистить</button>
-            <button id="printButton" onclick="window.print()">Печать</button>
-            <div id="author">© e7hereal | Ремнев Дмитрий</div>
-          </div>
+        <div>
+          <button class="tab-button" onclick="showInstructionTab('general')">Общая инструкция</button>
+          <button class="tab-button" onclick="showInstructionTab('printer')">Настройка принтера</button>
         </div>
 
-        <!-- ИНСТРУКЦИЯ -->
-        <div id="instruction">
-        <div class="instruction-overlay">
-            <div class="instruction-content">
-                <button class="close-instruction" onclick="toggleInstruction()" aria-label="Закрыть инструкцию">&times;</button>
-            <p style="font-size: 22px; margin-top: 0;"><strong>Инструкция</strong></p>
-
-            <div>
-                <button class="tab-button" onclick="showInstructionTab('general')">Общая инструкция</button>
-                <button class="tab-button" onclick="showInstructionTab('printer')">Настройка принтера</button>
-                
-            </div>
-
-            <div id="generalInstructions"class="instruction-tab active">
-                <ul>
-                    <li>Введите строки текста (одна строка = один QR-код)</li>
-                    <li>Нажмите "Сгенерировать QR-коды"</li>
-                    <li><strong>Обязательно</strong> дождитесь, пока ползунок генерации дойдет до конца (100%) и исчезнет</li>
-                    <img src="images\progressbar100.jpg" alt="Фото прогрессбара">
-                    <li>При необходимости добавьте стрелки - кнопка "Добавить стрелки"</li>
-                    <li>Нажмите на кнопку "Распечатать QR-коды"</li>
-                    <li>В настройках печати выставляем ориентация - Вертикальная. Масштаб - персонализированные, затем выставляем 100. В параметрах убираем галочку с "Фон"</span></li>
-                    <img src="images/printsetting.jpg" alt="Настройки печати">
-                    <li>Если в параметрах стоит галочка на "Верхние и нижние колонтитулы" - убираем</li>
-                    <img src="images/settingparametrs.jpg" alt="Насткройки - параметры">
-                </ul>
-            </div>
-
-            <div id="printerInstructions" class="instruction-tab">
-                <ul>
-                <li>В поиске снизу введите "Принетеры и сканеры" или найдите данный пункт в настройках</li>
-                <img src="images\printersandscanners.jpg" alt="Принетеры и сканеры">
-                <li>Выберите ваш принтер (на 6-ой фазе это принтер TSZM19)</li>
-                <img src="images\settingbutton.jpg" alt="TSZM19">
-                <li>Далее в настройках принтера измените плотность на 27. Формат бумаги выберите "мм". Ширина 65, высота 25</li>
-                <img src="images/printersettings.jpg" alt="Настройки принтера">
-                <li>Затем нажимаем "Применить" и "ОК"</li>
-                <li>Готово. Принтер настроен</li>
-                </ul>
-            </div>
-
-            <button id ="closeInstruction" class="tab-button" onclick="toggleInstruction()">Закрыть</button>
-            </div>
-        </div>
-        </div>
-            
-        <div id="allCentr">
-            <h1>Генерация QR-кодов</h1>
-            <label for="qrText">Введите строки текста (каждая строка для отдельного QR-кода):</label><br>
-            <div class="file-upload-wrapper">
-                <textarea id="qrText" placeholder="Введите несколько строк (мест)..." autocomplete="off"></textarea>
-                <span id="fileIcon" class="file-icon">или перетащите файл сюда: &#128194;</span> <!-- Иконка файла -->
-            </div>
-
-            <br>
-            <label id="fileLoad" for="fileUpload" class="custom-file-button">Загрузить из Excel</label>
-            <input type="file" id="fileUpload" style="display: none;" accept=".xlsx, .xls, .csv, .txt">
-
-            <button id="generateBarcodes" onclick="generateQRCodes()">Сгенерировать QR-коды</button>
-
-            <div id="progressBar">
-                <div id="progressFill"></div>
-                <div id="progressText">0.00%</div>
-            </div>
+        <div id="generalInstructions" class="instruction-tab active">
+          <ul>
+            <li>Введите строки текста (одна строка = один QR-код)</li>
+            <li>Нажмите "Сгенерировать QR-коды"</li>
+            <li><strong>Обязательно</strong> дождитесь, пока ползунок генерации дойдет до конца (100%) и исчезнет</li>
+            <img src="images/progressbar100.jpg" alt="Фото прогрессбара" />
+            <li>При необходимости добавьте стрелки - кнопка "Добавить стрелки"</li>
+            <li>Нажмите на кнопку "Распечатать QR-коды"</li>
+            <li>В настройках печати выставляем ориентация - Вертикальная. Масштаб - персонализированные, затем выставляем 100. В параметрах убираем галочку с "Фон"</li>
+            <img src="images/printsetting.jpg" alt="Настройки печати" />
+            <li>Если в параметрах стоит галочка на "Верхние и нижние колонтитулы" - убираем</li>
+            <img src="images/settingparametrs.jpg" alt="Настройки - параметры" />
+          </ul>
         </div>
 
-        <button id="scrollDown">Промотать вниз</button>
+        <div id="printerInstructions" class="instruction-tab">
+          <ul>
+            <li>В поиске снизу введите "Принтеры и сканеры" или найдите данный пункт в настройках</li>
+            <img src="images/printersandscanners.jpg" alt="Принтеры и сканеры" />
+            <li>Выберите ваш принтер (на 6-ой фазе это принтер TSZM19)</li>
+            <img src="images/settingbutton.jpg" alt="TSZM19" />
+            <li>Далее в настройках принтера измените плотность на 27. Формат бумаги выберите "мм". Ширина 65, высота 25</li>
+            <img src="images/printersettings.jpg" alt="Настройки принтера" />
+            <li>Затем нажимаем "Применить" и "ОК"</li>
+            <li>Готово. Принтер настроен</li>
+          </ul>
+        </div>
 
-        <div id="message">Готово</div>
+        <button id="closeInstruction" class="tab-button" onclick="toggleInstruction()">Закрыть</button>
+      </div>
+    </div>
+  </div>
 
-        <div id="qrcodeList"></div>
+  <div id="allCentr">
+    <h1>Генерация QR-кодов</h1>
+    <label for="qrText">Введите строки текста (каждая строка для отдельного QR-кода):</label><br />
+    <div class="file-upload-wrapper">
+      <textarea id="qrText" placeholder="Введите несколько строк (мест)..." autocomplete="off"></textarea>
+      <span id="fileIcon" class="file-icon">или перетащите файл сюда: &#128194;</span>
+      <!-- Иконка файла -->
+    </div>
 
-        <canvas id="snow-canvas"></canvas>
+    <br />
+    <label id="fileLoad" for="fileUpload" class="custom-file-button">Загрузить из Excel</label>
+    <input type="file" id="fileUpload" style="display: none;" accept=".xlsx, .xls, .csv, .txt" />
 
-         <!-- Подключение скриптов -->
-        <script src="js/script.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-        <script src="js/qrcode.min.js"></script>
-      
-    </body>
+    <button id="generateBarcodes" onclick="generateQRCodes()">Сгенерировать QR-коды</button>
+
+    <div id="progressBar">
+      <div id="progressFill"></div>
+      <div id="progressText">0.00%</div>
+    </div>
+  </div>
+
+  <button id="scrollDown">Промотать вниз</button>
+
+  <div id="message">Готово</div>
+
+  <div id="qrcodeList"></div>
+
+  <canvas id="snow-canvas"></canvas>
+
+  <!-- Подключение скриптов -->
+  <script src="js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="js/qrcode.min.js"></script>
+</body>
 </html>
