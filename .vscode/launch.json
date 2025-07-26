@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "c:\\Users\\dmitry.remnev\\Desktop\\Git\\QR-Generator\\index.html"
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }
