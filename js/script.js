@@ -247,18 +247,43 @@ buttonClearDiv.addEventListener('click', function () {
     checkScrollButton();
 });
 
-    // Функция для переключения темы
+// Функция для переключения темы
 function toggleTheme() {
     const body = document.body;
-    body.classList.toggle('dark-theme'); // Переключаем класс темной темы
+    const button = document.getElementById('themeToggleBtn');
 
-    // Сохраняем выбранную тему в localStorage
-    if (body.classList.contains('dark-theme')) {
+    const isDark = body.classList.toggle('dark-theme');
+
+    if (isDark) {
         localStorage.setItem('theme', 'dark');
+        button.textContent = 'Светлая тема';
     } else {
         localStorage.setItem('theme', 'light');
+        button.textContent = 'Темная тема';
     }
 }
+
+// При загрузке страницы применяем тему из localStorage
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const body = document.body;
+    const button = document.getElementById('themeToggleBtn');
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-theme');
+        button.textContent = 'Светлая тема';
+    } else {
+        body.classList.remove('dark-theme');
+        button.textContent = 'Темная тема';
+    }
+}
+
+// Привязка обработчика при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme();
+    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+});
+
 
 function toggleModeMenu() {
   document.getElementById('modeMenu').classList.toggle('hidden');
