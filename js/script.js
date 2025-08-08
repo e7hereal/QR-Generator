@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
   textAreaWithOutTransition.classList.remove('disable-transitions');
 });
 
-let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры, 4 - Полки CP
+let mode = 1; // 1 - Места, 2 - Стрелки, 3 - Контейнеры, 4 - Полки CP, 5 - Полки CP со стрелками, 6 - Логин/пароль, 7 - LM-ки
 
 let useApiGeneration = true;
 
@@ -739,7 +739,7 @@ document.addEventListener('mouseup', (e) => {
 });
 
 function onMouseMove(e) {
-    if (!isDragging) return;
+    if (!isDragging || !isDraggingAllowed()) return;
 
     const deltaX = e.clientX - startX;
     if (Math.abs(deltaX) > SWITCH_THRESHOLD) {
@@ -754,6 +754,7 @@ function onMouseMove(e) {
         }
     }
 }
+
 
 toggleBtn.addEventListener('touchstart', (e) => {
     isDragging = true;
@@ -771,7 +772,7 @@ document.addEventListener('touchend', (e) => {
 });
 
 function onTouchMove(e) {
-    if (!isDragging) return;
+    if (!isDragging || !isDraggingAllowed()) return;
 
     const deltaX = e.touches[0].clientX - startX;
     if (Math.abs(deltaX) > SWITCH_THRESHOLD) {
@@ -785,6 +786,10 @@ function onTouchMove(e) {
             checkSplitToggle();
         }
     }
+}
+
+function isDraggingAllowed() {
+    return ![1, 2, 7].includes(mode);
 }
 
 window.addEventListener('load', () => {
