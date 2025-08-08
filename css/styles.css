@@ -669,7 +669,7 @@ button {
     left: 50%;
     bottom: 12px;
     transform: translateX(-50%);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     display: none; /* Кнопка скрыта по умолчанию */
     z-index: 50;
 }
